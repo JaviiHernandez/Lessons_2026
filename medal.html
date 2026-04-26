@@ -2,178 +2,270 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>St. Patrick's Animal Hunt — Medal</title>
+<title>St. Patrick's Animal Hunt — Role Medals</title>
 <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Fredoka+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
-    background: #2d2d2d;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    min-height: 100vh; gap: 20px;
-    font-family: 'Fredoka', sans-serif;
-    padding: 40px;
+    background:#1e1e1e;
+    font-family:'Fredoka',sans-serif;
+    padding:40px;
+    display:flex; flex-direction:column; align-items:center; gap:40px;
   }
-  h1 { color: rgba(255,255,255,0.5); font-family:'Fredoka One',cursive; font-size:18px; }
+  h1 { color:rgba(255,255,255,0.45); font-family:'Fredoka One',cursive; font-size:18px; text-align:center; }
+  .hint { color:rgba(255,255,255,0.3); font-size:13px; text-align:center; margin-top:-30px; }
 
-  .medals-row { display: flex; gap: 40px; align-items: flex-end; flex-wrap: wrap; justify-content: center; }
-
+  /* Grid of medals */
+  .medals-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:36px;
+    max-width:760px;
+    width:100%;
+  }
   .medal-wrap {
-    display: flex; flex-direction: column; align-items: center; gap: 0;
+    display:flex; flex-direction:column; align-items:center; gap:0;
   }
 
-  /* Ribbon */
+  /* ── RIBBON ── */
   .ribbon-top {
-    width: 60px; height: 50px;
-    position: relative; z-index: 1;
-    display: flex; flex-direction: column; align-items: center;
+    width:70px; height:60px;
+    display:flex; flex-direction:column; align-items:center;
+    position:relative; z-index:1;
   }
   .ribbon-bar {
-    width: 40px; height: 100%;
-    background: linear-gradient(180deg, #1A6B3C 0%, #145530 100%);
-    border-radius: 4px 4px 0 0;
-    box-shadow: 3px 0 0 #0e3d22, -3px 0 0 #0e3d22;
+    width:36px; height:100%;
+    border-radius:4px 4px 0 0;
   }
-  .ribbon-knot {
-    position: absolute;
-    bottom: -8px;
-    width: 56px; height: 18px;
-    display: flex; gap: 0; align-items: center; justify-content: center;
+  .ribbon-v {
+    position:absolute; bottom:-4px;
+    display:flex;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));
   }
-  .ribbon-l {
-    width: 0; height: 0;
-    border-top: 18px solid #1A6B3C;
-    border-right: 28px solid transparent;
-    border-left: 14px solid transparent;
-  }
-  .ribbon-r {
-    width: 0; height: 0;
-    border-top: 18px solid #1A6B3C;
-    border-left: 28px solid transparent;
-    border-right: 14px solid transparent;
-  }
+  .rv-l { width:0; height:0; border-top:16px solid transparent; border-right:22px solid transparent; }
+  .rv-r { width:0; height:0; border-top:16px solid transparent; border-left:22px solid transparent; }
 
-  /* Medal circle */
+  /* ── MEDAL CIRCLE ── */
   .medal-circle {
-    width: 220px; height: 220px;
-    border-radius: 50%;
-    background: conic-gradient(#D4AF37 0deg, #f5d47a 40deg, #D4AF37 80deg, #f5d47a 120deg, #D4AF37 160deg, #f5d47a 200deg, #D4AF37 240deg, #f5d47a 280deg, #D4AF37 320deg, #f5d47a 360deg);
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.3);
-    position: relative;
-    z-index: 2;
+    width:190px; height:190px;
+    border-radius:50%;
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 10px 36px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
   }
 
+  /* Outer gold ring with ridged effect */
+  .medal-ring {
+    position:absolute; inset:0;
+    border-radius:50%;
+    background: conic-gradient(
+      #D4AF37 0deg, #f5d47a 18deg,
+      #D4AF37 36deg, #f5d47a 54deg,
+      #D4AF37 72deg, #f5d47a 90deg,
+      #D4AF37 108deg, #f5d47a 126deg,
+      #D4AF37 144deg, #f5d47a 162deg,
+      #D4AF37 180deg, #f5d47a 198deg,
+      #D4AF37 216deg, #f5d47a 234deg,
+      #D4AF37 252deg, #f5d47a 270deg,
+      #D4AF37 288deg, #f5d47a 306deg,
+      #D4AF37 324deg, #f5d47a 342deg,
+      #D4AF37 360deg
+    );
+  }
+
+  /* Inner colored disc */
   .medal-inner {
-    width: 188px; height: 188px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #1d7a45 0%, #1A6B3C 50%, #0e3d22 100%);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 4px;
-    box-shadow: inset 0 4px 12px rgba(0,0,0,0.3);
-    position: relative;
-    overflow: hidden;
+    width:154px; height:154px;
+    border-radius:50%;
+    position:relative;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:2px;
+    overflow:hidden;
+    box-shadow: inset 0 4px 14px rgba(0,0,0,0.35), inset 0 -2px 6px rgba(255,255,255,0.1);
   }
 
-  /* Inner gold ring */
-  .medal-inner::before {
-    content: '';
-    position: absolute;
-    inset: 8px;
-    border-radius: 50%;
-    border: 2px solid rgba(212,175,55,0.4);
-  }
-
-  .medal-top-text {
-    font-family: 'Fredoka One', cursive;
-    font-size: 11px;
-    color: #D4AF37;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    position: relative; z-index: 2;
-  }
-  .medal-shamrock { font-size: 44px; position: relative; z-index: 2; }
-  .medal-main-text {
-    font-family: 'Uncial Antiqua', cursive;
-    font-size: 15px;
-    color: #FAF6E9;
-    text-align: center;
-    position: relative; z-index: 2;
-    line-height: 1.3;
-    padding: 0 16px;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-  }
-  .medal-gold-text {
-    font-family: 'Fredoka One', cursive;
-    font-size: 12px;
-    color: #D4AF37;
-    text-align: center;
-    letter-spacing: 1px;
-    position: relative; z-index: 2;
-    text-transform: uppercase;
-  }
-
-  /* Sunburst */
+  /* Sunburst rays */
   .sunburst {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: repeating-conic-gradient(rgba(255,255,255,0.04) 0deg 10deg, transparent 10deg 20deg);
+    position:absolute; inset:0; border-radius:50%;
+    background: repeating-conic-gradient(rgba(255,255,255,0.06) 0deg 9deg, transparent 9deg 18deg);
   }
 
-  /* Small version label */
-  .size-label { color: rgba(255,255,255,0.4); font-size:13px; font-family:'Fredoka One',cursive; }
+  /* Shine spot */
+  .shine {
+    position:absolute; top:12px; left:26px;
+    width:40px; height:22px;
+    background:radial-gradient(ellipse, rgba(255,255,255,0.22) 0%, transparent 80%);
+    border-radius:50%;
+  }
 
+  /* Inner gold ring line */
+  .inner-ring {
+    position:absolute; inset:8px; border-radius:50%;
+    border:1.5px solid rgba(212,175,55,0.45);
+  }
+
+  /* Content */
+  .m-top-text {
+    font-family:'Fredoka One',cursive; font-size:9px;
+    color:#fff; letter-spacing:2px; text-transform:uppercase;
+    position:relative; z-index:2;
+    background:rgba(0,0,0,0.45);
+    padding:2px 8px; border-radius:10px;
+    text-shadow:0 1px 3px rgba(0,0,0,0.8);
+  }
+  .m-icon { font-size:42px; position:relative; z-index:2; filter:drop-shadow(0 3px 8px rgba(0,0,0,0.35)); }
+  .m-role { font-family:'Uncial Antiqua',cursive; font-size:16px; color:white; text-align:center; line-height:1.2; position:relative; z-index:2; text-shadow:0 2px 4px rgba(0,0,0,0.5); }
+  .m-subtitle { font-family:'Fredoka One',cursive; font-size:9px; color:rgba(255,255,255,0.65); letter-spacing:1px; text-transform:uppercase; position:relative; z-index:2; }
+
+  /* Name plate below medal */
+  .name-plate {
+    width:160px;
+    background:white;
+    border:2px solid #D4AF37;
+    border-radius:8px;
+    padding:5px 10px;
+    text-align:center;
+    margin-top:8px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.2);
+  }
+  .name-label { font-size:9px; color:#aaa; letter-spacing:2px; text-transform:uppercase; font-weight:600; margin-bottom:2px; }
+  .name-line { border-bottom:1.5px solid #1A6B3C; height:20px; }
+
+  /* Bottom shamrocks */
+  .medal-shamrocks { font-size:13px; color:rgba(255,255,255,0.3); margin-top:4px; letter-spacing:3px; }
+
+  /* Page break for print */
   @media print {
-    body { background: white; }
-    h1, .size-label { display: none; }
-    .medals-row { gap: 60px; }
+    body{background:white;padding:20px;}
+    h1,.hint{display:none;}
+    .medals-grid{grid-template-columns:repeat(3,1fr);gap:20px;}
+    .medal-circle{box-shadow:none;}
+    .name-plate{box-shadow:none;}
   }
 </style>
 </head>
 <body>
-<h1>🥇 Printable Medals — Cut out and attach ribbon</h1>
+<h1>🏅 Role Medals — One per student, based on their team role</h1>
+<div class="hint">Print on cardstock · Cut · Punch a hole at the top of the ribbon · Thread a green ribbon or string</div>
 
-<div class="medals-row">
-  <!-- Full size medal -->
-  <div class="medal-wrap">
-    <div class="size-label">Full size (22cm)</div>
-    <div class="ribbon-top">
-      <div class="ribbon-bar"></div>
-      <div class="ribbon-knot"><div class="ribbon-l"></div><div class="ribbon-r"></div></div>
-    </div>
-    <div class="medal-circle">
-      <div class="medal-inner">
-        <div class="sunburst"></div>
-        <div class="medal-top-text">🍀 St. Patrick's 🍀</div>
-        <div class="medal-shamrock">🍀</div>
-        <div class="medal-main-text">Gold Medal<br>Animal Helper</div>
-        <div class="medal-gold-text">Snake Expeller!</div>
+<div class="medals-grid">
+  <script>
+  const roles = [
+    {
+      role:'Reader', icon:'📖', color1:'#1565C0', color2:'#0d3b6e',
+      ribbon:'#1565C0', rvColor:'#0d3b6e',
+      sub:'Best Reader',
+      top:'St. Patrick\'s Hunt',
+    },
+    {
+      role:'Writer', icon:'✏️', color1:'#6A1B9A', color2:'#38006b',
+      ribbon:'#6A1B9A', rvColor:'#38006b',
+      sub:'Best Writer',
+      top:'St. Patrick\'s Hunt',
+    },
+    {
+      role:'Scanner', icon:'📱', color1:'#00796B', color2:'#003d33',
+      ribbon:'#00796B', rvColor:'#003d33',
+      sub:'Best Scanner',
+      top:'St. Patrick\'s Hunt',
+    },
+    {
+      role:'Speaker', icon:'🗣️', color1:'#E65100', color2:'#8c2e00',
+      ribbon:'#E65100', rvColor:'#8c2e00',
+      sub:'Best Speaker',
+      top:'St. Patrick\'s Hunt',
+    },
+    {
+      role:'Decider', icon:'🎯', color1:'#B71C1C', color2:'#7f0000',
+      ribbon:'#B71C1C', rvColor:'#7f0000',
+      sub:'Best Decider',
+      top:'St. Patrick\'s Hunt',
+    },
+    {
+      role:'Champion', icon:'🏆', color1:'#1A6B3C', color2:'#0e3d22',
+      ribbon:'#D4AF37', rvColor:'#b8952e',
+      sub:'Snake Expeller!',
+      top:'St. Patrick\'s Hunt',
+    },
+  ];
+
+  roles.forEach(r => {
+    document.write(`
+    <div class="medal-wrap">
+      <!-- Ribbon -->
+      <div class="ribbon-top">
+        <div class="ribbon-bar" style="background:linear-gradient(180deg,${r.ribbon},${r.rvColor});"></div>
+        <div class="ribbon-v">
+          <div class="rv-l" style="border-right-color:${r.ribbon};"></div>
+          <div class="rv-r" style="border-left-color:${r.ribbon};"></div>
+        </div>
       </div>
+
+      <!-- Medal -->
+      <div class="medal-circle">
+        <div class="medal-ring"></div>
+        <div class="medal-inner" style="background:radial-gradient(circle at 35% 30%, ${r.color1} 0%, ${r.color2} 100%);">
+          <div class="sunburst"></div>
+          <div class="shine"></div>
+          <div class="inner-ring"></div>
+          <div class="m-top-text">${r.top}</div>
+          <div class="m-icon">${r.icon}</div>
+          <div class="m-role">${r.role}</div>
+          <div class="m-subtitle">${r.sub}</div>
+        </div>
+      </div>
+
+      <!-- Name plate -->
+      <div class="name-plate">
+        <div class="name-label">Name</div>
+        <div class="name-line"></div>
+      </div>
+      <div class="medal-shamrocks">🍀 🍀 🍀</div>
+    </div>
+    `);
+  });
+  </script>
+</div>
+
+<!-- Second row: mini versions (4-up per page for extra copies) -->
+<h1 style="margin-top:20px;">Mini versions — 6 per page (extra copies)</h1>
+<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:20px;max-width:760px;width:100%;">
+<script>
+const roles2 = [
+  { role:'Reader',   icon:'📖', c1:'#1565C0', c2:'#0d3b6e', rb:'#1565C0', rv:'#0d3b6e' },
+  { role:'Writer',   icon:'✏️', c1:'#6A1B9A', c2:'#38006b', rb:'#6A1B9A', rv:'#38006b' },
+  { role:'Scanner',  icon:'📱', c1:'#00796B', c2:'#003d33', rb:'#00796B', rv:'#003d33' },
+  { role:'Speaker',  icon:'🗣️', c1:'#E65100', c2:'#8c2e00', rb:'#E65100', rv:'#8c2e00' },
+  { role:'Decider',  icon:'🎯', c1:'#B71C1C', c2:'#7f0000', rb:'#B71C1C', rv:'#7f0000' },
+  { role:'Champion', icon:'🏆', c1:'#1A6B3C', c2:'#0e3d22', rb:'#D4AF37', rv:'#b8952e' },
+];
+roles2.forEach(r=>{
+  document.write(`
+  <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+    <div style="width:36px;height:30px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;">
+      <div style="width:18px;height:100%;background:linear-gradient(180deg,${r.rb},${r.rv});border-radius:3px 3px 0 0;"></div>
+      <div style="position:absolute;bottom:-3px;display:flex;">
+        <div style="width:0;height:0;border-top:9px solid ${r.rb};border-right:13px solid transparent;"></div>
+        <div style="width:0;height:0;border-top:9px solid ${r.rb};border-left:13px solid transparent;"></div>
+      </div>
+    </div>
+    <div style="width:90px;height:90px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.4);">
+      <div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(#D4AF37 0deg,#f5d47a 20deg,#D4AF37 40deg,#f5d47a 60deg,#D4AF37 80deg,#f5d47a 100deg,#D4AF37 120deg,#f5d47a 140deg,#D4AF37 160deg,#f5d47a 180deg,#D4AF37 200deg,#f5d47a 220deg,#D4AF37 240deg,#f5d47a 260deg,#D4AF37 280deg,#f5d47a 300deg,#D4AF37 320deg,#f5d47a 340deg,#D4AF37 360deg);"></div>
+      <div style="width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 35% 30%,${r.c1},${r.c2});display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;position:relative;overflow:hidden;box-shadow:inset 0 3px 10px rgba(0,0,0,0.35);">
+        <div style="position:absolute;inset:0;border-radius:50%;background:repeating-conic-gradient(rgba(255,255,255,0.06) 0deg 9deg,transparent 9deg 18deg);"></div>
+        <div style="font-size:22px;position:relative;z-index:2;">${r.icon}</div>
+        <div style="font-family:'Fredoka One',cursive;font-size:8px;color:white;position:relative;z-index:2;letter-spacing:0.5px;text-align:center;">${r.role}</div>
+      </div>
+    </div>
+    <div style="width:80px;background:white;border:1.5px solid #D4AF37;border-radius:6px;padding:3px 6px;text-align:center;margin-top:4px;">
+      <div style="font-size:7px;color:#aaa;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px;">Name</div>
+      <div style="border-bottom:1px solid #1A6B3C;height:14px;"></div>
     </div>
   </div>
-
-  <!-- Small version x4 -->
-  <div style="display:flex;flex-direction:column;gap:16px;align-items:center;">
-    <div class="size-label">Mini (print 4 per page)</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-      <div class="medal-wrap" style="transform:scale(0.55);transform-origin:top center;margin-bottom:-50px;">
-        <div class="ribbon-top"><div class="ribbon-bar"></div><div class="ribbon-knot"><div class="ribbon-l"></div><div class="ribbon-r"></div></div></div>
-        <div class="medal-circle"><div class="medal-inner"><div class="sunburst"></div><div class="medal-top-text">🍀 St. Patrick's 🍀</div><div class="medal-shamrock">🍀</div><div class="medal-main-text">Gold Medal<br>Animal Helper</div><div class="medal-gold-text">Snake Expeller!</div></div></div>
-      </div>
-      <div class="medal-wrap" style="transform:scale(0.55);transform-origin:top center;margin-bottom:-50px;">
-        <div class="ribbon-top"><div class="ribbon-bar"></div><div class="ribbon-knot"><div class="ribbon-l"></div><div class="ribbon-r"></div></div></div>
-        <div class="medal-circle"><div class="medal-inner"><div class="sunburst"></div><div class="medal-top-text">🍀 St. Patrick's 🍀</div><div class="medal-shamrock">🍀</div><div class="medal-main-text">Gold Medal<br>Animal Helper</div><div class="medal-gold-text">Snake Expeller!</div></div></div>
-      </div>
-      <div class="medal-wrap" style="transform:scale(0.55);transform-origin:top center;margin-bottom:-50px;">
-        <div class="ribbon-top"><div class="ribbon-bar"></div><div class="ribbon-knot"><div class="ribbon-l"></div><div class="ribbon-r"></div></div></div>
-        <div class="medal-circle"><div class="medal-inner"><div class="sunburst"></div><div class="medal-top-text">🍀 St. Patrick's 🍀</div><div class="medal-shamrock">🍀</div><div class="medal-main-text">Gold Medal<br>Animal Helper</div><div class="medal-gold-text">Snake Expeller!</div></div></div>
-      </div>
-      <div class="medal-wrap" style="transform:scale(0.55);transform-origin:top center;margin-bottom:-50px;">
-        <div class="ribbon-top"><div class="ribbon-bar"></div><div class="ribbon-knot"><div class="ribbon-l"></div><div class="ribbon-r"></div></div></div>
-        <div class="medal-circle"><div class="medal-inner"><div class="sunburst"></div><div class="medal-top-text">🍀 St. Patrick's 🍀</div><div class="medal-shamrock">🍀</div><div class="medal-main-text">Gold Medal<br>Animal Helper</div><div class="medal-gold-text">Snake Expeller!</div></div></div>
-      </div>
-    </div>
-  </div>
+  `);
+});
+</script>
 </div>
 </body>
 </html>
