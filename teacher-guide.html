@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>St. Patrick's Animal Hunt — Teacher's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Fredoka+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: #2d2d2d;
+    font-family: 'Fredoka', sans-serif;
+    padding: 40px;
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+  }
+
+  .page {
+    width: 794px;
+    background: #FAF6E9;
+    position: relative;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    padding: 52px 60px 48px;
+    margin-bottom: 32px;
+  }
+  .page:first-of-type { border-radius: 12px 12px 0 0; }
+  .page:last-of-type  { border-radius: 0 0 12px 12px; margin-bottom: 0; }
+
+  /* Top banner */
+  .page-header {
+    background: linear-gradient(135deg, #1A6B3C, #2d8f55);
+    margin: -52px -60px 36px;
+    padding: 28px 60px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .guide-title {
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 28px; color: #FAF6E9;
+  }
+  .guide-subtitle {
+    font-family: 'Fredoka One', cursive;
+    font-size: 14px; color: #D4AF37;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .header-badge {
+    background: #D4AF37;
+    color: #1A6B3C;
+    font-family: 'Fredoka One', cursive;
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+
+  /* Section headers */
+  .section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 18px;
+    color: white;
+    background: #1A6B3C;
+    padding: 8px 18px;
+    border-radius: 10px;
+    margin: 28px 0 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title:first-of-type { margin-top: 0; }
+
+  /* Timeline */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .tl-item {
+    display: flex; align-items: stretch; gap: 0;
+  }
+  .tl-time {
+    width: 80px; flex-shrink: 0;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 6px 0;
+  }
+  .tl-bubble {
+    width: 44px; height: 44px;
+    background: #D4AF37;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 12px; color: #1A6B3C;
+    text-align: center; line-height: 1.2;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .tl-line {
+    width: 2px; background: rgba(212,175,55,0.4);
+    flex: 1; margin: 2px 0;
+  }
+  .tl-content {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 4px 0 4px 12px;
+    border-left: 4px solid #D4AF37;
+  }
+  .tl-phase {
+    font-family: 'Fredoka One', cursive;
+    font-size: 15px; color: #1A6B3C;
+    margin-bottom: 4px;
+  }
+  .tl-desc { font-size: 14px; color: #444; line-height: 1.55; }
+  .tl-tip {
+    margin-top: 6px;
+    font-size: 12.5px; color: #888;
+    font-style: italic;
+  }
+
+  /* Answers grid */
+  .answers-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+  }
+  .answer-card {
+    background: white;
+    border-radius: 12px;
+    padding: 12px 8px;
+    text-align: center;
+    border: 2px solid;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .answer-em { font-size: 28px; display: block; margin-bottom: 4px; }
+  .answer-name { font-family: 'Fredoka One', cursive; font-size: 13px; margin-bottom: 4px; }
+  .answer-key {
+    background: #1A6B3C;
+    color: white;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 12px;
+    display: inline-block;
+  }
+
+  /* Vocab box */
+  .vocab-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .vocab-cat {
+    background: white;
+    border-radius: 12px;
+    padding: 12px 14px;
+    border-left: 4px solid #7FB069;
+  }
+  .vocab-cat-title { font-family:'Fredoka One',cursive; font-size:13px; color:#1A6B3C; margin-bottom:6px; }
+  .vocab-words { font-size:13px; color:#444; line-height:1.7; }
+
+  /* ADHD adaptations */
+  .adhd-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .adhd-card {
+    background: white;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .adhd-icon { font-size: 22px; flex-shrink: 0; }
+  .adhd-title { font-family:'Fredoka One',cursive; font-size:13px; color:#1A6B3C; margin-bottom:3px; }
+  .adhd-desc { font-size:12.5px; color:#555; line-height:1.5; }
+
+  /* Evaluation */
+  .eval-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .eval-table th {
+    background: #1A6B3C;
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 13px;
+    padding: 10px 14px;
+    text-align: left;
+    letter-spacing: 0.5px;
+  }
+  .eval-table td {
+    background: white;
+    padding: 9px 14px;
+    font-size: 13px; color: #333;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .eval-table tr:last-child td { border-bottom: none; }
+  .eval-table tr:nth-child(even) td { background: #f8fdf9; }
+  .tag {
+    display: inline-block;
+    background: #D4AF37; color: #1A6B3C;
+    border-radius: 6px; padding: 2px 8px;
+    font-family: 'Fredoka One', cursive; font-size: 11px;
+  }
+
+  /* Materials checklist */
+  .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .check-item {
+    display: flex; align-items: center; gap: 8px;
+    background: white; border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 13.5px; color: #333; font-weight: 600;
+  }
+  .check-box {
+    width: 20px; height: 20px;
+    border: 2.5px solid #1A6B3C;
+    border-radius: 5px; flex-shrink: 0;
+  }
+
+  /* Page 2 header */
+  .p2-header {
+    background: linear-gradient(135deg, #1A6B3C, #2d8f55);
+    margin: -52px -60px 36px;
+    padding: 20px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .p2-title { font-family:'Uncial Antiqua',cursive; font-size:22px; color:#FAF6E9; }
+  .p2-page { font-family:'Fredoka One',cursive; font-size:13px; color:#D4AF37; }
+
+  /* Notes lines */
+  .notes-area { display: flex; flex-direction: column; gap: 14px; }
+  .notes-line { border-bottom: 1.5px solid rgba(0,0,0,0.12); height: 28px; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; border-radius: 0; break-after: page; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <div class="guide-title">🍀 Teacher's Guide</div>
+      <div class="guide-subtitle">St. Patrick's Animal Hunt · A1 English · Year 3</div>
+    </div>
+    <div class="header-badge">Page 1 of 2</div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="section-title">⏱ Lesson Timeline (45–50 min)</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-time">
+        <div class="tl-bubble">0–5<br>min</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-phase">🌟 Warm-up — The Legend</div>
+        <div class="tl-desc">Show the poster. Read the legend aloud with expression. Ask: <em>"Do you know Saint Patrick?"</em> / <em>"What animals do you know in English?"</em> Introduce the 5 animals on the board with flashcards.</div>
+        <div class="tl-tip">💡 Tip: Act out St. Patrick expelling snakes — kids love it!</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">
+        <div class="tl-bubble">5–10<br>min</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-phase">👥 Set Up — Teams & Roles</div>
+        <div class="tl-desc">Form teams of 4–5. Hand out team boards. Assign roles (Reader, Writer, Scanner, Speaker, Decider). Let teams choose a team name. Place QR cards at 5 stations around the room.</div>
+        <div class="tl-tip">💡 Tip: Number desks/areas 1–5 with station colour dots so teams navigate easily.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">
+        <div class="tl-bubble">10–40<br>min</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-phase">🎮 Game — Animal Hunt (30 min)</div>
+        <div class="tl-desc">Teams move freely between stations in any order. Each team scans QR → reads riddle → submits answer → gets card. Circulate to monitor, encourage, and help stuck teams. Give +1 hint token if a team is stuck after 3 minutes.</div>
+        <div class="tl-tip">💡 Tip: Teams that finish early can help decode the legend or create their own riddle.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">
+        <div class="tl-bubble">40–45<br>min</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-phase">🏆 Closing — Celebration & Reflection</div>
+        <div class="tl-desc">Award medals and diplomas to all teams. Do a quick whole-class review: show each animal, ask "What is it?", review clue vocabulary. Thumbs up/down exit ticket: <em>"Did you enjoy it? Did you learn new words?"</em></div>
+        <div class="tl-tip">💡 Tip: Take photos of teams with their completed boards!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Answers -->
+  <div class="section-title">✅ Riddle Answers</div>
+  <div class="answers-grid">
+    <div class="answer-card" style="border-color:#1A6B3C">
+      <span class="answer-em">🐴</span>
+      <div class="answer-name" style="color:#1A6B3C">Station 1</div>
+      <div class="answer-key">horse</div>
+    </div>
+    <div class="answer-card" style="border-color:#E8833A">
+      <span class="answer-em">🐯</span>
+      <div class="answer-name" style="color:#E8833A">Station 2</div>
+      <div class="answer-key" style="background:#E8833A">tiger</div>
+    </div>
+    <div class="answer-card" style="border-color:#2A9D8F">
+      <span class="answer-em">🦜</span>
+      <div class="answer-name" style="color:#2A9D8F">Station 3</div>
+      <div class="answer-key" style="background:#2A9D8F">parrot</div>
+    </div>
+    <div class="answer-card" style="border-color:#7B5EA7">
+      <span class="answer-em">🐑</span>
+      <div class="answer-name" style="color:#7B5EA7">Station 4</div>
+      <div class="answer-key" style="background:#7B5EA7">sheep</div>
+    </div>
+    <div class="answer-card" style="border-color:#2176AE">
+      <span class="answer-em">🐟</span>
+      <div class="answer-name" style="color:#2176AE">Station 5</div>
+      <div class="answer-key" style="background:#2176AE">fish</div>
+    </div>
+  </div>
+
+  <!-- Vocabulary -->
+  <div class="section-title">📚 Pre-teach Vocabulary</div>
+  <div class="vocab-grid">
+    <div class="vocab-cat">
+      <div class="vocab-cat-title">🐾 Animals</div>
+      <div class="vocab-words">horse · tiger · parrot · sheep · fish · snake</div>
+    </div>
+    <div class="vocab-cat">
+      <div class="vocab-cat-title">🎨 Adjectives</div>
+      <div class="vocab-words">big · small · fast · fluffy · clever · strong · orange · white · blue · green</div>
+    </div>
+    <div class="vocab-cat">
+      <div class="vocab-cat-title">🌍 Habitats</div>
+      <div class="vocab-words">farm · jungle · tree · water · forest · river</div>
+    </div>
+    <div class="vocab-cat">
+      <div class="vocab-cat-title">🧩 Structures</div>
+      <div class="vocab-words">I am… · I have… · I can… · I live in… · I say… · What am I?</div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div class="section-title">📦 Materials Checklist</div>
+  <div class="checklist">
+    <div class="check-item"><div class="check-box"></div>Introductory Poster (A3, colour)</div>
+    <div class="check-item"><div class="check-box"></div>Team Boards × number of teams (A4, colour)</div>
+    <div class="check-item"><div class="check-box"></div>QR Station Cards × 5 (A5, colour, laminated)</div>
+    <div class="check-item"><div class="check-box"></div>Animal Cards × 5 sets (cardstock, cut)</div>
+    <div class="check-item"><div class="check-box"></div>Medals × 1 per student (colour, cut)</div>
+    <div class="check-item"><div class="check-box"></div>Diplomas × 1 per team (A4, colour)</div>
+    <div class="check-item"><div class="check-box"></div>Device with QR scanner (1 per team)</div>
+    <div class="check-item"><div class="check-box"></div>Glue sticks for pasting cards</div>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="p2-header">
+    <div class="p2-title">🍀 Teacher's Guide — Page 2</div>
+    <div class="p2-page">Adaptations & Evaluation</div>
+  </div>
+
+  <!-- ADHD -->
+  <div class="section-title">🧠 ADHD & SEN Adaptations</div>
+  <div class="adhd-grid">
+    <div class="adhd-card">
+      <div class="adhd-icon">✏️</div>
+      <div>
+        <div class="adhd-title">Short Instructions</div>
+        <div class="adhd-desc">Max 1 line per step. Use the role cards as visual anchors. Repeat instructions one-to-one if needed.</div>
+      </div>
+    </div>
+    <div class="adhd-card">
+      <div class="adhd-icon">🎨</div>
+      <div>
+        <div class="adhd-title">Colour Coding</div>
+        <div class="adhd-desc">Each station has a unique colour. Use matching dot stickers on desks so students navigate independently.</div>
+      </div>
+    </div>
+    <div class="adhd-card">
+      <div class="adhd-icon">⭐</div>
+      <div>
+        <div class="adhd-title">Visible Progress</div>
+        <div class="adhd-desc">The team board's 5-slot grid gives constant visual feedback. Celebrate each card collected immediately.</div>
+      </div>
+    </div>
+    <div class="adhd-card">
+      <div class="adhd-icon">🏃</div>
+      <div>
+        <div class="adhd-title">Movement Built In</div>
+        <div class="adhd-desc">Teams physically move between stations. This channels energy productively and resets attention.</div>
+      </div>
+    </div>
+    <div class="adhd-card">
+      <div class="adhd-icon">⏱️</div>
+      <div>
+        <div class="adhd-title">Time Awareness</div>
+        <div class="adhd-desc">Each riddle shows "~5 min". Use a visual timer on the board. Give 2-min warnings before moving stations.</div>
+      </div>
+    </div>
+    <div class="adhd-card">
+      <div class="adhd-icon">🔁</div>
+      <div>
+        <div class="adhd-title">Rotating Roles</div>
+        <div class="adhd-desc">Rotate roles at each station. Everyone has a defined job — reduces social anxiety and off-task behaviour.</div>
+      </div>
+    </div>
+    <div class="adhd-card">
+      <div class="adhd-icon">🎯</div>
+      <div>
+        <div class="adhd-title">Clear Goal Always Visible</div>
+        <div class="adhd-desc">"5 animals = Victory!" on every screen and card. Students always know what they are working towards.</div>
+      </div>
+    </div>
+    <div class="adhd-card">
+      <div class="adhd-icon">💡</div>
+      <div>
+        <div class="adhd-title">Scaffolded Hints</div>
+        <div class="adhd-desc">The riddle app gives an extra letter hint after 2 wrong attempts automatically — no teacher intervention needed.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Evaluation -->
+  <div class="section-title">📊 Competency Evaluation Criteria</div>
+  <table class="eval-table">
+    <thead>
+      <tr>
+        <th>Competency</th>
+        <th>Observable Indicator</th>
+        <th>Assessment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Listening</strong></td>
+        <td>Understands A1 riddle clues read aloud by teammate</td>
+        <td><span class="tag">Observation</span></td>
+      </tr>
+      <tr>
+        <td><strong>Reading</strong></td>
+        <td>Reads 3–4 simple sentences (I am / I have / I live)</td>
+        <td><span class="tag">Observation</span></td>
+      </tr>
+      <tr>
+        <td><strong>Writing</strong></td>
+        <td>Types the correct animal name in English</td>
+        <td><span class="tag">App log</span></td>
+      </tr>
+      <tr>
+        <td><strong>Speaking</strong></td>
+        <td>Uses target vocabulary during team discussion</td>
+        <td><span class="tag">Observation</span></td>
+      </tr>
+      <tr>
+        <td><strong>Vocabulary</strong></td>
+        <td>Recognises and produces 5 animal names + clue words</td>
+        <td><span class="tag">Exit ticket</span></td>
+      </tr>
+      <tr>
+        <td><strong>Teamwork</strong></td>
+        <td>Respects roles, collaborates, includes all members</td>
+        <td><span class="tag">Observation</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Bonus points -->
+  <div class="section-title">🌟 Bonus Points System</div>
+  <div class="vocab-grid">
+    <div class="vocab-cat" style="border-color:#D4AF37">
+      <div class="vocab-cat-title">🍀 Shamrock Stickers</div>
+      <div class="vocab-words">Give 1 sticker per animal card collected. Students paste them in their notebook. 5 stickers = full star in class register.</div>
+    </div>
+    <div class="vocab-cat" style="border-color:#D4AF37">
+      <div class="vocab-cat-title">⭐ +1 Grade Point</div>
+      <div class="vocab-words">Teams completing all 5 stations earn +1 bonus point on the unit grade. Partial completion = participation mark.</div>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div class="section-title">📝 Teacher Notes</div>
+  <div class="notes-area">
+    <div class="notes-line"></div>
+    <div class="notes-line"></div>
+    <div class="notes-line"></div>
+    <div class="notes-line"></div>
+    <div class="notes-line"></div>
+    <div class="notes-line"></div>
+  </div>
+</div>
+
+</body>
+</html>

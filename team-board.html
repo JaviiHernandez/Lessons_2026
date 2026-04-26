@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>St. Patrick's Animal Hunt — Team Board</title>
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Fredoka+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: #2d2d2d;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 32px;
+    font-family: 'Fredoka', sans-serif;
+  }
+  .board {
+    width: 794px; height: 1123px;
+    background: #FAF6E9;
+    position: relative; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  /* Ireland landscape bg */
+  .sky { position: absolute; top:0; left:0; right:0; height:380px; background: linear-gradient(180deg,#c8e6f5 0%,#e8f4fd 100%); }
+  .hill1 { position: absolute; bottom:0; left:-60px; right:-60px; height:700px; background: #7FB069; border-radius: 60% 60% 0 0 / 40% 40% 0 0; }
+  .hill2 { position: absolute; bottom:0; left:0; right:0; height:560px; background: #5a9a50; border-radius: 55% 55% 0 0 / 35% 35% 0 0; }
+  .hill3 { position: absolute; bottom:0; left:0; right:0; height:440px; background: #3d7a40; border-radius: 50% 50% 0 0 / 30% 30% 0 0; }
+  .cliff { position: absolute; bottom: 320px; left:0; width:130px; height:280px; background:#4a6741; border-radius: 0 30px 10px 0; }
+  .cliff2 { position: absolute; bottom: 300px; right:0; width:100px; height:220px; background:#4a6741; border-radius: 30px 0 0 10px; }
+  /* Clouds */
+  .cloud { position: absolute; background: white; border-radius: 50px; opacity: 0.85; }
+  /* Gold border */
+  .border-frame { position: absolute; inset:14px; border:4px solid #D4AF37; border-radius:18px; z-index:30; pointer-events:none; }
+  .border-frame::before { content:''; position:absolute; inset:5px; border:1.5px solid rgba(212,175,55,0.35); border-radius:13px; }
+
+  /* Content */
+  .content { position: absolute; inset:0; z-index:20; display:flex; flex-direction:column; align-items:center; padding: 30px 40px 24px; }
+
+  .title-wrap { text-align:center; margin-bottom:10px; }
+  .title-team { font-family:'Uncial Antiqua',cursive; font-size:13px; color:#1A6B3C; letter-spacing:3px; text-transform:uppercase; }
+  .team-name-box {
+    display: inline-block;
+    background: white;
+    border: 3px solid #D4AF37;
+    border-radius: 14px;
+    padding: 8px 40px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 28px;
+    color: #1A6B3C;
+    min-width: 280px;
+    text-align: center;
+    margin: 4px 0 8px;
+  }
+  .board-title { font-family:'Uncial Antiqua',cursive; font-size:30px; color:#FAF6E9; text-shadow:0 2px 8px rgba(0,0,0,0.4); }
+
+  /* Progress bar */
+  .progress-section { width: 100%; margin-bottom: 14px; }
+  .prog-label { font-family:'Fredoka One',cursive; font-size:15px; color:#D4AF37; text-align:center; margin-bottom:6px; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
+  .prog-track {
+    background: rgba(255,255,255,0.25);
+    border-radius: 20px;
+    height: 28px;
+    border: 2px solid #D4AF37;
+    overflow: hidden;
+    display: flex;
+    gap: 0;
+  }
+  .prog-seg {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    border-right: 2px solid rgba(212,175,55,0.4);
+    color: rgba(255,255,255,0.6);
+    font-family: 'Fredoka One', cursive;
+    font-size: 14px;
+    transition: background 0.3s;
+  }
+  .prog-seg:last-child { border-right: none; }
+  .prog-seg.done { background: #D4AF37; color: white; }
+
+  /* 5 animal slots */
+  .slots-section { display: flex; gap: 14px; margin-bottom: 14px; }
+  .slot {
+    width: 126px;
+    background: rgba(255,255,255,0.18);
+    border: 3px dashed rgba(255,255,255,0.5);
+    border-radius: 20px;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 14px 8px 10px;
+    position: relative;
+    backdrop-filter: blur(2px);
+  }
+  .slot-num {
+    width: 26px; height: 26px;
+    background: #D4AF37;
+    color: white;
+    border-radius: 50%;
+    font-family: 'Fredoka One', cursive;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .slot-circle {
+    width: 72px; height: 72px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+  }
+  .slot-name { font-family:'Fredoka One',cursive; font-size:12px; color:white; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
+  .slot-color { width: 14px; height: 14px; border-radius: 50%; margin: 4px auto 0; }
+
+  /* Station color dots */
+  .slot:nth-child(1) .slot-color { background: #1A6B3C; }
+  .slot:nth-child(2) .slot-color { background: #E8833A; }
+  .slot:nth-child(3) .slot-color { background: #2A9D8F; }
+  .slot:nth-child(4) .slot-color { background: #7B5EA7; }
+  .slot:nth-child(5) .slot-color { background: #2176AE; }
+
+  /* Role cards */
+  .roles-title { font-family:'Fredoka One',cursive; font-size:15px; color:#D4AF37; text-align:center; margin-bottom:8px; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
+  .roles-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; width:100%; margin-bottom:12px; }
+  .role-card {
+    background: rgba(255,255,255,0.88);
+    border-radius: 12px;
+    padding: 8px 4px;
+    text-align: center;
+    border: 2px solid rgba(212,175,55,0.6);
+  }
+  .role-icon { font-size:20px; display:block; margin-bottom:4px; }
+  .role-name { font-family:'Fredoka One',cursive; font-size:11px; color:#1A6B3C; }
+  .role-who {
+    font-size: 10px; color: #666; margin-top: 4px;
+    border-top: 1px solid #eee; padding-top: 3px;
+    min-height: 14px;
+    font-style: italic;
+  }
+
+  /* Rules reminder */
+  .rules-box {
+    background: rgba(255,255,255,0.82);
+    border: 2.5px solid #D4AF37;
+    border-radius: 14px;
+    padding: 12px 20px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .rule { font-size:13px; color:#1A6B3C; font-weight:600; display:flex; align-items:center; gap:6px; }
+
+  /* Bottom bar */
+  .bottom-bar {
+    position: absolute; bottom: 28px; left: 0; right: 0;
+    display: flex; justify-content: center; z-index:21;
+  }
+  .victory-tag {
+    background: #D4AF37;
+    color: #1A6B3C;
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 16px;
+    padding: 8px 28px;
+    border-radius: 30px;
+    border: 2px solid #b8952e;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  }
+
+  @media print { body{background:white;padding:0;} .board{box-shadow:none;} }
+</style>
+</head>
+<body>
+<div class="board">
+  <!-- Landscape -->
+  <div class="sky"></div>
+  <!-- Clouds -->
+  <div class="cloud" style="top:40px;left:80px;width:120px;height:40px;"></div>
+  <div class="cloud" style="top:50px;left:160px;width:80px;height:30px;"></div>
+  <div class="cloud" style="top:35px;right:100px;width:140px;height:44px;"></div>
+  <div class="cloud" style="top:48px;right:200px;width:90px;height:32px;"></div>
+  <div class="hill1"></div>
+  <div class="hill2"></div>
+  <div class="hill3"></div>
+  <div class="cliff"></div>
+  <div class="cliff2"></div>
+  <div class="border-frame"></div>
+
+  <div class="content">
+    <!-- Header -->
+    <div class="title-wrap">
+      <div class="title-team">🍀 Team Name</div>
+      <div class="team-name-box">_____________________</div>
+      <div class="board-title">Animal Hunt — Team Board</div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-section">
+      <div class="prog-label">⭐ Progress: Animals collected ⭐</div>
+      <div class="prog-track">
+        <div class="prog-seg">1</div>
+        <div class="prog-seg">2</div>
+        <div class="prog-seg">3</div>
+        <div class="prog-seg">4</div>
+        <div class="prog-seg">5 🏆</div>
+      </div>
+    </div>
+
+    <!-- Animal slots -->
+    <div class="slots-section">
+      <div class="slot">
+        <div class="slot-num">1</div>
+        <div class="slot-circle">🐴</div>
+        <div class="slot-name">Horse</div>
+        <div class="slot-color"></div>
+      </div>
+      <div class="slot">
+        <div class="slot-num">2</div>
+        <div class="slot-circle">🐯</div>
+        <div class="slot-name">Tiger</div>
+        <div class="slot-color"></div>
+      </div>
+      <div class="slot">
+        <div class="slot-num">3</div>
+        <div class="slot-circle">🦜</div>
+        <div class="slot-name">Parrot</div>
+        <div class="slot-color"></div>
+      </div>
+      <div class="slot">
+        <div class="slot-num">4</div>
+        <div class="slot-circle">🐑</div>
+        <div class="slot-name">Sheep</div>
+        <div class="slot-color"></div>
+      </div>
+      <div class="slot">
+        <div class="slot-num">5</div>
+        <div class="slot-circle">🐟</div>
+        <div class="slot-name">Fish</div>
+        <div class="slot-color"></div>
+      </div>
+    </div>
+
+    <!-- Team roles -->
+    <div class="roles-title">👥 Team Roles — Who does what?</div>
+    <div class="roles-grid">
+      <div class="role-card">
+        <span class="role-icon">📖</span>
+        <div class="role-name">Reader</div>
+        <div class="role-who">reads the clues</div>
+      </div>
+      <div class="role-card">
+        <span class="role-icon">✏️</span>
+        <div class="role-name">Writer</div>
+        <div class="role-who">types the answer</div>
+      </div>
+      <div class="role-card">
+        <span class="role-icon">📱</span>
+        <div class="role-name">Scanner</div>
+        <div class="role-who">scans the QR</div>
+      </div>
+      <div class="role-card">
+        <span class="role-icon">🗣️</span>
+        <div class="role-name">Speaker</div>
+        <div class="role-who">talks to teacher</div>
+      </div>
+      <div class="role-card">
+        <span class="role-icon">🎯</span>
+        <div class="role-name">Decider</div>
+        <div class="role-who">chooses answer</div>
+      </div>
+    </div>
+
+    <!-- Rules reminder -->
+    <div class="rules-box">
+      <div class="rule">📱 Scan the QR code</div>
+      <div class="rule">🧠 Solve the riddle together</div>
+      <div class="rule">✅ Check your answer</div>
+      <div class="rule">🃏 Collect the animal card</div>
+      <div class="rule">🤫 Work quietly as a team</div>
+      <div class="rule">🙋 Ask for help if needed</div>
+    </div>
+  </div>
+
+  <!-- Victory bottom -->
+  <div class="bottom-bar">
+    <div class="victory-tag">🏆 5 Animals Collected = Victory! 🍀</div>
+  </div>
+</div>
+</body>
+</html>

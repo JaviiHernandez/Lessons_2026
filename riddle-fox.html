@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animal Hunt — Station 1: Red Fox</title>
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Fredoka+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --station-color: #E8833A;
+    --station-dark: #c4692a;
+    --station-light: #fde8d3;
+    --green: #1A6B3C;
+    --gold: #D4AF37;
+    --cream: #FAF6E9;
+  }
+
+  body {
+    min-height: 100vh;
+    background: var(--cream);
+    font-family: 'Fredoka', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Animated background blobs */
+  .bg-blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+    animation: blobFloat 8s ease-in-out infinite;
+  }
+  .blob1 { width: 500px; height: 500px; background: var(--station-color); top: -100px; left: -150px; animation-delay: 0s; }
+  .blob2 { width: 400px; height: 400px; background: #1A6B3C; bottom: -100px; right: -100px; animation-delay: 3s; }
+  .blob3 { width: 300px; height: 300px; background: var(--gold); top: 40%; left: 60%; animation-delay: 1.5s; }
+
+  @keyframes blobFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -20px) scale(1.05); }
+  }
+
+  /* Station badge top */
+  .station-badge {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--station-color);
+    color: white;
+    padding: 8px 24px;
+    border-radius: 40px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 20px;
+    box-shadow: 0 4px 16px rgba(232, 131, 58, 0.4);
+    letter-spacing: 0.5px;
+  }
+
+  .station-badge .num {
+    width: 34px; height: 34px;
+    background: white;
+    color: var(--station-color);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+  }
+
+  /* Progress stars */
+  .progress-bar {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    z-index: 20;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    background: white;
+    padding: 8px 14px;
+    border-radius: 30px;
+    border: 2px solid var(--gold);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+  .star { font-size: 22px; filter: grayscale(1) opacity(0.4); transition: all 0.4s; }
+  .star.active { filter: none; animation: starPop 0.4s ease; }
+  @keyframes starPop { 0%{transform:scale(0.5)} 60%{transform:scale(1.3)} 100%{transform:scale(1)} }
+
+  /* Timer badge */
+  .timer-badge {
+    position: fixed;
+    top: 20px;
+    left: 24px;
+    z-index: 20;
+    background: white;
+    border: 2px solid var(--station-color);
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 17px;
+    color: var(--station-color);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+
+  /* Main card */
+  .card {
+    width: min(580px, 94vw);
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* Animal silhouette */
+  .silhouette-wrap {
+    width: 200px;
+    height: 180px;
+    position: relative;
+    margin-bottom: -20px;
+    z-index: 2;
+    filter: drop-shadow(0 8px 20px rgba(232,131,58,0.25));
+    transition: filter 0.5s;
+  }
+
+  .silhouette-wrap.revealed svg .animal-body {
+    fill: #E8833A !important;
+  }
+
+  .silhouette-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Riddle card */
+  .riddle-card {
+    background: white;
+    border-radius: 28px;
+    border: 3px solid var(--station-color);
+    padding: 32px 32px 28px;
+    box-shadow: 0 8px 32px rgba(232, 131, 58, 0.15), 0 2px 8px rgba(0,0,0,0.06);
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .riddle-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--station-color), var(--gold), var(--station-color));
+  }
+
+  .riddle-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .riddle-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--station-color);
+    letter-spacing: 0.5px;
+  }
+
+  .riddle-icon {
+    font-size: 30px;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  /* Riddle lines */
+  .riddle-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .riddle-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--station-light);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 21px;
+    font-weight: 600;
+    color: #2a2a2a;
+    opacity: 0;
+    transform: translateX(-16px);
+    animation: lineIn 0.4s ease forwards;
+    line-height: 1.3;
+  }
+
+  .riddle-line:nth-child(1) { animation-delay: 0.1s; }
+  .riddle-line:nth-child(2) { animation-delay: 0.25s; }
+  .riddle-line:nth-child(3) { animation-delay: 0.4s; }
+  .riddle-line:nth-child(4) { animation-delay: 0.55s; }
+
+  @keyframes lineIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .riddle-line .line-icon { font-size: 22px; flex-shrink: 0; }
+
+  /* Question */
+  .riddle-question {
+    text-align: center;
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 24px;
+    color: var(--green);
+    margin-bottom: 20px;
+    animation: lineIn 0.4s 0.7s ease forwards;
+    opacity: 0;
+  }
+
+  /* Extra hint (shown after 2 fails) */
+  .extra-hint {
+    display: none;
+    background: #fff8e0;
+    border: 2px dashed var(--gold);
+    border-radius: 12px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    color: #7a6000;
+    text-align: center;
+    font-weight: 600;
+    animation: fadeIn 0.4s ease;
+  }
+  .extra-hint.visible { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Input row */
+  .input-row {
+    display: flex;
+    gap: 10px;
+    animation: lineIn 0.4s 0.85s ease forwards;
+    opacity: 0;
+  }
+
+  .answer-input {
+    flex: 1;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    border: 3px solid #ddd;
+    border-radius: 14px;
+    padding: 12px 18px;
+    outline: none;
+    color: #222;
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-transform: lowercase;
+  }
+  .answer-input::placeholder { color: #bbb; font-weight: 400; }
+  .answer-input:focus { border-color: var(--station-color); box-shadow: 0 0 0 4px rgba(232,131,58,0.15); }
+  .answer-input.correct { border-color: #1A6B3C; background: #f0fff4; }
+  .answer-input.wrong { border-color: #e55; animation: shake 0.4s ease; }
+
+  @keyframes shake {
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-8px)}
+    40%{transform:translateX(8px)}
+    60%{transform:translateX(-5px)}
+    80%{transform:translateX(5px)}
+  }
+
+  .check-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    background: var(--station-color);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 28px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+    box-shadow: 0 4px 14px rgba(232,131,58,0.35);
+    letter-spacing: 0.5px;
+  }
+  .check-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(232,131,58,0.45); }
+  .check-btn:active { transform: translateY(1px); }
+  .check-btn:disabled { background: #ccc; box-shadow: none; cursor: default; }
+
+  /* Feedback overlay */
+  .feedback {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .feedback.show { opacity: 1; pointer-events: all; }
+
+  .feedback-box {
+    background: white;
+    border-radius: 28px;
+    padding: 40px 48px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    max-width: 420px;
+    width: 90%;
+    position: relative;
+    transform: scale(0.7);
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .feedback.show .feedback-box { transform: scale(1); }
+
+  .feedback-emoji { font-size: 72px; display: block; margin-bottom: 12px; }
+  .feedback-title {
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 30px;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+  .feedback-sub {
+    font-size: 20px;
+    color: #555;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+  .feedback-close {
+    font-family: 'Fredoka One', cursive;
+    font-size: 20px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .feedback-close:hover { transform: scale(1.04); }
+
+  /* Confetti canvas */
+  #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 99; }
+
+  /* Fail feedback banner */
+  .fail-banner {
+    display: none;
+    background: #fff0f0;
+    border: 2.5px solid #e55;
+    border-radius: 14px;
+    padding: 12px 18px;
+    margin-top: 14px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #c00;
+    animation: fadeIn 0.3s ease;
+  }
+  .fail-banner.visible { display: block; }
+
+  /* Objective tag */
+  .objective-tag {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--green);
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 17px;
+    padding: 8px 24px;
+    border-radius: 30px;
+    z-index: 20;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(26,107,60,0.3);
+  }
+
+  /* Role chips */
+  .roles-strip {
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 20;
+    flex-wrap: nowrap;
+  }
+
+  .role-chip {
+    background: white;
+    border: 2px solid var(--station-color);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--station-color);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<!-- Background -->
+<div class="bg-blob blob1"></div>
+<div class="bg-blob blob2"></div>
+<div class="bg-blob blob3"></div>
+
+<!-- Timer -->
+<div class="timer-badge">⏱ ~5 min</div>
+
+<!-- Station badge -->
+<div class="station-badge">
+  <div class="num">1</div>
+  Station 1 of 5
+</div>
+
+<!-- Progress -->
+<div class="progress-bar">
+  <span class="star active" title="Station 1">⭐</span>
+  <span class="star" title="Station 2">⭐</span>
+  <span class="star" title="Station 3">⭐</span>
+  <span class="star" title="Station 4">⭐</span>
+  <span class="star" title="Station 5">⭐</span>
+</div>
+
+<!-- Main card -->
+<div class="card">
+
+  <!-- Fox silhouette -->
+  <div class="silhouette-wrap" id="silhouette">
+    <svg class="silhouette-svg" viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Fox silhouette shape - filled black to look like a mystery shape -->
+      <!-- Body -->
+      <ellipse cx="100" cy="120" rx="50" ry="35" class="animal-body" fill="#2a2a2a"/>
+      <!-- Head -->
+      <circle cx="148" cy="90" r="28" class="animal-body" fill="#2a2a2a"/>
+      <!-- Snout -->
+      <ellipse cx="168" cy="98" rx="15" ry="11" class="animal-body" fill="#2a2a2a"/>
+      <!-- Left ear -->
+      <path d="M128 72 L118 44 L142 62 Z" class="animal-body" fill="#2a2a2a"/>
+      <!-- Right ear -->
+      <path d="M152 70 L158 42 L170 66 Z" class="animal-body" fill="#2a2a2a"/>
+      <!-- Fluffy tail -->
+      <path d="M52 120 Q20 100 16 130 Q12 158 48 152 Q70 148 70 130 Z" class="animal-body" fill="#2a2a2a"/>
+      <!-- Legs -->
+      <rect x="78" y="148" width="14" height="24" rx="6" class="animal-body" fill="#2a2a2a"/>
+      <rect x="100" y="148" width="14" height="24" rx="6" class="animal-body" fill="#2a2a2a"/>
+      <rect x="122" y="148" width="14" height="22" rx="6" class="animal-body" fill="#2a2a2a"/>
+      <!-- Question mark overlay -->
+      <text x="100" y="130" text-anchor="middle" font-family="Fredoka One, sans-serif" font-size="48" fill="white" opacity="0.5">?</text>
+    </svg>
+  </div>
+
+  <!-- Riddle card -->
+  <div class="riddle-card">
+    <div class="riddle-header">
+      <span class="riddle-icon">🤔</span>
+      <div class="riddle-title">Read the clues. What animal am I?</div>
+    </div>
+
+    <div class="riddle-lines">
+      <div class="riddle-line">
+        <span class="line-icon">🎨</span>
+        I am orange and red.
+      </div>
+      <div class="riddle-line">
+        <span class="line-icon">🌲</span>
+        I live in the forest.
+      </div>
+      <div class="riddle-line">
+        <span class="line-icon">🦷</span>
+        I have a big, fluffy tail.
+      </div>
+      <div class="riddle-line">
+        <span class="line-icon">🧠</span>
+        I am very clever.
+      </div>
+    </div>
+
+    <div class="riddle-question">What am I? 🍀</div>
+
+    <div class="extra-hint" id="extraHint">
+      💡 Extra clue: My name starts with the letter <strong>F</strong>!
+    </div>
+
+    <div class="input-row">
+      <input
+        type="text"
+        class="answer-input"
+        id="answerInput"
+        placeholder="Type your answer..."
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
+      <button class="check-btn" id="checkBtn" onclick="checkAnswer()">Check! ✅</button>
+    </div>
+
+    <div class="fail-banner" id="failBanner">
+      ❌ Try again! Read the clues carefully. 🍀
+    </div>
+  </div>
+</div>
+
+<!-- Feedback overlay — success -->
+<div class="feedback" id="successFeedback">
+  <div class="feedback-box" style="border: 4px solid #1A6B3C;">
+    <span class="feedback-emoji">🦊</span>
+    <div class="feedback-title" style="color: #1A6B3C;">Well done, Animal Helper!</div>
+    <div class="feedback-sub">You found the <strong>Red Fox</strong>! 🎉<br>Collect your animal card!</div>
+    <button class="feedback-close" onclick="closeFeedback()">🃏 Get my card!</button>
+  </div>
+</div>
+
+<div class="objective-tag">🎯 5 animals = Victory!</div>
+
+<div class="roles-strip">
+  <div class="role-chip">📖 Reader</div>
+  <div class="role-chip">✏️ Writer</div>
+  <div class="role-chip">📱 Scanner</div>
+  <div class="role-chip">🗣 Speaker</div>
+  <div class="role-chip">🎯 Decider</div>
+</div>
+
+<script>
+  let failCount = 0;
+  const ANSWER = 'fox';
+  const ACCEPTED = ['fox', 'red fox', 'a fox', 'a red fox'];
+
+  const input = document.getElementById('answerInput');
+  const failBanner = document.getElementById('failBanner');
+  const extraHint = document.getElementById('extraHint');
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') checkAnswer();
+    // clear fail state on type
+    input.classList.remove('wrong');
+    failBanner.classList.remove('visible');
+  });
+
+  function checkAnswer() {
+    const val = input.value.trim().toLowerCase();
+    if (!val) return;
+
+    if (ACCEPTED.includes(val)) {
+      // ✅ Correct!
+      input.classList.add('correct');
+      input.classList.remove('wrong');
+      document.getElementById('checkBtn').disabled = true;
+      revealAnimal();
+      setTimeout(() => {
+        launchConfetti();
+        document.getElementById('successFeedback').classList.add('show');
+      }, 600);
+    } else {
+      // ❌ Wrong
+      failCount++;
+      input.classList.add('wrong');
+      failBanner.classList.add('visible');
+      if (failCount >= 2) {
+        extraHint.classList.add('visible');
+      }
+      setTimeout(() => {
+        input.classList.remove('wrong');
+        input.value = '';
+        input.focus();
+      }, 600);
+    }
+  }
+
+  function closeFeedback() {
+    document.getElementById('successFeedback').classList.remove('show');
+  }
+
+  function revealAnimal() {
+    // Change silhouette color to fox orange
+    const bodies = document.querySelectorAll('.animal-body');
+    bodies.forEach((el, i) => {
+      setTimeout(() => {
+        el.style.transition = 'fill 0.5s ease';
+        el.style.fill = '#E8833A';
+      }, i * 40);
+    });
+    // Hide question mark
+    const qmark = document.querySelector('#silhouette text');
+    if (qmark) qmark.style.opacity = '0';
+  }
+
+  // ——— Confetti (shamrocks + stars) ———
+  function launchConfetti() {
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = Array.from({length: 80}, () => ({
+      x: Math.random() * canvas.width,
+      y: -20,
+      vy: 2 + Math.random() * 4,
+      vx: (Math.random() - 0.5) * 3,
+      rot: Math.random() * Math.PI * 2,
+      rotV: (Math.random() - 0.5) * 0.15,
+      size: 14 + Math.random() * 16,
+      color: ['#1A6B3C','#7FB069','#D4AF37','#E8833A','#fff'][Math.floor(Math.random()*5)],
+      type: Math.random() > 0.5 ? 'shamrock' : 'star',
+      alpha: 1
+    }));
+
+    let frame = 0;
+    function tick() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.y += p.vy;
+        p.x += p.vx;
+        p.rot += p.rotV;
+        if (frame > 80) p.alpha -= 0.012;
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        if (p.type === 'star') {
+          drawStar(ctx, 0, 0, 5, p.size/2, p.size/4);
+        } else {
+          drawShamrock(ctx, 0, 0, p.size/2);
+        }
+        ctx.restore();
+      });
+      ctx.globalAlpha = 1;
+      frame++;
+      if (frame < 160) requestAnimationFrame(tick);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    tick();
+  }
+
+  function drawStar(ctx, cx, cy, spikes, outerR, innerR) {
+    ctx.beginPath();
+    for (let i = 0; i < spikes * 2; i++) {
+      const r = i % 2 === 0 ? outerR : innerR;
+      const a = (i * Math.PI) / spikes - Math.PI / 2;
+      i === 0 ? ctx.moveTo(cx + r * Math.cos(a), cy + r * Math.sin(a))
+               : ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a));
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawShamrock(ctx, cx, cy, r) {
+    const leafR = r * 0.55;
+    ctx.beginPath();
+    ctx.arc(cx, cy - leafR * 0.6, leafR, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath();
+    ctx.arc(cx - leafR * 0.8, cy + leafR * 0.4, leafR, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath();
+    ctx.arc(cx + leafR * 0.8, cy + leafR * 0.4, leafR, 0, Math.PI * 2); ctx.fill();
+    ctx.fillRect(cx - 2, cy, 4, r);
+  }
+</script>
+
+</body>
+</html>
