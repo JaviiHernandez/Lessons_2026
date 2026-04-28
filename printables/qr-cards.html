@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>St. Patrick's Animal Hunt — QR Station Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Fredoka+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: #2d2d2d;
+    font-family: 'Fredoka', sans-serif;
+    padding: 40px;
+    display: flex; flex-direction: column; align-items: center; gap: 32px;
+  }
+  h1 { color: rgba(255,255,255,0.45); font-family:'Fredoka One',cursive; font-size:18px; }
+
+  /* A5 landscape */
+  .card {
+    width: 559px; height: 397px;
+    border-radius: 24px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+    display: flex; align-items: stretch;
+  }
+
+  /* LEFT: station info */
+  .left-panel {
+    width: 210px; flex-shrink: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 24px 18px;
+    position: relative; z-index: 2;
+  }
+
+  .st-label {
+    font-family:'Fredoka One',cursive;
+    font-size: 13px; color:rgba(255,255,255,0.75);
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .st-number {
+    font-family:'Uncial Antiqua',cursive;
+    font-size: 92px; color:white; line-height:1;
+    text-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  }
+
+  /* Mystery question mark — no animal shown */
+  .mystery-box {
+    width: 88px; height: 88px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 3px solid rgba(255,255,255,0.35);
+    display: flex; align-items: center; justify-content: center;
+    margin: 10px 0 8px;
+  }
+  .mystery-q {
+    font-family:'Fredoka One',cursive;
+    font-size: 52px; color:rgba(255,255,255,0.7);
+    line-height:1;
+  }
+
+  .time-chip {
+    background: rgba(255,255,255,0.2);
+    border: 1.5px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 13px; color:rgba(255,255,255,0.9); font-weight:600;
+  }
+
+  /* Decorative shamrocks */
+  .sham { position:absolute; opacity:0.18; font-size:28px; }
+  .sham-tl { top:12px; left:10px; }
+  .sham-br { bottom:12px; right:10px; }
+
+  /* Divider */
+  .divider {
+    width: 3px;
+    background: rgba(255,255,255,0.2);
+    margin: 24px 0; border-radius: 2px; flex-shrink:0;
+  }
+
+  /* RIGHT: QR area */
+  .right-panel {
+    flex:1; background:white;
+    display: flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding: 20px; gap: 10px;
+  }
+
+  .scan-label {
+    font-family:'Fredoka One',cursive;
+    font-size: 19px; color:#333;
+  }
+
+  /* QR placeholder box */
+  .qr-box {
+    width: 168px; height: 168px;
+    border: 3px dashed #ccc;
+    border-radius: 14px;
+    background: #f8f8f8;
+    display: flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap: 8px; position:relative;
+  }
+  /* Decorative corner markers like real QR */
+  .qr-corner {
+    position:absolute; width:28px; height:28px;
+    border: 5px solid #bbb; border-radius:4px;
+  }
+  .qr-corner.tl { top:8px; left:8px; border-right:none; border-bottom:none; }
+  .qr-corner.tr { top:8px; right:8px; border-left:none; border-bottom:none; }
+  .qr-corner.bl { bottom:8px; left:8px; border-right:none; border-top:none; }
+
+  .qr-icon { font-size: 38px; opacity:0.35; }
+  .qr-label { font-size:11px; color:#bbb; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; }
+
+  .url-hint {
+    font-size:11px; color:#aaa; text-align:center;
+    font-weight:600; font-style:italic; line-height:1.5;
+    max-width:160px;
+  }
+
+  /* Inner border */
+  .inner-border {
+    position:absolute; inset:10px;
+    border:2px solid rgba(255,255,255,0.22);
+    border-radius:15px; pointer-events:none; z-index:3;
+  }
+
+  /* St Patrick Hunt branding bottom */
+  .brand-strip {
+    position:absolute; bottom:0; left:0; right:0;
+    padding: 6px; text-align:center;
+    background: rgba(0,0,0,0.15);
+    font-family:'Fredoka One',cursive;
+    font-size:11px; color:rgba(255,255,255,0.6);
+    letter-spacing:1px;
+    z-index:4;
+  }
+
+  @media print {
+    body{background:white;padding:0;}
+    .card{box-shadow:none;margin:16px auto;break-after:page;}
+    h1{display:none;}
+  }
+</style>
+</head>
+<body>
+<h1>🃏 QR Station Cards — Print, laminate, place at each station</h1>
+<script>
+const stations = [
+  { n:1, color:'#1A6B3C', dark:'#0e4526' },
+  { n:2, color:'#E8833A', dark:'#9e4a15' },
+  { n:3, color:'#2A9D8F', dark:'#15584f' },
+  { n:4, color:'#7B5EA7', dark:'#4a3468' },
+  { n:5, color:'#2176AE', dark:'#0e3f6e' },
+];
+
+document.write(stations.map(s=>`
+<div class="card" style="background:linear-gradient(135deg,${s.color} 0%,${s.dark} 100%);">
+  <div class="inner-border"></div>
+
+  <div class="left-panel">
+    <div class="sham sham-tl">🍀</div>
+    <div class="st-label">Station</div>
+    <div class="st-number">${s.n}</div>
+    <div class="mystery-box">
+      <div class="mystery-q">?</div>
+    </div>
+    <div class="time-chip">⏱ ~5 min</div>
+    <div class="sham sham-br">🍀</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="right-panel">
+    <div class="scan-label">📱 Scan to play!</div>
+    <div class="qr-box">
+      <div class="qr-corner tl"></div>
+      <div class="qr-corner tr"></div>
+      <div class="qr-corner bl"></div>
+      <div class="qr-icon">▦</div>
+      <div class="qr-label">QR Code here</div>
+    </div>
+    <div class="url-hint">riddle.html?s=${s.n}<br>(replace with your URL)</div>
+  </div>
+
+  <div class="brand-strip">🍀 St. Patrick's Animal Hunt 🍀</div>
+</div>
+`).join(''));
+</script>
+</body>
+</html>

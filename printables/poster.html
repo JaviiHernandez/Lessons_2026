@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>St. Patrick's Animal Hunt — Poster</title>
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Fredoka+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #2d2d2d;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+    font-family: 'Fredoka', sans-serif;
+    padding: 32px;
+  }
+  .poster {
+    width: 794px;
+    min-height: 1123px;
+    background: #FAF6E9;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  /* Background top arc */
+  .bg-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 380px;
+    background: linear-gradient(160deg, #1A6B3C 0%, #2d8f55 100%);
+    clip-path: ellipse(110% 78% at 50% 0%);
+    z-index: 0;
+  }
+  .bg-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(0deg, #1A6B3C 0%, transparent 100%);
+    opacity: 0.12;
+    z-index: 0;
+  }
+  /* Gold border */
+  .border-frame {
+    position: absolute;
+    inset: 14px;
+    border: 4px solid #D4AF37;
+    border-radius: 18px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .border-frame::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1.5px solid rgba(212,175,55,0.35);
+    border-radius: 13px;
+  }
+  /* Content wrapper */
+  .content {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 52px 28px;
+    gap: 0;
+  }
+  /* Ribbon */
+  .ribbon {
+    display: inline-block;
+    background: #D4AF37;
+    color: #1A6B3C;
+    font-family: 'Fredoka One', cursive;
+    font-size: 14px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 5px 22px;
+    border-radius: 20px;
+    border: 2px solid #b8952e;
+    margin-bottom: 10px;
+  }
+  /* Title */
+  .title-main {
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 56px;
+    color: #FAF6E9;
+    line-height: 1.05;
+    text-align: center;
+    text-shadow: 0 3px 0 rgba(0,0,0,0.22);
+  }
+  .title-sub {
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 34px;
+    color: #D4AF37;
+    text-align: center;
+    text-shadow: 0 2px 0 rgba(0,0,0,0.18);
+    margin-bottom: 10px;
+  }
+  /* Illustration */
+  .illustration {
+    width: 320px;
+    height: 200px;
+    flex-shrink: 0;
+    margin-bottom: 8px;
+  }
+  /* Story scroll */
+  .scroll-bg {
+    background: rgba(255,255,255,0.82);
+    border: 2.5px solid #D4AF37;
+    border-radius: 16px;
+    padding: 18px 26px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 14px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.07), inset 0 0 0 6px rgba(212,175,55,0.07);
+  }
+  .scroll-title {
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 18px;
+    color: #1A6B3C;
+    margin-bottom: 8px;
+  }
+  .scroll-text {
+    font-size: 16px;
+    color: #2a3d2f;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  .scroll-text em { color: #1A6B3C; font-style: normal; font-weight: 600; }
+
+  /* Mission */
+  .mission-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 20px;
+    color: #1A6B3C;
+    text-align: center;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .mission-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 14px;
+  }
+  .step-card {
+    background: white;
+    border-radius: 12px;
+    padding: 10px 6px;
+    text-align: center;
+    border: 2px solid #7FB069;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .step-num {
+    width: 24px; height: 24px;
+    background: #1A6B3C;
+    color: white;
+    border-radius: 50%;
+    font-family: 'Fredoka One', cursive;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 5px;
+  }
+  .step-icon { font-size: 22px; display: block; margin-bottom: 4px; }
+  .step-text { font-size: 12px; color: #2a3d2f; font-weight: 600; line-height: 1.3; }
+
+  /* Animals strip */
+  .animals-label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 15px;
+    color: #1A6B3C;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .animals-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .animal-badge {
+    width: 112px;
+    background: white;
+    border-radius: 12px;
+    border: 2.5px solid #D4AF37;
+    padding: 10px 6px 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+  }
+  .animal-emoji { font-size: 28px; display: block; margin-bottom: 4px; }
+  .animal-name { font-family: 'Fredoka One', cursive; font-size: 12px; color: #1A6B3C; }
+
+  /* Tagline */
+  .tagline {
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 14px;
+    color: #1A6B3C;
+    opacity: 0.65;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .poster { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+  <div class="bg-top"></div>
+  <div class="bg-bottom"></div>
+  <div class="border-frame"></div>
+
+  <div class="content">
+    <div class="ribbon">🍀 A1 English · Year 3 · St. Patrick's Day 🍀</div>
+    <div class="title-main">St. Patrick's</div>
+    <div class="title-sub">Animal Hunt</div>
+
+    <!-- Illustration -->
+    <div class="illustration">
+      <svg viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="320" height="200">
+        <!-- Rainbow -->
+        <path d="M10 180 Q160 10 310 180" stroke="#E8833A" stroke-width="7" fill="none" opacity="0.7" stroke-linecap="round"/>
+        <path d="M22 180 Q160 26 298 180" stroke="#D4AF37" stroke-width="6" fill="none" opacity="0.7" stroke-linecap="round"/>
+        <path d="M34 180 Q160 42 286 180" stroke="#7FB069" stroke-width="6" fill="none" opacity="0.65" stroke-linecap="round"/>
+        <path d="M46 180 Q160 58 274 180" stroke="#1A6B3C" stroke-width="5" fill="none" opacity="0.6" stroke-linecap="round"/>
+        <!-- Hills -->
+        <ellipse cx="80" cy="195" rx="110" ry="35" fill="#7FB069" opacity="0.45"/>
+        <ellipse cx="250" cy="198" rx="100" ry="30" fill="#7FB069" opacity="0.4"/>
+        <ellipse cx="160" cy="205" rx="170" ry="28" fill="#1A6B3C" opacity="0.35"/>
+        <!-- Patrick body -->
+        <rect x="136" y="130" width="48" height="58" rx="14" fill="#1A6B3C"/>
+        <ellipse cx="160" cy="200" rx="30" ry="12" fill="#1A6B3C"/>
+        <!-- Patrick head -->
+        <circle cx="160" cy="118" r="24" fill="#FDDCB0"/>
+        <!-- Hat -->
+        <path d="M140 108 L160 68 L180 108 Z" fill="#D4AF37"/>
+        <rect x="136" y="106" width="48" height="9" rx="4.5" fill="#D4AF37"/>
+        <rect x="158" y="76" width="5" height="18" rx="2" fill="white" opacity="0.7"/>
+        <rect x="152" y="83" width="17" height="4" rx="2" fill="white" opacity="0.7"/>
+        <!-- Face -->
+        <circle cx="153" cy="117" r="3.5" fill="white"/>
+        <circle cx="167" cy="117" r="3.5" fill="white"/>
+        <circle cx="154" cy="118" r="2" fill="#333"/>
+        <circle cx="168" cy="118" r="2" fill="#333"/>
+        <path d="M154 126 Q160 131 166 126" stroke="#555" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Staff -->
+        <rect x="188" y="88" width="6" height="98" rx="3" fill="#8B6914"/>
+        <path d="M194 94 Q210 78 204 96" stroke="#8B6914" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <!-- Friendly snake left -->
+        <path d="M56 170 Q44 150 62 140 Q80 130 76 116" stroke="#7FB069" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <ellipse cx="76" cy="112" rx="9" ry="6" fill="#7FB069" transform="rotate(-15 76 112)"/>
+        <circle cx="73" cy="109" r="1.8" fill="white"/><circle cx="73.5" cy="109" r="1" fill="#1A6B3C"/>
+        <path d="M74 114 Q76 116 79 114" stroke="white" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Friendly snake right -->
+        <path d="M256 172 Q270 150 252 140 Q234 130 240 116" stroke="#E8833A" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <ellipse cx="240" cy="112" rx="9" ry="6" fill="#E8833A" transform="rotate(15 240 112)"/>
+        <circle cx="243" cy="109" r="1.8" fill="white"/><circle cx="242.5" cy="109" r="1" fill="#D4AF37"/>
+        <path d="M238 114 Q240 116 243 114" stroke="white" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Shamrocks -->
+        <g transform="translate(100,160) scale(0.55)" fill="#D4AF37">
+          <circle cx="0" cy="-9" r="9"/><circle cx="-8" cy="4" r="9"/><circle cx="8" cy="4" r="9"/>
+          <rect x="-2" y="9" width="4" height="12" rx="2"/>
+        </g>
+        <g transform="translate(220,163) scale(0.45)" fill="#D4AF37">
+          <circle cx="0" cy="-9" r="9"/><circle cx="-8" cy="4" r="9"/><circle cx="8" cy="4" r="9"/>
+          <rect x="-2" y="9" width="4" height="12" rx="2"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Story -->
+    <div class="scroll-bg">
+      <div class="scroll-title">📜 The Legend</div>
+      <div class="scroll-text">
+        Long ago, <em>Saint Patrick</em> expelled all the snakes from Ireland.<br>
+        But now… <em>the snakes are coming back!</em><br>
+        Only the bravest <em>Animal Helpers</em> can save the island.<br>
+        Solve the riddles, collect <em>5 animals</em>, and expel the snakes!
+      </div>
+    </div>
+
+    <!-- Mission steps -->
+    <div class="mission-title">⚡ Your Mission</div>
+    <div class="mission-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <span class="step-icon">📱</span>
+        <div class="step-text">Scan the QR code</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <span class="step-icon">🧠</span>
+        <div class="step-text">Solve the riddle</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <span class="step-icon">🃏</span>
+        <div class="step-text">Collect the card</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <span class="step-icon">⭐</span>
+        <div class="step-text">Fill your board</div>
+      </div>
+      <div class="step-card" style="background:#1A6B3C;border-color:#D4AF37;">
+        <div class="step-num" style="background:#D4AF37;color:#1A6B3C;">!</div>
+        <span class="step-icon">🏆</span>
+        <div class="step-text" style="color:white;"><strong style="color:#D4AF37">5 animals = Victory!</strong></div>
+      </div>
+    </div>
+
+    <!-- Animals -->
+    <div class="animals-label">🌟 Collect all 5 animals 🌟</div>
+    <div class="animals-row">
+      <div class="animal-badge"><span class="animal-emoji">?</span><div class="animal-name">Station 1</div></div>
+      <div class="animal-badge"><span class="animal-emoji">?</span><div class="animal-name">Station 2</div></div>
+      <div class="animal-badge"><span class="animal-emoji">?</span><div class="animal-name">Station 3</div></div>
+      <div class="animal-badge"><span class="animal-emoji">?</span><div class="animal-name">Station 4</div></div>
+      <div class="animal-badge"><span class="animal-emoji">?</span><div class="animal-name">Station 5</div></div>
+    </div>
+
+    <div class="tagline">🍀 &nbsp; Save Ireland · Be a Hero · Learn English &nbsp; 🍀</div>
+  </div>
+</div>
+</body>
+</html>

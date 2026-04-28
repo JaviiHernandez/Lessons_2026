@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>St. Patrick's Animal Hunt — Team Board</title>
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Fredoka+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#2d2d2d;
+    display:flex; align-items:center; justify-content:center;
+    min-height:100vh; padding:32px;
+    font-family:'Fredoka',sans-serif;
+  }
+  .board {
+    width:794px; height:1123px;
+    background:#FAF6E9;
+    position:relative; overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  /* Ireland landscape */
+  .sky { position:absolute; top:0; left:0; right:0; height:300px; background:linear-gradient(180deg,#b8dff0 0%,#dff0fb 100%); }
+  .hill1 { position:absolute; bottom:0; left:-60px; right:-60px; height:760px; background:#7FB069; border-radius:55% 55% 0 0/38% 38% 0 0; }
+  .hill2 { position:absolute; bottom:0; left:0; right:0; height:620px; background:#5a9a50; border-radius:50% 50% 0 0/33% 33% 0 0; }
+  .hill3 { position:absolute; bottom:0; left:0; right:0; height:500px; background:#3d7a40; border-radius:46% 46% 0 0/28% 28% 0 0; }
+  .cliff { position:absolute; bottom:380px; left:0; width:110px; height:240px; background:#4a6741; border-radius:0 24px 8px 0; }
+  .cliff2 { position:absolute; bottom:360px; right:0; width:85px; height:200px; background:#4a6741; border-radius:24px 0 0 8px; }
+  .cloud { position:absolute; background:white; border-radius:50px; opacity:0.82; }
+
+  /* Gold border */
+  .border-frame { position:absolute; inset:14px; border:4px solid #D4AF37; border-radius:18px; z-index:30; pointer-events:none; }
+  .border-frame::before { content:''; position:absolute; inset:5px; border:1.5px solid rgba(212,175,55,0.35); border-radius:13px; }
+
+  /* All content in one column */
+  .content {
+    position:absolute; inset:0; z-index:20;
+    display:flex; flex-direction:column; align-items:center;
+    padding:22px 32px 16px;
+    gap:0;
+  }
+
+  /* ── HEADER ── */
+  .team-label { font-family:'Fredoka One',cursive; font-size:12px; color:rgba(255,255,255,0.9); letter-spacing:3px; text-transform:uppercase; text-shadow:0 1px 4px rgba(0,0,0,0.3); margin-bottom:3px; }
+  .team-name-box {
+    display:block; width:100%; background:white;
+    border:3px solid #D4AF37; border-radius:12px;
+    padding:6px 20px;
+    font-family:'Fredoka One',cursive; font-size:22px; color:#1A6B3C;
+    text-align:center; margin-bottom:5px;
+  }
+  .board-title { font-family:'Uncial Antiqua',cursive; font-size:24px; color:#FAF6E9; text-shadow:0 2px 8px rgba(0,0,0,0.4); margin-bottom:6px; }
+
+  /* ── PROGRESS ── */
+  .prog-label { font-family:'Fredoka One',cursive; font-size:13px; color:#D4AF37; text-align:center; margin-bottom:4px; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
+  .prog-track { background:rgba(255,255,255,0.2); border-radius:20px; height:26px; border:2px solid #D4AF37; display:flex; width:100%; overflow:hidden; margin-bottom:7px; }
+  .prog-seg { flex:1; display:flex; align-items:center; justify-content:center; font-family:'Fredoka One',cursive; font-size:13px; color:rgba(255,255,255,0.7); border-right:2px solid rgba(212,175,55,0.35); }
+  .prog-seg:last-child { border-right:none; }
+
+  /* ── SLOTS ── */
+  .slots-title { font-family:'Fredoka One',cursive; font-size:13px; color:#D4AF37; text-align:center; margin-bottom:5px; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
+  .slots-row { display:flex; gap:8px; width:100%; margin-bottom:7px; }
+  .slot { flex:1; background:rgba(255,255,255,0.14); border:3px dashed rgba(255,255,255,0.45); border-radius:14px; display:flex; flex-direction:column; align-items:center; padding:9px 4px 7px; position:relative; }
+  .slot-num { width:22px; height:22px; background:#D4AF37; color:white; border-radius:50%; font-family:'Fredoka One',cursive; font-size:12px; display:flex; align-items:center; justify-content:center; position:absolute; top:-9px; left:50%; transform:translateX(-50%); box-shadow:0 2px 6px rgba(0,0,0,0.2); }
+  .slot-circle { width:58px; height:58px; background:rgba(255,255,255,0.2); border-radius:50%; border:3px solid rgba(255,255,255,0.4); display:flex; align-items:center; justify-content:center; margin-bottom:4px; }
+  .slot-q { font-family:'Fredoka One',cursive; font-size:26px; color:rgba(255,255,255,0.5); }
+  .slot-label { font-family:'Fredoka One',cursive; font-size:9.5px; color:rgba(255,255,255,0.7); }
+  .slot-dot { width:11px; height:11px; border-radius:50%; margin-top:3px; }
+
+  /* ── ROLES ── */
+  .section-title { font-family:'Fredoka One',cursive; font-size:14px; color:#D4AF37; text-align:center; margin-bottom:5px; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
+  .roles-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:5px; width:100%; margin-bottom:7px; }
+  .role-card { background:rgba(255,255,255,0.93); border-radius:10px; padding:7px 3px; text-align:center; border:2px solid rgba(212,175,55,0.55); }
+  .role-icon { font-size:17px; display:block; margin-bottom:2px; }
+  .role-name { font-family:'Fredoka One',cursive; font-size:11px; color:#1A6B3C; margin-bottom:2px; }
+  .role-job { font-size:9.5px; color:#555; line-height:1.3; margin-bottom:2px; }
+  .role-who { font-size:9px; color:#aaa; border-top:1px solid #eee; padding-top:2px; font-style:italic; min-height:11px; }
+
+  /* ── TEAMWORK TIPS ── */
+  .tips-grid { display:grid; grid-template-columns:1fr 1fr; gap:5px; width:100%; margin-bottom:8px; }
+  .tip-card { background:rgba(255,255,255,0.88); border-radius:10px; padding:7px 9px; display:flex; align-items:center; gap:7px; border-left:4px solid #D4AF37; }
+  .tip-ico { font-size:16px; flex-shrink:0; }
+  .tip-text { font-size:12px; color:#2a3d2f; font-weight:600; line-height:1.35; }
+  .tip-en { font-size:10px; color:#7a9a7a; font-style:italic; font-weight:400; }
+
+  /* ── SAY IT IN ENGLISH (fills bottom) ── */
+  .say-section { width:100%; flex:1; display:flex; flex-direction:column; }
+  .say-title { font-family:'Fredoka One',cursive; font-size:14px; color:#D4AF37; text-align:center; margin-bottom:6px; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
+  .bubbles-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; flex:1; }
+
+  .bubble {
+    background:white;
+    border-radius:16px;
+    padding:10px 14px;
+    position:relative;
+    border:2.5px solid rgba(212,175,55,0.5);
+    display:flex; flex-direction:column; justify-content:center;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  }
+  /* Speech tail */
+  .bubble::after {
+    content:'';
+    position:absolute; bottom:-10px; left:20px;
+    width:0; height:0;
+    border-left:10px solid transparent;
+    border-right:6px solid transparent;
+    border-top:10px solid white;
+  }
+  .bubble::before {
+    content:'';
+    position:absolute; bottom:-13px; left:19px;
+    width:0; height:0;
+    border-left:11px solid transparent;
+    border-right:7px solid transparent;
+    border-top:12px solid rgba(212,175,55,0.5);
+  }
+
+  .bubble-situation { font-size:10px; color:#aaa; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+  .bubble-phrase { font-family:'Fredoka One',cursive; font-size:15px; color:#1A6B3C; line-height:1.3; margin-bottom:2px; }
+  .bubble-translation { font-size:10.5px; color:#888; font-style:italic; }
+
+  /* ── BOTTOM ── */
+  .victory-bar { position:absolute; bottom:22px; left:0; right:0; display:flex; justify-content:center; z-index:21; }
+  .victory-tag { background:#D4AF37; color:#1A6B3C; font-family:'Uncial Antiqua',cursive; font-size:14px; padding:6px 24px; border-radius:26px; border:2px solid #b8952e; box-shadow:0 3px 10px rgba(0,0,0,0.2); }
+
+  @media print { body{background:white;padding:0;} .board{box-shadow:none;} }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="sky"></div>
+  <div class="cloud" style="top:30px;left:60px;width:105px;height:34px;"></div>
+  <div class="cloud" style="top:40px;left:140px;width:70px;height:26px;"></div>
+  <div class="cloud" style="top:26px;right:80px;width:120px;height:38px;"></div>
+  <div class="cloud" style="top:40px;right:170px;width:75px;height:26px;"></div>
+  <div class="hill1"></div><div class="hill2"></div><div class="hill3"></div>
+  <div class="cliff"></div><div class="cliff2"></div>
+  <div class="border-frame"></div>
+
+  <div class="content">
+
+    <!-- Header -->
+    <div class="team-label">🍀 Team Name</div>
+    <div class="team-name-box">_______________________________</div>
+    <div class="board-title">Animal Hunt — Team Board</div>
+
+    <!-- Progress -->
+    <div class="prog-label">⭐ Progress — Animals collected ⭐</div>
+    <div class="prog-track">
+      <div class="prog-seg">1</div>
+      <div class="prog-seg">2</div>
+      <div class="prog-seg">3</div>
+      <div class="prog-seg">4</div>
+      <div class="prog-seg">5 🏆</div>
+    </div>
+
+    <!-- Mystery slots -->
+    <div class="slots-title">🃏 Paste your Animal Cards here when you find them!</div>
+    <div class="slots-row">
+      <div class="slot"><div class="slot-num">1</div><div class="slot-circle"><div class="slot-q">?</div></div><div class="slot-label">Station 1</div><div class="slot-dot" style="background:#1A6B3C;"></div></div>
+      <div class="slot"><div class="slot-num">2</div><div class="slot-circle"><div class="slot-q">?</div></div><div class="slot-label">Station 2</div><div class="slot-dot" style="background:#E8833A;"></div></div>
+      <div class="slot"><div class="slot-num">3</div><div class="slot-circle"><div class="slot-q">?</div></div><div class="slot-label">Station 3</div><div class="slot-dot" style="background:#2A9D8F;"></div></div>
+      <div class="slot"><div class="slot-num">4</div><div class="slot-circle"><div class="slot-q">?</div></div><div class="slot-label">Station 4</div><div class="slot-dot" style="background:#7B5EA7;"></div></div>
+      <div class="slot"><div class="slot-num">5</div><div class="slot-circle"><div class="slot-q">?</div></div><div class="slot-label">Station 5</div><div class="slot-dot" style="background:#2176AE;"></div></div>
+    </div>
+
+    <!-- Roles -->
+    <div class="section-title">👥 Team Roles — Your job today!</div>
+    <div class="roles-grid">
+      <div class="role-card"><span class="role-icon">📖</span><div class="role-name">Reader</div><div class="role-job">Read the clues out loud to your team</div><div class="role-who">Name: ___________</div></div>
+      <div class="role-card"><span class="role-icon">✏️</span><div class="role-name">Writer</div><div class="role-job">Type the answer on the device</div><div class="role-who">Name: ___________</div></div>
+      <div class="role-card"><span class="role-icon">📱</span><div class="role-name">Scanner</div><div class="role-job">Scan the QR code at each station</div><div class="role-who">Name: ___________</div></div>
+      <div class="role-card"><span class="role-icon">🗣️</span><div class="role-name">Speaker</div><div class="role-job">Talk to the teacher if you need help</div><div class="role-who">Name: ___________</div></div>
+      <div class="role-card"><span class="role-icon">🎯</span><div class="role-name">Decider</div><div class="role-job">Choose the final answer for your team</div><div class="role-who">Name: ___________</div></div>
+    </div>
+
+    <!-- Tips -->
+    <div class="section-title">🌟 Teamwork Tips — Work together!</div>
+    <div class="tips-grid">
+      <div class="tip-card"><span class="tip-ico">🤫</span><div><div class="tip-text">Use a quiet voice!</div><div class="tip-en">"Speak quietly, please."</div></div></div>
+      <div class="tip-card"><span class="tip-ico">👂</span><div><div class="tip-text">Listen to your team!</div><div class="tip-en">"Good idea! I agree / I disagree."</div></div></div>
+      <div class="tip-card"><span class="tip-ico">🙋</span><div><div class="tip-text">Ask if you don't know!</div><div class="tip-en">"Can you repeat, please?"</div></div></div>
+      <div class="tip-card"><span class="tip-ico">🌟</span><div><div class="tip-text">Be positive!</div><div class="tip-en">"Well done! Good job! Try again!"</div></div></div>
+    </div>
+
+    <!-- SAY IT IN ENGLISH — fills remaining space -->
+    <div class="say-section">
+      <div class="say-title">💬 Say it in English!</div>
+      <div class="bubbles-grid">
+        <div class="bubble">
+          <div class="bubble-situation">💡 You have an idea</div>
+          <div class="bubble-phrase">"I think it is a…"</div>
+          <div class="bubble-translation">Creo que es un…</div>
+        </div>
+        <div class="bubble">
+          <div class="bubble-situation">✅ You agree</div>
+          <div class="bubble-phrase">"Yes! I agree!"</div>
+          <div class="bubble-translation">¡Sí! ¡Estoy de acuerdo!</div>
+        </div>
+        <div class="bubble">
+          <div class="bubble-situation">❌ You disagree</div>
+          <div class="bubble-phrase">"No, I think it is a…"</div>
+          <div class="bubble-translation">No, creo que es un…</div>
+        </div>
+        <div class="bubble">
+          <div class="bubble-situation">🏆 You win!</div>
+          <div class="bubble-phrase">"We did it! Let's go!"</div>
+          <div class="bubble-translation">¡Lo hicimos! ¡Vamos!</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="victory-bar">
+    <div class="victory-tag">🏆 5 Animals = Victory! Ireland is safe! 🍀</div>
+  </div>
+</div>
+</body>
+</html>
