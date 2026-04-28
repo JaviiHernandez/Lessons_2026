@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carmen — Oposición · Lessons</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    background:#1a1a1a;
+    color:#f5f5f5;
+    font-family:'Fredoka', sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:60px 24px;
+  }
+  header { text-align:center; margin-bottom:48px; max-width:720px; }
+  h1 {
+    font-family:'Fredoka One', cursive;
+    font-size:clamp(2rem, 5vw, 3.25rem);
+    color:#7ed957;
+    letter-spacing:0.5px;
+    margin-bottom:12px;
+  }
+  header p { color:#bdbdbd; font-size:1.05rem; line-height:1.5; }
+  .grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:20px;
+    width:100%;
+    max-width:960px;
+  }
+  .card {
+    display:block;
+    background:#262626;
+    border:1px solid #333;
+    border-radius:18px;
+    padding:28px 24px;
+    text-decoration:none;
+    color:inherit;
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .card:hover {
+    transform:translateY(-3px);
+    border-color:#7ed957;
+    background:#2d2d2d;
+  }
+  .card.disabled {
+    opacity:0.5;
+    cursor:not-allowed;
+    pointer-events:none;
+  }
+  .badge {
+    display:inline-block;
+    font-size:0.72rem;
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:#7ed957;
+    background:rgba(126,217,87,0.12);
+    padding:4px 10px;
+    border-radius:999px;
+    margin-bottom:12px;
+  }
+  .card.disabled .badge { color:#888; background:rgba(255,255,255,0.06); }
+  .card h2 {
+    font-family:'Fredoka One', cursive;
+    font-size:1.5rem;
+    margin-bottom:8px;
+  }
+  .card p { color:#aaa; font-size:0.95rem; line-height:1.45; }
+  footer {
+    margin-top:auto;
+    padding-top:48px;
+    color:#666;
+    font-size:0.85rem;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Carmen · Oposición</h1>
+    <p>Materiales y actividades por lección. Selecciona una para abrir su contenido.</p>
+  </header>
+
+  <main class="grid">
+    <a class="card" href="lesson-9/">
+      <span class="badge">Lesson 9</span>
+      <h2>St. Patrick's Animal Hunt</h2>
+      <p>Pósters, tarjetas, acertijos interactivos, medallas y guía para el profesor.</p>
+    </a>
+
+    <a class="card disabled" href="#">
+      <span class="badge">Lesson · Próximamente</span>
+      <h2>Lesson · TBD</h2>
+      <p>Contenido en preparación.</p>
+    </a>
+
+    <a class="card disabled" href="#">
+      <span class="badge">Lesson · Próximamente</span>
+      <h2>Lesson · TBD</h2>
+      <p>Contenido en preparación.</p>
+    </a>
+
+    <a class="card disabled" href="#">
+      <span class="badge">Lesson · Próximamente</span>
+      <h2>Lesson · TBD</h2>
+      <p>Contenido en preparación.</p>
+    </a>
+  </main>
+
+  <footer>Hecho con cariño · Carmen Oposición</footer>
+</body>
+</html>
