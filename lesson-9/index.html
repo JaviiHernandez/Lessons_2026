@@ -11,10 +11,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:#1a1a1a; font-family:'Fredoka',sans-serif; }
+  body { background:#1a1a1a; font-family:'Fredoka',sans-serif; color:#f5f5f5; }
+  .riddle-bar {
+    padding:24px 20px;
+    background:#222;
+    border-bottom:1px solid #333;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    justify-content:center;
+    align-items:center;
+  }
+  .riddle-bar .label {
+    font-weight:600;
+    color:#bdbdbd;
+    margin-right:8px;
+    font-size:0.95rem;
+  }
+  .riddle-bar a {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:8px 14px;
+    background:#2d2d2d;
+    border:1px solid #444;
+    border-radius:999px;
+    color:#f5f5f5;
+    text-decoration:none;
+    font-size:0.9rem;
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+  .riddle-bar a:hover {
+    border-color:#7ed957;
+    background:#333;
+    transform:translateY(-1px);
+  }
 </style>
 </head>
 <body>
+<nav class="riddle-bar">
+  <span class="label">🧩 Riddles directos:</span>
+  <a href="riddle.html?s=1" target="_blank" rel="noopener">🐴 Horse</a>
+  <a href="riddle.html?s=2" target="_blank" rel="noopener">🐯 Tiger</a>
+  <a href="riddle.html?s=3" target="_blank" rel="noopener">🦜 Parrot</a>
+  <a href="riddle.html?s=4" target="_blank" rel="noopener">🐑 Sheep</a>
+  <a href="riddle.html?s=5" target="_blank" rel="noopener">🐟 Fish</a>
+</nav>
 <div id="root"></div>
 <script type="text/babel">
 const { DesignCanvas, DCSection, DCArtboard } = window;
