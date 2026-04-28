@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Eco House Hunt — QR Station Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#2d2d2d; font-family:'Fredoka',sans-serif; padding:40px; display:flex; flex-direction:column; align-items:center; gap:28px; }
+  h1 { color:white; font-family:'Fredoka One',cursive; font-size:17px; opacity:0.5; }
+
+  /* Landscape A5: 210×148mm → ~794×559px, scaled down for preview */
+  .qr-card {
+    width:700px; height:340px;
+    border-radius:20px; overflow:hidden;
+    box-shadow:0 10px 36px rgba(0,0,0,0.5);
+    display:flex; flex-direction:row;
+    position:relative;
+  }
+
+  /* ── LEFT PANEL ── */
+  .left {
+    width:260px; flex-shrink:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:10px;
+    position:relative;
+    padding:28px 20px;
+  }
+  .left::after {
+    content:'';
+    position:absolute; right:0; top:16px; bottom:16px;
+    width:2px; background:rgba(255,255,255,0.15);
+    border-radius:2px;
+  }
+
+  /* Eco pattern overlay */
+  .left-pattern {
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(45deg,transparent,transparent 16px,rgba(255,255,255,0.04) 16px,rgba(255,255,255,0.04) 17px);
+  }
+
+  .station-label {
+    font-family:'Fredoka One',cursive; font-size:11px;
+    color:rgba(255,255,255,0.65); letter-spacing:3px; text-transform:uppercase;
+    position:relative; z-index:1;
+  }
+  .station-num {
+    font-family:'Fredoka One',cursive; font-size:88px; line-height:1;
+    color:white; text-shadow:0 4px 20px rgba(0,0,0,0.3);
+    position:relative; z-index:1;
+  }
+  .mystery-circle {
+    width:72px; height:72px; border-radius:50%;
+    background:rgba(255,255,255,0.18);
+    border:3px solid rgba(255,255,255,0.4);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; z-index:1;
+  }
+  .mystery-q {
+    font-family:'Fredoka One',cursive; font-size:38px;
+    color:rgba(255,255,255,0.75);
+  }
+  .time-badge {
+    background:rgba(0,0,0,0.22); border:1.5px solid rgba(255,255,255,0.3);
+    border-radius:20px; padding:4px 14px;
+    font-family:'Fredoka One',cursive; font-size:13px;
+    color:rgba(255,255,255,0.8);
+    position:relative; z-index:1;
+  }
+  .eco-icons-left {
+    display:flex; gap:6px; font-size:18px; opacity:0.5;
+    position:relative; z-index:1;
+  }
+
+  /* ── RIGHT PANEL ── */
+  .right {
+    flex:1; background:white;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:14px; padding:24px 28px;
+  }
+  .scan-title {
+    font-family:'Fredoka One',cursive; font-size:22px; color:#333;
+    display:flex; align-items:center; gap:8px;
+  }
+  .qr-placeholder {
+    width:148px; height:148px;
+    border:3px dashed #ccc; border-radius:14px;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:6px; background:#fafafa;
+    position:relative;
+  }
+  /* Corner marks */
+  .qr-placeholder::before, .qr-placeholder::after {
+    content:''; position:absolute;
+    width:20px; height:20px; border-color:#aaa; border-style:solid;
+  }
+  .qr-placeholder::before { top:8px; left:8px; border-width:3px 0 0 3px; border-radius:2px 0 0 2px; }
+  .qr-placeholder::after  { bottom:8px; right:8px; border-width:0 3px 3px 0; border-radius:0 0 2px 2px; }
+
+  .qr-icon { font-size:36px; opacity:0.25; }
+  .qr-label { font-family:'Fredoka One',cursive; font-size:12px; color:#ccc; letter-spacing:1px; text-transform:uppercase; }
+
+  .qr-url {
+    font-size:11px; color:#bbb; font-family:'Fredoka One',cursive;
+    letter-spacing:0.5px; text-align:center; font-style:italic;
+  }
+
+  /* Bottom strip */
+  .card-footer-strip {
+    position:absolute; bottom:0; left:0; right:0; height:32px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(0,0,0,0.15);
+    font-family:'Fredoka One',cursive; font-size:11px;
+    color:rgba(255,255,255,0.7); letter-spacing:1.5px; text-transform:uppercase;
+    z-index:5;
+  }
+
+  @media print {
+    body{background:white;padding:16px;gap:16px;}
+    .qr-card{box-shadow:none;page-break-after:always;}
+    h1{display:none;}
+  }
+</style>
+</head>
+<body>
+<h1>📱 QR Station Cards — Print, laminate, place at each station</h1>
+
+<script>
+const stations = [
+  { n:1, color:'#C62828', dark:'#8b1a1a', url:'riddle.html?s=1' },
+  { n:2, color:'#6A1B9A', dark:'#4a0e6e', url:'riddle.html?s=2' },
+  { n:3, color:'#0277BD', dark:'#01487a', url:'riddle.html?s=3' },
+  { n:4, color:'#2E7D32', dark:'#1b5e20', url:'riddle.html?s=4' },
+  { n:5, color:'#E64A19', dark:'#a33612', url:'riddle.html?s=5' },
+];
+
+stations.forEach(s => {
+  document.write(`
+  <div class="qr-card">
+    <!-- LEFT -->
+    <div class="left" style="background:linear-gradient(145deg,${s.color},${s.dark});">
+      <div class="left-pattern"></div>
+      <div class="station-label">Station</div>
+      <div class="station-num">${s.n}</div>
+      <div class="mystery-circle"><div class="mystery-q">?</div></div>
+      <div class="time-badge">⏱ ~5 min</div>
+      <div class="eco-icons-left">🌿 ♻️ 💧</div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+      <div class="scan-title">📱 Scan to play!</div>
+      <div class="qr-placeholder">
+        <span class="qr-icon">▦</span>
+        <span class="qr-label">QR Code here</span>
+      </div>
+      <div class="qr-url">${s.url}<br>(replace with your URL)</div>
+    </div>
+
+    <!-- Footer strip -->
+    <div class="card-footer-strip" style="background:${s.color}cc;">
+      🌿 Eco House Hunt · Save Energy · Save Water 🌿
+    </div>
+  </div>
+  `);
+});
+</script>
+</body>
+</html>
