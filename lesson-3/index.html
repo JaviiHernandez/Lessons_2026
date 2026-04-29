@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>🎃 The Midnight Hunt — Lesson 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Fredoka', sans-serif;
+    background: #f0eee9;
+    overflow: hidden;
+    height: 100dvh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Top navigation bar ── */
+  .top-bar {
+    background: linear-gradient(135deg, #1a0a3e, #2d0a4e);
+    border-bottom: 3px solid #FF6B1A;
+    padding: 0 clamp(12px, 2vw, 24px);
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 1.5vw, 16px);
+    flex-shrink: 0;
+    height: 52px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+
+  .top-bar::-webkit-scrollbar { display: none; }
+
+  .bar-brand {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.2vw, 18px);
+    color: #FF6B1A;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    letter-spacing: 0.3px;
+  }
+
+  .bar-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255,255,255,0.15);
+    flex-shrink: 0;
+  }
+
+  .riddle-bar {
+    display: flex;
+    gap: clamp(4px, 0.8vw, 8px);
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .riddle-bar-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(11px, 1.6vw, 13px);
+    color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .riddle-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: rgba(255,255,255,0.85);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(11px, 1.5vw, 13px);
+    transition: background 0.15s, border-color 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .riddle-link:hover {
+    background: rgba(255,107,26,0.25);
+    border-color: #FF6B1A;
+    color: white;
+  }
+
+  .rl1:hover { border-color: #9c27b0; background: rgba(156,39,176,0.2); }
+  .rl2:hover { border-color: #546E7A; background: rgba(84,110,122,0.2); }
+  .rl3:hover { border-color: #c62828; background: rgba(198,40,40,0.2); }
+  .rl4:hover { border-color: #37474F; background: rgba(55,71,79,0.2); }
+  .rl5:hover { border-color: #558B2F; background: rgba(85,139,47,0.2); }
+
+  .bar-spacer { flex: 1; }
+
+  .bar-hint {
+    font-size: clamp(10px, 1.4vw, 12px);
+    color: rgba(255,255,255,0.3);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── Canvas area fills remaining height ── */
+  #root {
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<div class="top-bar">
+  <div class="bar-brand">🎃 The Midnight Hunt — Lesson 3</div>
+  <div class="bar-divider"></div>
+  <div class="riddle-bar">
+    <div class="riddle-bar-label">Open riddle:</div>
+    <a class="riddle-link rl1" href="riddle.html?s=1" target="_blank">🧙‍♀️ Witch</a>
+    <a class="riddle-link rl2" href="riddle.html?s=2" target="_blank">💀 Skeleton</a>
+    <a class="riddle-link rl3" href="riddle.html?s=3" target="_blank">🧛 Vampire</a>
+    <a class="riddle-link rl4" href="riddle.html?s=4" target="_blank">👻 Ghost</a>
+    <a class="riddle-link rl5" href="riddle.html?s=5" target="_blank">🧟 Zombie</a>
+  </div>
+  <div class="bar-spacer"></div>
+  <div class="bar-hint">Scroll · Pan · Pinch to zoom</div>
+</div>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const IFRAME_STYLE = {
+  border: 'none',
+  display: 'block',
+  width: '100%',
+  height: '100%',
+};
+
+// Artboard wrapper that renders an iframe
+function PageFrame({ src, width, height }) {
+  return (
+    <iframe
+      src={src}
+      title={src}
+      style={{ ...IFRAME_STYLE, width, height }}
+      loading="lazy"
+    />
+  );
+}
+
+function App() {
+  return (
+    <DesignCanvas>
+
+      {/* ── Section 1: Printable Classroom Materials ── */}
+      <DCSection
+        id="printables"
+        title="🖨️ Printable Classroom Materials"
+        subtitle="Open individually in browser · Cmd+P / Ctrl+P to print at correct size"
+      >
+        <DCArtboard id="poster" label="poster.html — Intro Poster (A3)" width={560} height={800}>
+          <PageFrame src="poster.html" width={560} height={800} />
+        </DCArtboard>
+
+        <DCArtboard id="team-board" label="team-board.html — Team Board (A4)" width={560} height={720}>
+          <PageFrame src="team-board.html" width={560} height={720} />
+        </DCArtboard>
+
+        <DCArtboard id="qr-cards" label="qr-cards.html — 5 QR Station Cards (A5)" width={560} height={760}>
+          <PageFrame src="qr-cards.html" width={560} height={760} />
+        </DCArtboard>
+      </DCSection>
+
+      {/* ── Section 2: Interactive Halloween Riddles ── */}
+      <DCSection
+        id="riddles"
+        title="👻 Interactive Halloween Riddles"
+        subtitle="Mobile-first · Open on tablets/phones in the classroom · Use ?s=1 through ?s=5"
+      >
+        <DCArtboard id="r1" label="Station 1 — Witch 🧙‍♀️" width={375} height={680}>
+          <PageFrame src="riddle.html?s=1" width={375} height={680} />
+        </DCArtboard>
+
+        <DCArtboard id="r2" label="Station 2 — Skeleton 💀" width={375} height={680}>
+          <PageFrame src="riddle.html?s=2" width={375} height={680} />
+        </DCArtboard>
+
+        <DCArtboard id="r3" label="Station 3 — Vampire 🧛" width={375} height={680}>
+          <PageFrame src="riddle.html?s=3" width={375} height={680} />
+        </DCArtboard>
+
+        <DCArtboard id="r4" label="Station 4 — Ghost 👻" width={375} height={680}>
+          <PageFrame src="riddle.html?s=4" width={375} height={680} />
+        </DCArtboard>
+
+        <DCArtboard id="r5" label="Station 5 — Zombie 🧟" width={375} height={680}>
+          <PageFrame src="riddle.html?s=5" width={375} height={680} />
+        </DCArtboard>
+      </DCSection>
+
+      {/* ── Section 3: Collectible Character Cards ── */}
+      <DCSection
+        id="cards"
+        title="🃏 Collectible Character Cards"
+        subtitle="Print on cardstock · Cut out · Hand to teams when they find each creature"
+      >
+        <DCArtboard id="room-cards" label="room-cards.html — 5 Character Cards (front + back)" width={600} height={760}>
+          <PageFrame src="room-cards.html" width={600} height={760} />
+        </DCArtboard>
+      </DCSection>
+
+      {/* ── Section 4: Rewards & Teacher Materials ── */}
+      <DCSection
+        id="rewards"
+        title="🏆 Rewards &amp; Teacher Materials"
+        subtitle="Medals · Diploma · Teacher Guide — print at end of session"
+      >
+        <DCArtboard id="medal" label="medal.html — 5 Role Medals" width={500} height={560}>
+          <PageFrame src="medal.html" width={500} height={560} />
+        </DCArtboard>
+
+        <DCArtboard id="diploma" label="diploma.html — Trick or Treat Master Diploma (A4)" width={560} height={720}>
+          <PageFrame src="diploma.html" width={560} height={720} />
+        </DCArtboard>
+
+        <DCArtboard id="teacher-guide" label="teacher-guide.html — Teacher Guide (2 × A4)" width={560} height={880}>
+          <PageFrame src="teacher-guide.html" width={560} height={880} />
+        </DCArtboard>
+      </DCSection>
+
+    </DesignCanvas>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>

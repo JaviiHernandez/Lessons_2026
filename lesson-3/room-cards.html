@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Midnight Hunt — Character Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #1a0a2e;
+    font-family: 'Fredoka', sans-serif;
+    padding: clamp(16px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(32px, 5vw, 60px);
+  }
+
+  .page-heading {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(22px, 4vw, 36px);
+    color: #F9A825;
+    text-align: center;
+    padding-top: clamp(8px, 1.5vw, 16px);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  }
+
+  .print-note {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(249,168,37,0.3);
+    border-radius: 8px;
+    padding: clamp(8px,1.5vw,12px) clamp(16px,3vw,24px);
+    color: rgba(255,248,240,0.65);
+    font-size: clamp(12px,1.8vw,14px);
+    text-align: center;
+    max-width: 600px;
+  }
+
+  /* Card pair container */
+  .card-pair {
+    display: flex;
+    gap: clamp(24px, 4vw, 48px);
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .card-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(13px, 2vw, 16px);
+    color: rgba(255,248,240,0.5);
+    text-align: center;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Card = 238×332 px */
+  .card {
+    width: 238px;
+    height: 332px;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 2px rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+
+  /* ── FRONT ── */
+  .card-front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 18px 14px 14px;
+    position: relative;
+    gap: 12px;
+  }
+
+  .front-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .station-chip {
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .char-emoji-big {
+    font-size: 90px;
+    line-height: 1;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));
+    margin: 2px 0;
+  }
+
+  .char-name-front {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 24px;
+    color: white;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  /* Corner ornaments */
+  .corner-orns {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .orn {
+    position: absolute;
+    font-size: 16px;
+    opacity: 0.5;
+  }
+
+  .orn-tl { top: 8px; left: 10px; }
+  .orn-tr { top: 8px; right: 10px; }
+  .orn-bl { bottom: 30px; left: 10px; }
+  .orn-br { bottom: 30px; right: 10px; }
+
+  /* Card footer strip */
+  .card-footer-strip {
+    width: calc(100% + 28px);
+    margin: 0 -14px -14px;
+    padding: 7px 0;
+    background: rgba(0,0,0,0.25);
+    text-align: center;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
+    border-radius: 0 0 18px 18px;
+  }
+
+  /* ── BACK ── */
+  .card-back {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 14px 12px 12px;
+    gap: 8px;
+    position: relative;
+  }
+
+  .back-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid rgba(255,255,255,0.15);
+  }
+
+  .back-emoji { font-size: 28px; }
+
+  .back-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 16px;
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    line-height: 1.2;
+  }
+
+  .back-station {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .back-description {
+    font-size: 11px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.85);
+    font-style: italic;
+    background: rgba(0,0,0,0.15);
+    border-radius: 8px;
+    padding: 8px 10px;
+    border-left: 3px solid rgba(255,255,255,0.3);
+  }
+
+  .back-facts-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .back-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+  }
+
+  .back-fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.35;
+  }
+
+  .back-fact-icon { font-size: 14px; flex-shrink: 0; }
+
+  .back-footer {
+    text-align: center;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 9px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.5px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Colour themes */
+  .theme-witch    { background: linear-gradient(145deg, #4a0080, #6A1B9A, #9c27b0); }
+  .theme-skeleton { background: linear-gradient(145deg, #263238, #37474F, #546E7A); }
+  .theme-vampire  { background: linear-gradient(145deg, #5a0000, #8B0000, #c62828); }
+  .theme-ghost    { background: linear-gradient(145deg, #0d1b4b, #1a237e, #37474F); }
+  .theme-zombie   { background: linear-gradient(145deg, #1b3a0a, #33691E, #558B2F); }
+
+  .theme-witch-inv    { background: linear-gradient(145deg, #9c27b0, #6A1B9A, #4a0080); }
+  .theme-skeleton-inv { background: linear-gradient(145deg, #546E7A, #37474F, #263238); }
+  .theme-vampire-inv  { background: linear-gradient(145deg, #c62828, #8B0000, #5a0000); }
+  .theme-ghost-inv    { background: linear-gradient(145deg, #37474F, #1a237e, #0d1b4b); }
+  .theme-zombie-inv   { background: linear-gradient(145deg, #558B2F, #33691E, #1b3a0a); }
+
+  @media (max-width: 560px) {
+    .card-pair { gap: 16px; }
+  }
+
+  @media print {
+    body { background: white; padding: 10px; gap: 20px; }
+    .page-heading, .print-note { display: none; }
+    .card-pair { page-break-after: always; gap: 30px; }
+    .card { box-shadow: 0 0 0 1px rgba(0,0,0,0.15); }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-heading">🎃 The Midnight Hunt — Character Cards</div>
+<div class="print-note">Print on cardstock · Cut out each card · Glue front to back · Laminate for best results · Hand out when teams find a creature!</div>
+
+<!-- ══ WITCH ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-witch">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🎃</span>
+          <span class="orn orn-tr">🕸️</span>
+          <span class="orn orn-bl">🦇</span>
+          <span class="orn orn-br">🕷️</span>
+        </div>
+        <div class="front-top">
+          <div class="station-chip">Station 1</div>
+          <div class="char-emoji-big">🧙‍♀️</div>
+          <div class="char-name-front">Witch</div>
+        </div>
+        <div class="card-footer-strip">🎃 The Midnight Hunt · Haunted House 🕸️</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-witch-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🧙‍♀️</div>
+          <div>
+            <div class="back-title">Witch</div>
+            <div class="back-station">Station 1 · Haunted House</div>
+          </div>
+        </div>
+        <div class="back-description">"I'm wearing a black and purple dress, a pointy hat and striped socks. I'm flying on my broom. I love black cats!"</div>
+        <div class="back-facts-title">⭐ Fun Facts</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="back-fact-icon">🌙</span>Witches fly on broomsticks on Halloween night!</div>
+          <div class="back-fact"><span class="back-fact-icon">🐈‍⬛</span>A witch's cat is called a familiar — a magic helper!</div>
+          <div class="back-fact"><span class="back-fact-icon">⭐</span>The pointy hat is the witch's most famous accessory!</div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SKELETON ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-skeleton">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🦴</span>
+          <span class="orn orn-tr">🕸️</span>
+          <span class="orn orn-bl">🎃</span>
+          <span class="orn orn-br">🦇</span>
+        </div>
+        <div class="front-top">
+          <div class="station-chip">Station 2</div>
+          <div class="char-emoji-big">💀</div>
+          <div class="char-name-front">Skeleton</div>
+        </div>
+        <div class="card-footer-strip">🎃 The Midnight Hunt · Dungeon 🦴</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-skeleton-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">💀</div>
+          <div>
+            <div class="back-title">Skeleton</div>
+            <div class="back-station">Station 2 · Dungeon</div>
+          </div>
+        </div>
+        <div class="back-description">"I'm not wearing a skirt, no jumper, no trainers… I'm not wearing clothes — just bones!"</div>
+        <div class="back-facts-title">⭐ Fun Facts</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="back-fact-icon">🦴</span>The human body has 206 bones — that's a lot of rattling!</div>
+          <div class="back-fact"><span class="back-fact-icon">💀</span>Skeletons are very popular Halloween decorations!</div>
+          <div class="back-fact"><span class="back-fact-icon">🎵</span>Skeletons love to dance! They say "click, clack, click!"</div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ VAMPIRE ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-vampire">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🦇</span>
+          <span class="orn orn-tr">🕷️</span>
+          <span class="orn orn-bl">🕸️</span>
+          <span class="orn orn-br">🎃</span>
+        </div>
+        <div class="front-top">
+          <div class="station-chip">Station 3</div>
+          <div class="char-emoji-big">🧛</div>
+          <div class="char-name-front">Vampire</div>
+        </div>
+        <div class="card-footer-strip">🎃 The Midnight Hunt · Old Castle 🦇</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-vampire-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🧛</div>
+          <div>
+            <div class="back-title">Vampire</div>
+            <div class="back-station">Station 3 · Old Castle</div>
+          </div>
+        </div>
+        <div class="back-description">"I've got sharp teeth and white skin. I'm wearing a black and red coat and very clean black shoes. I don't like sunlight!"</div>
+        <div class="back-facts-title">⭐ Fun Facts</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="back-fact-icon">🧄</span>Vampires hate garlic! It keeps them away!</div>
+          <div class="back-fact"><span class="back-fact-icon">🦇</span>Vampires can transform into bats and fly away!</div>
+          <div class="back-fact"><span class="back-fact-icon">⚰️</span>Vampires sleep in coffins during the day!</div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GHOST ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-ghost">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">👻</span>
+          <span class="orn orn-tr">🕸️</span>
+          <span class="orn orn-bl">🎃</span>
+          <span class="orn orn-br">🦇</span>
+        </div>
+        <div class="front-top">
+          <div class="station-chip">Station 4</div>
+          <div class="char-emoji-big">👻</div>
+          <div class="char-name-front">Ghost</div>
+        </div>
+        <div class="card-footer-strip">🎃 The Midnight Hunt · Attic 👻</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-ghost-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">👻</div>
+          <div>
+            <div class="back-title">Ghost "Boo"</div>
+            <div class="back-station">Station 4 · Attic</div>
+          </div>
+        </div>
+        <div class="back-description">"I'm not wearing a scarf, no gloves, no shorts… My name is Boo and I'm living in the attic!"</div>
+        <div class="back-facts-title">⭐ Fun Facts</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="back-fact-icon">👻</span>Ghosts say BOO to scare people on Halloween night!</div>
+          <div class="back-fact"><span class="back-fact-icon">🌫️</span>Ghosts can walk through walls — they don't need doors!</div>
+          <div class="back-fact"><span class="back-fact-icon">💨</span>Some ghosts are friendly, like Casper the Friendly Ghost!</div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ZOMBIE ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-zombie">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🪦</span>
+          <span class="orn orn-tr">🕷️</span>
+          <span class="orn orn-bl">🎃</span>
+          <span class="orn orn-br">🕸️</span>
+        </div>
+        <div class="front-top">
+          <div class="station-chip">Station 5</div>
+          <div class="char-emoji-big">🧟</div>
+          <div class="char-name-front">Zombie</div>
+        </div>
+        <div class="card-footer-strip">🎃 The Midnight Hunt · Cemetery 🪦</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-zombie-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🧟</div>
+          <div>
+            <div class="back-title">Zombie</div>
+            <div class="back-station">Station 5 · Cemetery</div>
+          </div>
+        </div>
+        <div class="back-description">"I've got green skin. I'm wearing a ripped T-shirt, dirty jeans and old boots. I'm walking around very slowly…"</div>
+        <div class="back-facts-title">⭐ Fun Facts</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="back-fact-icon">🧠</span>Zombies always say BRAINS! It's their favourite word!</div>
+          <div class="back-fact"><span class="back-fact-icon">🚶</span>Zombies walk very slowly — they are never in a hurry!</div>
+          <div class="back-fact"><span class="back-fact-icon">🪦</span>Zombies come from cemeteries on Halloween night!</div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

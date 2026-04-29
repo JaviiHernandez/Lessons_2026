@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Midnight Hunt — Medals</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #1a0a2e;
+    font-family: 'Fredoka', sans-serif;
+    padding: clamp(16px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(24px, 4vw, 48px);
+  }
+
+  .page-heading {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(22px, 4vw, 34px);
+    color: #F9A825;
+    text-align: center;
+    padding-top: clamp(8px, 1.5vw, 16px);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  }
+
+  .print-note {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(249,168,37,0.3);
+    border-radius: 8px;
+    padding: clamp(8px,1.5vw,12px) clamp(16px,3vw,24px);
+    color: rgba(255,248,240,0.65);
+    font-size: clamp(12px,1.8vw,14px);
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .medals-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(24px, 4vw, 48px);
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .medal-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Medal shape: 160×220 px total (ribbon + circle) */
+  .medal {
+    width: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+  }
+
+  /* Ribbon top */
+  .ribbon-top {
+    display: flex;
+    width: 80px;
+    height: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ribbon-half {
+    flex: 1;
+    height: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  }
+
+  /* Medal body */
+  .medal-body {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    margin-top: -6px;
+  }
+
+  /* Outer ring */
+  .medal-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+      #F9A825 0deg, #fff3c0 30deg, #F9A825 60deg,
+      #e0a800 90deg, #F9A825 120deg, #fff3c0 150deg,
+      #F9A825 180deg, #e0a800 210deg, #F9A825 240deg,
+      #fff3c0 270deg, #F9A825 300deg, #e0a800 330deg, #F9A825 360deg
+    );
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.2), 0 4px 16px rgba(0,0,0,0.4);
+  }
+
+  /* Inner circle */
+  .medal-inner {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    z-index: 2;
+    border: 3px solid rgba(255,255,255,0.15);
+  }
+
+  /* Sunburst pattern */
+  .medal-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: repeating-conic-gradient(
+      rgba(255,255,255,0.06) 0deg 15deg,
+      transparent 15deg 30deg
+    );
+  }
+
+  .medal-event {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 9px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+    line-height: 1.2;
+    background: rgba(0,0,0,0.35);
+    border-radius: 6px;
+    padding: 2px 6px;
+  }
+
+  .medal-role-icon {
+    font-size: 28px;
+    position: relative;
+    z-index: 3;
+    margin: 2px 0;
+  }
+
+  .medal-role {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 3;
+    line-height: 1.1;
+    padding: 0 6px;
+  }
+
+  /* Name line below medal */
+  .name-area {
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  .name-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .name-line-box {
+    width: 140px;
+    height: 28px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* Theme colours */
+  /* Reader — orange */
+  .r1 .ribbon-half:first-child { background: #FF6B1A; }
+  .r1 .ribbon-half:last-child  { background: #e55a0a; }
+  .r1 .medal-inner { background: radial-gradient(circle at 35% 35%, #6A1B9A, #4a0080); }
+
+  /* Writer — purple */
+  .r2 .ribbon-half:first-child { background: #9c27b0; }
+  .r2 .ribbon-half:last-child  { background: #6A1B9A; }
+  .r2 .medal-inner { background: radial-gradient(circle at 35% 35%, #c62828, #8B0000); }
+
+  /* Scanner — dark teal */
+  .r3 .ribbon-half:first-child { background: #37474F; }
+  .r3 .ribbon-half:last-child  { background: #263238; }
+  .r3 .medal-inner { background: radial-gradient(circle at 35% 35%, #37474F, #1a2c35); }
+
+  /* Speaker — green */
+  .r4 .ribbon-half:first-child { background: #558B2F; }
+  .r4 .ribbon-half:last-child  { background: #33691E; }
+  .r4 .medal-inner { background: radial-gradient(circle at 35% 35%, #33691E, #1b3a0a); }
+
+  /* Decider — blood red */
+  .r5 .ribbon-half:first-child { background: #8B0000; }
+  .r5 .ribbon-half:last-child  { background: #5a0000; }
+  .r5 .medal-inner { background: radial-gradient(circle at 35% 35%, #1a237e, #0d1440); }
+
+  @media print {
+    body { background: white; padding: 10px; gap: 20px; }
+    .page-heading, .print-note { display: none; }
+    .medals-grid { page-break-after: always; }
+    .medal { filter: none; }
+    .medal-ring { box-shadow: 0 0 0 2px #ccc; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-heading">🏅 The Midnight Hunt — Role Medals</div>
+<div class="print-note">Print on cardstock · Cut out each medal · Laminate · Add a ribbon or lanyard · Award at the end of the activity!</div>
+
+<div class="medals-grid">
+
+  <!-- Best Reader -->
+  <div class="medal-wrap">
+    <div class="medal r1">
+      <div class="ribbon-top">
+        <div class="ribbon-half"></div>
+        <div class="ribbon-half"></div>
+      </div>
+      <div class="medal-body">
+        <div class="medal-ring"></div>
+        <div class="medal-inner">
+          <div class="medal-event">The Midnight Hunt</div>
+          <div class="medal-role-icon">📖</div>
+          <div class="medal-role">Best<br>Reader</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">Name</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+  <!-- Best Writer -->
+  <div class="medal-wrap">
+    <div class="medal r2">
+      <div class="ribbon-top">
+        <div class="ribbon-half"></div>
+        <div class="ribbon-half"></div>
+      </div>
+      <div class="medal-body">
+        <div class="medal-ring"></div>
+        <div class="medal-inner">
+          <div class="medal-event">The Midnight Hunt</div>
+          <div class="medal-role-icon">✏️</div>
+          <div class="medal-role">Best<br>Writer</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">Name</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+  <!-- Best Scanner -->
+  <div class="medal-wrap">
+    <div class="medal r3">
+      <div class="ribbon-top">
+        <div class="ribbon-half"></div>
+        <div class="ribbon-half"></div>
+      </div>
+      <div class="medal-body">
+        <div class="medal-ring"></div>
+        <div class="medal-inner">
+          <div class="medal-event">The Midnight Hunt</div>
+          <div class="medal-role-icon">📱</div>
+          <div class="medal-role">Best<br>Scanner</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">Name</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+  <!-- Best Speaker -->
+  <div class="medal-wrap">
+    <div class="medal r4">
+      <div class="ribbon-top">
+        <div class="ribbon-half"></div>
+        <div class="ribbon-half"></div>
+      </div>
+      <div class="medal-body">
+        <div class="medal-ring"></div>
+        <div class="medal-inner">
+          <div class="medal-event">The Midnight Hunt</div>
+          <div class="medal-role-icon">🗣️</div>
+          <div class="medal-role">Best<br>Speaker</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">Name</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+  <!-- Best Decider -->
+  <div class="medal-wrap">
+    <div class="medal r5">
+      <div class="ribbon-top">
+        <div class="ribbon-half"></div>
+        <div class="ribbon-half"></div>
+      </div>
+      <div class="medal-body">
+        <div class="medal-ring"></div>
+        <div class="medal-inner">
+          <div class="medal-event">The Midnight Hunt</div>
+          <div class="medal-role-icon">🎯</div>
+          <div class="medal-role">Best<br>Decider</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">Name</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

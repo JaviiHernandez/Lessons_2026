@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Midnight Hunt — Riddle</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #FF6B1A;
+    --gold: #F9A825;
+    --bg: #0d0521;
+    --card-bg: rgba(255,255,255,0.05);
+    --white: #FFF8F0;
+  }
+
+  body {
+    font-family: 'Fredoka', sans-serif;
+    min-height: 100dvh;
+    background: var(--bg);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+    overflow-x: hidden;
+  }
+
+  /* Animated background particles */
+  .bg-anim {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .bg-particle {
+    position: absolute;
+    font-size: clamp(16px, 3vw, 28px);
+    animation: float-particle linear infinite;
+    opacity: 0.15;
+  }
+
+  @keyframes float-particle {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.15; }
+    90% { opacity: 0.15; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  /* Main layout */
+  .page {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    padding: clamp(16px, 3vw, 32px) clamp(16px, 4vw, 32px);
+    gap: clamp(14px, 2.5vw, 24px);
+  }
+
+  /* Header */
+  .riddle-header {
+    text-align: center;
+    padding: clamp(16px, 3vw, 28px) clamp(16px, 4vw, 28px);
+    border-radius: 20px;
+    border: 3px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .station-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(13px, 2.2vw, 16px);
+    color: rgba(255,255,255,0.9);
+    margin-bottom: clamp(8px, 1.5vw, 14px);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .station-emoji {
+    font-size: clamp(24px, 4vw, 36px);
+    display: block;
+    margin-bottom: clamp(6px, 1.2vw, 10px);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  .location-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(26px, 5.5vw, 48px);
+    line-height: 1.1;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  }
+
+  .location-subtitle {
+    font-size: clamp(14px, 2.5vw, 18px);
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+
+  /* Clues section */
+  .clues-section {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: clamp(16px, 3vw, 28px);
+    backdrop-filter: blur(4px);
+  }
+
+  .clues-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(16px, 3vw, 22px);
+    color: var(--gold);
+    margin-bottom: clamp(12px, 2.5vw, 20px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .clue-cards {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 1.5vw, 12px);
+  }
+
+  .clue-card {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: clamp(10px, 2vw, 16px) clamp(14px, 2.5vw, 20px);
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 2vw, 16px);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  .clue-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .clue-card.active {
+    border-color: var(--gold);
+    background: rgba(249,168,37,0.1);
+    box-shadow: 0 0 20px rgba(249,168,37,0.2);
+  }
+
+  .clue-num {
+    width: clamp(32px, 5vw, 40px);
+    height: clamp(32px, 5vw, 40px);
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.5vw, 18px);
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(255,107,26,0.4);
+  }
+
+  .clue-text {
+    font-size: clamp(14px, 2.5vw, 18px);
+    line-height: 1.5;
+    color: var(--white);
+  }
+
+  .clue-text em {
+    color: var(--gold);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* Next Clue button */
+  .next-clue-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--accent), #e55a0a);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: clamp(12px, 2.5vw, 16px) clamp(24px, 5vw, 36px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(16px, 3vw, 20px);
+    cursor: pointer;
+    margin-top: clamp(12px, 2.5vw, 18px);
+    width: 100%;
+    min-height: 54px;
+    box-shadow: 0 4px 16px rgba(255,107,26,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    touch-action: manipulation;
+  }
+
+  .next-clue-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,107,26,0.5); }
+  .next-clue-btn:active { transform: translateY(0); }
+  .next-clue-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Answer section */
+  .answer-section {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: clamp(16px, 3vw, 28px);
+    backdrop-filter: blur(4px);
+  }
+
+  .answer-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(16px, 3vw, 22px);
+    color: var(--gold);
+    margin-bottom: clamp(12px, 2.5vw, 18px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .answer-input-row {
+    display: flex;
+    gap: clamp(8px, 1.5vw, 12px);
+  }
+
+  .answer-input {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 14px;
+    padding: clamp(12px, 2vw, 16px) clamp(14px, 2.5vw, 20px);
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(16px, 3vw, 20px);
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    min-height: 54px;
+    -webkit-appearance: none;
+  }
+
+  .answer-input::placeholder { color: rgba(255,248,240,0.4); }
+  .answer-input:focus { border-color: var(--gold); background: rgba(255,255,255,0.15); }
+
+  .check-btn {
+    background: linear-gradient(135deg, #F9A825, #f57f17);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: clamp(12px, 2vw, 16px) clamp(18px, 3.5vw, 28px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 18px);
+    cursor: pointer;
+    min-height: 54px;
+    min-width: 100px;
+    box-shadow: 0 4px 16px rgba(249,168,37,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    touch-action: manipulation;
+    white-space: nowrap;
+  }
+
+  .check-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,168,37,0.5); }
+  .check-btn:active { transform: translateY(0); }
+
+  /* Feedback */
+  .feedback {
+    margin-top: clamp(10px, 2vw, 14px);
+    padding: clamp(10px, 2vw, 14px) clamp(14px, 2.5vw, 18px);
+    border-radius: 12px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 18px);
+    text-align: center;
+    display: none;
+    transition: all 0.3s;
+  }
+
+  .feedback.error {
+    display: block;
+    background: rgba(198,40,40,0.2);
+    border: 2px solid #ef5350;
+    color: #ffcdd2;
+    animation: shake 0.4s ease;
+  }
+
+  .feedback.hint {
+    display: block;
+    background: rgba(249,168,37,0.15);
+    border: 2px solid rgba(249,168,37,0.4);
+    color: var(--gold);
+    margin-top: 8px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(13px, 2.2vw, 16px);
+    font-weight: 500;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+  }
+
+  /* Success overlay */
+  .success-panel {
+    display: none;
+    background: rgba(255,255,255,0.07);
+    border: 3px solid var(--gold);
+    border-radius: 20px;
+    padding: clamp(20px, 4vw, 36px) clamp(16px, 4vw, 32px);
+    text-align: center;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    backdrop-filter: blur(8px);
+  }
+
+  .success-panel.visible { display: block; }
+
+  @keyframes pop-in {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .success-emoji-big {
+    font-size: clamp(48px, 10vw, 80px);
+    display: block;
+    margin-bottom: clamp(8px, 1.5vw, 14px);
+    animation: bounce 0.6s ease 0.3s both;
+  }
+
+  @keyframes bounce {
+    0% { transform: translateY(20px); opacity: 0; }
+    60% { transform: translateY(-10px); }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  .success-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(28px, 6vw, 52px);
+    color: var(--gold);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    margin-bottom: 4px;
+  }
+
+  .success-subtitle {
+    font-size: clamp(14px, 2.5vw, 18px);
+    color: rgba(255,248,240,0.8);
+    margin-bottom: clamp(14px, 3vw, 24px);
+  }
+
+  /* Character reveal card */
+  .character-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: clamp(14px, 2.5vw, 22px);
+    margin-bottom: clamp(14px, 2.5vw, 22px);
+    border: 2px solid rgba(255,255,255,0.12);
+    text-align: left;
+  }
+
+  .char-card-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(18px, 3.5vw, 26px);
+    color: var(--gold);
+    margin-bottom: clamp(6px, 1.2vw, 10px);
+  }
+
+  .char-description {
+    font-size: clamp(13px, 2.2vw, 16px);
+    line-height: 1.6;
+    color: rgba(255,248,240,0.9);
+    margin-bottom: clamp(10px, 2vw, 14px);
+    font-style: italic;
+  }
+
+  .fun-facts {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 1.2vw, 10px);
+  }
+
+  .fun-fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: clamp(8px, 1.5vw, 12px) clamp(10px, 2vw, 14px);
+    font-size: clamp(12px, 2vw, 15px);
+    color: rgba(255,248,240,0.85);
+    line-height: 1.4;
+  }
+
+  .fact-icon { font-size: clamp(16px, 2.5vw, 20px); flex-shrink: 0; }
+
+  /* Claim treat button */
+  .claim-btn {
+    background: linear-gradient(135deg, #FF6B1A, #F9A825);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: clamp(14px, 3vw, 20px) clamp(28px, 6vw, 48px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(18px, 3.5vw, 26px);
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255,107,26,0.5);
+    transition: transform 0.15s, box-shadow 0.15s;
+    min-height: 60px;
+    width: 100%;
+    touch-action: manipulation;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 4px 20px rgba(255,107,26,0.4); }
+    100% { box-shadow: 0 4px 40px rgba(249,168,37,0.7), 0 0 60px rgba(255,107,26,0.3); }
+  }
+
+  .claim-btn:hover { transform: translateY(-2px) scale(1.02); }
+
+  /* Treat sticker */
+  .treat-sticker {
+    display: none;
+    margin: clamp(14px, 3vw, 24px) auto 0;
+    text-align: center;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .treat-sticker.visible { display: block; }
+
+  .sticker-circle {
+    width: clamp(100px, 20vw, 140px);
+    height: clamp(100px, 20vw, 140px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #FFE082, #FF6B1A);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto clamp(8px, 1.5vw, 14px);
+    box-shadow: 0 0 40px rgba(255,107,26,0.5), 0 0 0 4px #F9A825, 0 0 0 8px rgba(249,168,37,0.3);
+    animation: spin-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes spin-in {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .sticker-emoji { font-size: clamp(36px, 7vw, 56px); }
+  .sticker-text {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(8px, 1.5vw, 11px);
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .sticker-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(16px, 3vw, 22px);
+    color: var(--gold);
+  }
+
+  /* Confetti */
+  .confetti-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    overflow: hidden;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    animation: confetti-fall linear forwards;
+    top: -20px;
+  }
+
+  @keyframes confetti-fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Tries counter */
+  .tries-info {
+    text-align: center;
+    font-size: clamp(12px, 2vw, 15px);
+    color: rgba(255,248,240,0.5);
+    margin-top: clamp(6px, 1.2vw, 10px);
+  }
+
+  /* Progress dots */
+  .clue-progress {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-top: clamp(10px, 2vw, 16px);
+  }
+
+  .clue-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: background 0.3s;
+  }
+
+  .clue-dot.filled { background: var(--gold); }
+
+  @media (min-width: 600px) {
+    .answer-input-row { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating background particles -->
+<div class="bg-anim" id="bgAnim"></div>
+
+<!-- Confetti container -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<div class="page">
+  <div class="riddle-header" id="riddleHeader">
+    <div class="station-badge" id="stationBadge">⚡ Station 1</div>
+
+    <div class="location-title" id="locationTitle">Haunted House</div>
+    <div class="location-subtitle" id="locationSubtitle">Who is hiding here tonight? 👀</div>
+  </div>
+
+  <div class="clues-section">
+    <div class="clues-title">🔍 Mystery Clues</div>
+    <div class="clue-cards" id="clueCards"></div>
+    <div class="clue-progress" id="clueProgress"></div>
+    <button class="next-clue-btn" id="nextClueBtn" onclick="showNextClue()">Next Clue 👉</button>
+  </div>
+
+  <div class="answer-section" id="answerSection">
+    <div class="answer-title">🤔 Who is it?</div>
+    <div class="answer-input-row">
+      <input class="answer-input" type="text" id="answerInput"
+        placeholder="Type the creature's name…"
+        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+        onkeydown="if(event.key==='Enter')checkAnswer()">
+      <button class="check-btn" onclick="checkAnswer()">Check! ✅</button>
+    </div>
+    <div class="feedback" id="feedbackMsg"></div>
+    <div class="feedback hint" id="hintMsg" style="display:none"></div>
+    <div class="tries-info" id="triesInfo"></div>
+  </div>
+
+  <div class="success-panel" id="successPanel">
+    <span class="success-emoji-big" id="successEmoji">🍬</span>
+    <div class="success-title">TRICK OR TREAT!</div>
+    <div class="success-subtitle" id="successSubtitle">You found the creature! 🎉</div>
+    <div class="character-card">
+      <div class="char-card-name" id="charName"></div>
+      <div class="char-description" id="charDesc"></div>
+      <div class="fun-facts" id="funFacts"></div>
+    </div>
+    <button class="claim-btn" onclick="claimTreat()">🍬 Claim Your Treat!</button>
+    <div class="treat-sticker" id="treatSticker">
+      <div class="sticker-circle">
+        <span class="sticker-emoji" id="stickerEmoji">🍬</span>
+        <span class="sticker-text">Treat!</span>
+      </div>
+      <div class="sticker-label" id="stickerLabel">+1 Treat collected! 🎃</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Station data ──────────────────────────────────────────────
+const STATIONS = {
+  1: {
+    emoji: '🧙‍♀️',
+    location: 'Haunted House',
+    color: ['#6A1B9A', '#9c27b0'],
+    answers: ['witch', 'the witch', 'a witch'],
+    clues: [
+      { text: 'I\'m wearing a <em>black and purple dress</em>.', emoji: '👗' },
+      { text: 'I\'m wearing a <em>pointy hat</em> and <em>striped socks</em>.', emoji: '🎩' },
+      { text: 'I\'m flying on my <em>broom</em>. Wheee! 🧹', emoji: '🧹' },
+      { text: 'Meow! 🐱 I <em>love black cats!</em>', emoji: '🐈‍⬛' },
+    ],
+    description: '"I\'m wearing a black and purple dress, a pointy hat and striped socks. I\'m flying on my broom. I love black cats!"',
+    facts: [
+      { icon: '🌙', text: 'Witches fly on broomsticks on Halloween night!' },
+      { icon: '🐈‍⬛', text: 'A witch\'s cat is called a familiar. They are magic helpers!' },
+      { icon: '⭐', text: 'The pointy hat is the witch\'s most famous accessory!' },
+    ],
+  },
+  2: {
+    emoji: '💀',
+    location: 'Dungeon',
+    color: ['#37474F', '#546E7A'],
+    answers: ['skeleton', 'the skeleton', 'a skeleton'],
+    clues: [
+      { text: 'I\'m <em>not wearing</em> a skirt or a jumper.', emoji: '❌' },
+      { text: 'I\'m <em>not wearing</em> trainers or a coat.', emoji: '❌' },
+      { text: 'I\'m <em>not wearing</em> any clothes at all!', emoji: '😱' },
+      { text: 'I\'m made of <em>bones, bones, bones!</em> Rattlerattle! 🦴', emoji: '🦴' },
+    ],
+    description: '"I\'m not wearing a skirt, no jumper, no trainers… I\'m not wearing clothes — just bones!"',
+    facts: [
+      { icon: '🦴', text: 'The human body has 206 bones! That\'s a lot of rattling!' },
+      { icon: '💀', text: 'Skeletons are very popular Halloween decorations!' },
+      { icon: '🎵', text: 'Skeletons love to dance! They say "click, clack, click!"' },
+    ],
+  },
+  3: {
+    emoji: '🧛',
+    location: 'Old Castle',
+    color: ['#8B0000', '#c62828'],
+    answers: ['vampire', 'the vampire', 'a vampire'],
+    clues: [
+      { text: 'I\'ve got <em>sharp teeth</em> and <em>very white skin</em>.', emoji: '🦷' },
+      { text: 'I\'m wearing a <em>black and red coat</em>.', emoji: '🧥' },
+      { text: 'I\'m wearing very <em>clean black shoes</em>.', emoji: '👞' },
+      { text: 'I <em>don\'t like sunlight!</em> I only come out at night! 🌙', emoji: '🌙' },
+    ],
+    description: '"I\'ve got sharp teeth and white skin. I\'m wearing a black and red coat and very clean black shoes. I don\'t like sunlight!"',
+    facts: [
+      { icon: '🧄', text: 'Vampires hate garlic! It keeps them away!' },
+      { icon: '🦇', text: 'Vampires can transform into bats and fly away!' },
+      { icon: '⚰️', text: 'Vampires sleep in coffins during the day!' },
+    ],
+  },
+  4: {
+    emoji: '👻',
+    location: 'Attic',
+    color: ['#1a237e', '#37474F'],
+    answers: ['ghost', 'the ghost', 'a ghost', 'boo'],
+    clues: [
+      { text: 'I\'m <em>not wearing</em> a scarf or gloves.', emoji: '❌' },
+      { text: 'I\'m <em>not wearing</em> shorts or a hat.', emoji: '❌' },
+      { text: 'My name is <em>Boo</em> 👻 and I\'m living in the attic!', emoji: '🏚️' },
+      { text: '<em>BOO!</em> Did I scare you? I\'m invisible sometimes! 😂', emoji: '👀' },
+    ],
+    description: '"I\'m not wearing a scarf, no gloves, no shorts… My name is Boo and I\'m living in the attic!"',
+    facts: [
+      { icon: '👻', text: 'Ghosts say BOO to scare people on Halloween night!' },
+      { icon: '🌫️', text: 'Ghosts can walk through walls — they don\'t need doors!' },
+      { icon: '💨', text: 'Some ghosts are friendly, like Casper the Friendly Ghost!' },
+    ],
+  },
+  5: {
+    emoji: '🧟',
+    location: 'Cemetery',
+    color: ['#33691E', '#558B2F'],
+    answers: ['zombie', 'the zombie', 'a zombie'],
+    clues: [
+      { text: 'I\'ve got <em>green skin</em>. I look a bit yucky!', emoji: '🟢' },
+      { text: 'I\'m wearing a <em>ripped T-shirt</em> and <em>dirty jeans</em>.', emoji: '👕' },
+      { text: 'I\'m wearing <em>old boots</em>. They are very, very dirty!', emoji: '🥾' },
+      { text: 'I\'m walking <em>very, very slowly…</em> uuuugh! 🧟', emoji: '🚶' },
+    ],
+    description: '"I\'ve got green skin. I\'m wearing a ripped T-shirt, dirty jeans and old boots. I\'m walking around very slowly…"',
+    facts: [
+      { icon: '🧠', text: 'Zombies always say BRAINS! It\'s their favourite word!' },
+      { icon: '🚶', text: 'Zombies walk very slowly — they are never in a hurry!' },
+      { icon: '🪦', text: 'Zombies come from cemeteries on Halloween night!' },
+    ],
+  },
+};
+
+// ── State ──────────────────────────────────────────────────────
+let station = 1;
+let currentClue = 0;
+let tries = 0;
+let solved = false;
+
+// ── Init ──────────────────────────────────────────────────────
+function init() {
+  const params = new URLSearchParams(window.location.search);
+  station = parseInt(params.get('s')) || 1;
+  if (station < 1 || station > 5) station = 1;
+
+  const data = STATIONS[station];
+
+  // Set theme colors
+  document.documentElement.style.setProperty('--theme-a', data.color[0]);
+  document.documentElement.style.setProperty('--theme-b', data.color[1]);
+
+  // Apply gradient to header and body bg
+  document.getElementById('riddleHeader').style.background =
+    `linear-gradient(160deg, ${data.color[0]}cc, ${data.color[1]}99)`;
+  document.getElementById('riddleHeader').style.borderColor =
+    `${data.color[1]}88`;
+  document.body.style.background =
+    `linear-gradient(160deg, ${data.color[0]}22 0%, #0d0521 40%)`;
+
+  // Station info
+  document.getElementById('stationBadge').textContent = `⚡ Station ${station}`;
+  // emoji intentionally hidden to keep the character a mystery
+  document.getElementById('locationTitle').textContent = data.location;
+  document.title = `Station ${station} — ${data.location} · The Midnight Hunt`;
+
+  // Build clue cards (all hidden initially)
+  const clueContainer = document.getElementById('clueCards');
+  const progressContainer = document.getElementById('clueProgress');
+  data.clues.forEach((clue, i) => {
+    const card = document.createElement('div');
+    card.className = 'clue-card';
+    card.id = `clue-${i}`;
+    card.innerHTML = `
+      <div class="clue-num">${i + 1}</div>
+      <div class="clue-text">${clue.emoji} ${clue.text}</div>
+    `;
+    clueContainer.appendChild(card);
+
+    const dot = document.createElement('div');
+    dot.className = 'clue-dot';
+    dot.id = `dot-${i}`;
+    progressContainer.appendChild(dot);
+  });
+
+  // Build background particles
+  const particles = ['🎃', '🦇', '🕷️', '🌙', '⭐', '🍬', '💀'];
+  const bgAnim = document.getElementById('bgAnim');
+  for (let i = 0; i < 12; i++) {
+    const el = document.createElement('div');
+    el.className = 'bg-particle';
+    el.textContent = particles[Math.floor(Math.random() * particles.length)];
+    el.style.left = `${Math.random() * 100}%`;
+    el.style.animationDuration = `${8 + Math.random() * 12}s`;
+    el.style.animationDelay = `${Math.random() * 10}s`;
+    bgAnim.appendChild(el);
+  }
+
+  // Show first clue
+  showClue(0);
+}
+
+function showClue(index) {
+  const el = document.getElementById(`clue-${index}`);
+  const dot = document.getElementById(`dot-${index}`);
+  if (el) {
+    setTimeout(() => {
+      el.classList.add('visible');
+      if (index === currentClue) el.classList.add('active');
+    }, 50);
+  }
+  if (dot) dot.classList.add('filled');
+}
+
+function showNextClue() {
+  const data = STATIONS[station];
+  // Remove active from current
+  const cur = document.getElementById(`clue-${currentClue}`);
+  if (cur) cur.classList.remove('active');
+
+  currentClue++;
+  if (currentClue < data.clues.length) {
+    showClue(currentClue);
+    const next = document.getElementById(`clue-${currentClue}`);
+    if (next) next.classList.add('active');
+  }
+
+  if (currentClue >= data.clues.length - 1) {
+    document.getElementById('nextClueBtn').disabled = true;
+    document.getElementById('nextClueBtn').textContent = 'All clues revealed! 🔍';
+  }
+}
+
+// ── Answer checking ──────────────────────────────────────────
+function normalise(str) {
+  return str.trim().toLowerCase()
+    .replace(/^(the|a)\s+/, '')
+    .replace(/[^a-z]/g, '');
+}
+
+function checkAnswer() {
+  if (solved) return;
+  const input = document.getElementById('answerInput');
+  const val = input.value;
+  if (!val.trim()) return;
+
+  const data = STATIONS[station];
+  const norm = normalise(val);
+  const correct = data.answers.some(a => normalise(a) === norm);
+
+  if (correct) {
+    onSuccess(data);
+  } else {
+    tries++;
+    onWrong(data);
+  }
+}
+
+function onWrong(data) {
+  const fb = document.getElementById('feedbackMsg');
+  const hintMsg = document.getElementById('hintMsg');
+  const tries_el = document.getElementById('triesInfo');
+
+  fb.className = 'feedback error';
+  fb.textContent = '⚠️ Oops! Try again 🎃';
+
+  tries_el.textContent = `Attempt ${tries} — Keep trying! You can do it! 💪`;
+
+  // Progressive hints
+  if (tries === 2) {
+    hintMsg.style.display = 'block';
+    hintMsg.textContent = `💡 Hint: Read clue number ${Math.min(currentClue + 1, data.clues.length)} again!`;
+  } else if (tries >= 3) {
+    const firstLetter = data.answers[0][0].toUpperCase();
+    hintMsg.style.display = 'block';
+    hintMsg.textContent = `💡 Big hint: The answer starts with the letter "${firstLetter}"!`;
+    // Reveal all clues
+    data.clues.forEach((_, i) => showClue(i));
+    currentClue = data.clues.length - 1;
+    document.getElementById('nextClueBtn').disabled = true;
+    document.getElementById('nextClueBtn').textContent = 'All clues revealed! 🔍';
+  }
+
+  // Shake the input
+  const input = document.getElementById('answerInput');
+  input.style.borderColor = '#ef5350';
+  setTimeout(() => { input.style.borderColor = ''; }, 600);
+}
+
+function onSuccess(data) {
+  solved = true;
+
+  // Hide answer section
+  document.getElementById('answerSection').style.display = 'none';
+
+  // Show all clues
+  data.clues.forEach((_, i) => showClue(i));
+
+  // Show success panel
+  const panel = document.getElementById('successPanel');
+  panel.classList.add('visible');
+  panel.style.background = `linear-gradient(160deg, ${data.color[0]}33, rgba(255,255,255,0.07))`;
+  panel.style.borderColor = data.color[1];
+
+  document.getElementById('successEmoji').textContent = data.emoji;
+  document.getElementById('successSubtitle').textContent =
+    `Amazing! You found the ${data.answers[0]}! 🎉`;
+
+  document.getElementById('charName').textContent =
+    `${data.emoji} ${data.answers[0].charAt(0).toUpperCase() + data.answers[0].slice(1)} — Station ${station}`;
+  document.getElementById('charDesc').textContent = data.description;
+
+  const factsEl = document.getElementById('funFacts');
+  data.facts.forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'fun-fact';
+    div.innerHTML = `<span class="fact-icon">${f.icon}</span><span>${f.text}</span>`;
+    factsEl.appendChild(div);
+  });
+
+  // Confetti!
+  launchConfetti(data.color[0], data.color[1]);
+
+  // Save to localStorage
+  const saved = JSON.parse(localStorage.getItem('midnight-hunt-treats') || '[]');
+  if (!saved.includes(station)) {
+    saved.push(station);
+    localStorage.setItem('midnight-hunt-treats', JSON.stringify(saved));
+  }
+}
+
+function claimTreat() {
+  document.getElementById('treatSticker').classList.add('visible');
+  const stickers = ['🍬', '🍭', '🍫', '🍡', '🧁'];
+  document.getElementById('stickerEmoji').textContent =
+    stickers[(station - 1) % stickers.length];
+
+  const saved = JSON.parse(localStorage.getItem('midnight-hunt-treats') || '[]');
+  document.getElementById('stickerLabel').textContent =
+    `+1 Treat collected! Total: ${saved.length}/5 🎃`;
+
+  // Extra confetti burst
+  launchConfetti(STATIONS[station].color[0], STATIONS[station].color[1]);
+
+  // Hide the claim button after clicking
+  document.querySelector('.claim-btn').style.display = 'none';
+}
+
+function launchConfetti(color1, color2) {
+  const container = document.getElementById('confettiContainer');
+  const colors = [color1, color2, '#FF6B1A', '#F9A825', '#ffffff'];
+
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = `${6 + Math.random() * 8}px`;
+    piece.style.height = `${6 + Math.random() * 8}px`;
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    piece.style.animationDuration = `${1.5 + Math.random() * 2}s`;
+    piece.style.animationDelay = `${Math.random() * 0.5}s`;
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), 4000);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
