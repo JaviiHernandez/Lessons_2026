@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1B5E20">
+<title>The Christmas Sports Hunt — Role Medals</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0a1a0f;
+    font-family: 'Fredoka', sans-serif;
+    padding: clamp(16px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(22px, 3.8vw, 44px);
+    overflow-x: hidden;
+  }
+
+  .page-heading {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(20px, 3.8vw, 32px);
+    color: #F9A825;
+    text-align: center;
+    padding-top: clamp(8px, 1.5vw, 16px);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  }
+
+  .print-note {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(249,168,37,0.3);
+    border-radius: 8px;
+    padding: clamp(8px,1.5vw,12px) clamp(16px,3vw,24px);
+    color: rgba(255,248,240,0.65);
+    font-size: clamp(12px,1.8vw,14px);
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .medals-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(22px, 3.8vw, 44px);
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .medal-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .medal {
+    width: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+  }
+
+  /* Ribbon top */
+  .ribbon-top {
+    display: flex;
+    width: 80px;
+    height: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ribbon-half {
+    flex: 1;
+    height: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  }
+
+  /* Medal body */
+  .medal-body {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    margin-top: -6px;
+  }
+
+  /* Outer ring — gold conic */
+  .medal-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+      #F9A825 0deg, #fff3c0 30deg, #F9A825 60deg,
+      #e0a800 90deg, #F9A825 120deg, #fff3c0 150deg,
+      #F9A825 180deg, #e0a800 210deg, #F9A825 240deg,
+      #fff3c0 270deg, #F9A825 300deg, #e0a800 330deg, #F9A825 360deg
+    );
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.2), 0 4px 16px rgba(0,0,0,0.4);
+  }
+
+  /* Inner circle */
+  .medal-inner {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    z-index: 2;
+    border: 3px solid rgba(255,255,255,0.15);
+  }
+
+  .medal-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: repeating-conic-gradient(
+      rgba(255,255,255,0.05) 0deg 15deg,
+      transparent 15deg 30deg
+    );
+  }
+
+  .medal-event {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 8.5px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+    line-height: 1.2;
+    background: rgba(0,0,0,0.35);
+    border-radius: 6px;
+    padding: 2px 6px;
+  }
+
+  .medal-role-icon {
+    font-size: 27px;
+    position: relative;
+    z-index: 3;
+    margin: 2px 0;
+  }
+
+  .medal-role {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 3;
+    line-height: 1.1;
+    padding: 0 6px;
+  }
+
+  /* Name line */
+  .name-area { text-align: center; margin-top: 4px; }
+
+  .name-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .name-line-box {
+    width: 140px;
+    height: 28px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* ── Christmas colour themes ── */
+
+  /* Reader — Christmas Red */
+  .r1 .ribbon-half:first-child { background: #C62828; }
+  .r1 .ribbon-half:last-child  { background: #b71c1c; }
+  .r1 .medal-inner { background: radial-gradient(circle at 35% 35%, #C62828, #7a0000); }
+
+  /* Writer — Pine Green */
+  .r2 .ribbon-half:first-child { background: #2E7D32; }
+  .r2 .ribbon-half:last-child  { background: #1B5E20; }
+  .r2 .medal-inner { background: radial-gradient(circle at 35% 35%, #2E7D32, #0a3010); }
+
+  /* Scanner — Ice Blue */
+  .r3 .ribbon-half:first-child { background: #0288D1; }
+  .r3 .ribbon-half:last-child  { background: #01579B; }
+  .r3 .medal-inner { background: radial-gradient(circle at 35% 35%, #0288D1, #013a6e); }
+
+  /* Speaker — Christmas Gold */
+  .r4 .ribbon-half:first-child { background: #F9A825; }
+  .r4 .ribbon-half:last-child  { background: #F57F17; }
+  .r4 .medal-inner { background: radial-gradient(circle at 35% 35%, #e65100, #8a3200); }
+
+  /* Decider — Deep Navy */
+  .r5 .ribbon-half:first-child { background: #1A237E; }
+  .r5 .ribbon-half:last-child  { background: #0d1654; }
+  .r5 .medal-inner { background: radial-gradient(circle at 35% 35%, #1A237E, #080d3a); }
+
+  @media print {
+    body { background: white; padding: 10px; gap: 18px; }
+    .page-heading, .print-note { display: none; }
+    .medals-grid { page-break-after: always; }
+    .medal { filter: none; }
+    .medal-ring { box-shadow: 0 0 0 2px #ccc; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-heading">🏅 The Christmas Sports Hunt — Role Medals</div>
+<div class="print-note">Print on cardstock · Cut out each medal · Laminate · Add a ribbon or lanyard · Award at the end of the activity!</div>
+
+<div class="medals-grid">
+
+  <!-- Best Reader — Christmas Red -->
+  <div class="medal-wrap">
+    <div class="medal r1">
+      <div class="ribbon-top">
+        <div class="ribbon-half"></div>
+        <div class="ribbon-half"></div>
+      </div>
+      <div class="medal-body">
+        <div class="medal-ring"></div>
+        <div class="medal-inner">
+          <div class="medal-event">Christmas Sports Hunt</div>
+          <div class="medal-role-icon">📖</div>
+          <div class="medal-role">Best<br>Reader</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">Name</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+  <!-- Best Writer — Pine Green -->
+  <div class="medal-wrap">
+    <div class="medal r2">
+      <div class="ribbon-top">
+        <div class="ribbon-half"></div>
+        <div class="ribbon-half"></div>
+      </div>
+      <div class="medal-body">
+        <div class="medal-ring"></div>
+        <div class="medal-inner">
+          <div class="medal-event">Christmas Sports Hunt</div>
+          <div class="medal-role-icon">✏️</div>
+          <div class="medal-role">Best<br>Writer</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">Name</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+  <!-- Best Scanner — Ice Blue -->
+  <div class="medal-wrap">
+    <div class="medal r3">
+      <div class="ribbon-top">
+        <div class="ribbon-half"></div>
+        <div class="ribbon-half"></div>
+      </div>
+      <div class="medal-body">
+        <div class="medal-ring"></div>
+        <div class="medal-inner">
+          <div class="medal-event">Christmas Sports Hunt</div>
+          <div class="medal-role-icon">📱</div>
+          <div class="medal-role">Best<br>Scanner</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">Name</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+  <!-- Best Speaker — Christmas Gold -->
+  <div class="medal-wrap">
+    <div class="medal r4">
+      <div class="ribbon-top">
+        <div class="ribbon-half"></div>
+        <div class="ribbon-half"></div>
+      </div>
+      <div class="medal-body">
+        <div class="medal-ring"></div>
+        <div class="medal-inner">
+          <div class="medal-event">Christmas Sports Hunt</div>
+          <div class="medal-role-icon">🗣️</div>
+          <div class="medal-role">Best<br>Speaker</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">Name</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+  <!-- Best Decider — Deep Navy -->
+  <div class="medal-wrap">
+    <div class="medal r5">
+      <div class="ribbon-top">
+        <div class="ribbon-half"></div>
+        <div class="ribbon-half"></div>
+      </div>
+      <div class="medal-body">
+        <div class="medal-ring"></div>
+        <div class="medal-inner">
+          <div class="medal-event">Christmas Sports Hunt</div>
+          <div class="medal-role-icon">🎯</div>
+          <div class="medal-role">Best<br>Decider</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">Name</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1B5E20">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>The Christmas Sports Hunt — Riddle</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #C62828;
+    --gold: #F9A825;
+    --bg: #0a1a0f;
+    --white: #FFF8F0;
+  }
+
+  body {
+    font-family: 'Fredoka', sans-serif;
+    min-height: 100dvh;
+    background: var(--bg);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .bg-anim {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .bg-particle {
+    position: absolute;
+    font-size: clamp(14px, 2.8vw, 26px);
+    animation: float-particle linear infinite;
+    opacity: 0.12;
+  }
+
+  @keyframes float-particle {
+    0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.12; }
+    90%  { opacity: 0.12; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    padding: clamp(16px, 3vw, 32px) clamp(16px, 4vw, 32px);
+    gap: clamp(14px, 2.5vw, 22px);
+  }
+
+  /* Header */
+  .riddle-header {
+    text-align: center;
+    padding: clamp(16px, 3vw, 26px) clamp(16px, 4vw, 28px);
+    border-radius: 20px;
+    border: 3px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .station-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(13px, 2.2vw, 16px);
+    color: rgba(255,255,255,0.9);
+    margin-bottom: clamp(8px, 1.5vw, 12px);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .station-mystery-big {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(52px, 11vw, 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(80px, 16vw, 110px);
+    height: clamp(80px, 16vw, 110px);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 3px solid rgba(255,255,255,0.25);
+    margin: 0 auto clamp(4px, 1vw, 8px);
+    box-shadow: 0 0 30px rgba(255,255,255,0.1), inset 0 0 20px rgba(255,255,255,0.05);
+    animation: pulse 2s ease-in-out infinite;
+    color: white;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  }
+
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+  .location-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(24px, 5vw, 44px);
+    line-height: 1.1;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  }
+
+  .location-subtitle {
+    font-size: clamp(13px, 2.3vw, 17px);
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+
+  /* Clues section */
+  .clues-section {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: clamp(16px, 3vw, 26px);
+    backdrop-filter: blur(4px);
+  }
+
+  .clues-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--gold);
+    margin-bottom: clamp(12px, 2.5vw, 18px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .clue-cards { display: flex; flex-direction: column; gap: clamp(8px, 1.5vw, 11px); }
+
+  .clue-card {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: clamp(10px, 2vw, 15px) clamp(14px, 2.5vw, 20px);
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 2vw, 16px);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  .clue-card.visible { opacity: 1; transform: translateX(0); }
+
+  .clue-card.active {
+    border-color: var(--gold);
+    background: rgba(249,168,37,0.1);
+    box-shadow: 0 0 18px rgba(249,168,37,0.2);
+  }
+
+  .clue-num {
+    width: clamp(30px, 4.8vw, 38px);
+    height: clamp(30px, 4.8vw, 38px);
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.4vw, 17px);
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(198,40,40,0.4);
+  }
+
+  .clue-text {
+    font-size: clamp(14px, 2.4vw, 17px);
+    line-height: 1.5;
+    color: var(--white);
+  }
+
+  .clue-text em { color: var(--gold); font-style: normal; font-weight: 600; }
+
+  .next-clue-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--accent), #b71c1c);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: clamp(12px, 2.5vw, 15px) clamp(24px, 5vw, 36px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 19px);
+    cursor: pointer;
+    margin-top: clamp(12px, 2.5vw, 16px);
+    width: 100%;
+    min-height: 52px;
+    box-shadow: 0 4px 16px rgba(198,40,40,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    touch-action: manipulation;
+  }
+
+  .next-clue-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(198,40,40,0.5); }
+  .next-clue-btn:active { transform: translateY(0); }
+  .next-clue-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Answer section — multiple choice */
+  .answer-section {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: clamp(16px, 3vw, 26px);
+    backdrop-filter: blur(4px);
+  }
+
+  .answer-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--gold);
+    margin-bottom: clamp(12px, 2.5vw, 16px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .choices-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(8px, 1.5vw, 12px);
+  }
+
+  .choice-btn {
+    background: rgba(255,255,255,0.08);
+    border: 2.5px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: clamp(14px, 2.5vw, 18px) clamp(10px, 2vw, 16px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.4vw, 17px);
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-height: 80px;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .choice-btn .choice-emoji { font-size: clamp(26px, 5vw, 38px); }
+
+  .choice-btn:hover {
+    background: rgba(249,168,37,0.12);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(249,168,37,0.2);
+  }
+
+  .choice-btn:active { transform: scale(0.97); }
+
+  .choice-btn.correct {
+    background: rgba(27,94,32,0.4);
+    border-color: #66BB6A;
+    box-shadow: 0 0 20px rgba(102,187,106,0.4);
+    animation: correct-flash 0.4s ease;
+  }
+
+  .choice-btn.wrong {
+    background: rgba(198,40,40,0.3);
+    border-color: #ef5350;
+    animation: shake 0.4s ease;
+    opacity: 0.6;
+  }
+
+  @keyframes correct-flash {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+
+  .feedback {
+    margin-top: clamp(10px, 2vw, 14px);
+    padding: clamp(10px, 2vw, 13px) clamp(14px, 2.5vw, 18px);
+    border-radius: 12px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.6vw, 17px);
+    text-align: center;
+    display: none;
+  }
+
+  .feedback.error {
+    display: block;
+    background: rgba(198,40,40,0.2);
+    border: 2px solid #ef5350;
+    color: #ffcdd2;
+  }
+
+  .tries-info {
+    text-align: center;
+    font-size: clamp(11px, 1.8vw, 14px);
+    color: rgba(255,248,240,0.5);
+    margin-top: clamp(6px, 1.2vw, 10px);
+  }
+
+  .clue-progress { display: flex; gap: 6px; justify-content: center; margin-top: clamp(10px, 2vw, 14px); }
+  .clue-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); transition: background 0.3s; }
+  .clue-dot.filled { background: var(--gold); }
+
+  /* Success panel */
+  .success-panel {
+    display: none;
+    background: rgba(255,255,255,0.07);
+    border: 3px solid var(--gold);
+    border-radius: 20px;
+    padding: clamp(20px, 4vw, 34px) clamp(16px, 4vw, 30px);
+    text-align: center;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    backdrop-filter: blur(8px);
+  }
+
+  .success-panel.visible { display: block; }
+
+  @keyframes pop-in {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .success-emoji-big {
+    font-size: clamp(46px, 9vw, 76px);
+    display: block;
+    margin-bottom: clamp(8px, 1.5vw, 12px);
+    animation: bounce 0.6s ease 0.3s both;
+  }
+
+  @keyframes bounce {
+    0% { transform: translateY(20px); opacity: 0; }
+    60% { transform: translateY(-10px); }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  .success-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(26px, 5.5vw, 50px);
+    color: var(--gold);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    margin-bottom: 4px;
+  }
+
+  .success-subtitle {
+    font-size: clamp(13px, 2.4vw, 17px);
+    color: rgba(255,248,240,0.8);
+    margin-bottom: clamp(14px, 3vw, 22px);
+  }
+
+  .character-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: clamp(14px, 2.5vw, 20px);
+    margin-bottom: clamp(14px, 2.5vw, 20px);
+    border: 2px solid rgba(255,255,255,0.12);
+    text-align: left;
+  }
+
+  .char-card-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(17px, 3.3vw, 24px);
+    color: var(--gold);
+    margin-bottom: clamp(6px, 1.2vw, 9px);
+  }
+
+  .char-description {
+    font-size: clamp(12px, 2vw, 15px);
+    line-height: 1.6;
+    color: rgba(255,248,240,0.9);
+    margin-bottom: clamp(10px, 2vw, 13px);
+    font-style: italic;
+  }
+
+  .fun-facts { display: flex; flex-direction: column; gap: clamp(6px, 1.2vw, 9px); }
+
+  .fun-fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: clamp(7px, 1.4vw, 11px) clamp(10px, 2vw, 13px);
+    font-size: clamp(12px, 1.9vw, 14px);
+    color: rgba(255,248,240,0.85);
+    line-height: 1.4;
+  }
+
+  .fact-icon { font-size: clamp(15px, 2.4vw, 19px); flex-shrink: 0; }
+
+  .claim-btn {
+    background: linear-gradient(135deg, #C62828, #F9A825);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: clamp(14px, 3vw, 19px) clamp(28px, 6vw, 46px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(17px, 3.3vw, 24px);
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(198,40,40,0.5);
+    transition: transform 0.15s, box-shadow 0.15s;
+    min-height: 58px;
+    width: 100%;
+    touch-action: manipulation;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 4px 20px rgba(198,40,40,0.4); }
+    100% { box-shadow: 0 4px 40px rgba(249,168,37,0.7), 0 0 60px rgba(198,40,40,0.3); }
+  }
+
+  .claim-btn:hover { transform: translateY(-2px) scale(1.02); }
+
+  .treat-sticker {
+    display: none;
+    margin: clamp(14px, 3vw, 22px) auto 0;
+    text-align: center;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .treat-sticker.visible { display: block; }
+
+  .sticker-circle {
+    width: clamp(96px, 19vw, 134px);
+    height: clamp(96px, 19vw, 134px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #FFE082, #C62828);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto clamp(8px, 1.5vw, 12px);
+    box-shadow: 0 0 40px rgba(198,40,40,0.5), 0 0 0 4px #F9A825, 0 0 0 8px rgba(249,168,37,0.3);
+    animation: spin-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes spin-in {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .sticker-emoji { font-size: clamp(34px, 6.5vw, 52px); }
+  .sticker-text {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(7px, 1.3vw, 10px);
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .sticker-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--gold);
+  }
+
+  /* Confetti */
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    animation: confetti-fall linear forwards;
+    top: -20px;
+  }
+
+  @keyframes confetti-fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  @media (min-width: 600px) {
+    .choices-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bg-particle, .station-flag-big { animation: none; }
+    .clue-card { transition: none; }
+    .confetti-piece { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-anim" id="bgAnim"></div>
+<div class="confetti-container" id="confettiContainer"></div>
+
+<div class="page">
+  <div class="riddle-header" id="riddleHeader">
+    <div class="station-badge" id="stationBadge">⭐ Station 1</div>
+    <div class="station-mystery-big" id="stationMystery">?</div>
+    <div class="location-title" id="locationTitle">Mystery Sport</div>
+    <div class="location-subtitle" id="locationSubtitle">Read the clues and find the sport! 🔍</div>
+  </div>
+
+  <div class="clues-section">
+    <div class="clues-title">🔍 Clues from the Detective!</div>
+    <div class="clue-cards" id="clueCards"></div>
+    <div class="clue-progress" id="clueProgress"></div>
+    <button class="next-clue-btn" id="nextClueBtn" onclick="showNextClue()">Next Clue 👉</button>
+  </div>
+
+  <div class="answer-section" id="answerSection">
+    <div class="answer-title">🤔 Which sport is it?</div>
+    <div class="choices-grid" id="choicesGrid"></div>
+    <div class="feedback" id="feedbackMsg"></div>
+    <div class="tries-info" id="triesInfo"></div>
+  </div>
+
+  <div class="success-panel" id="successPanel">
+    <span class="success-emoji-big" id="successEmoji">🎁</span>
+    <div class="success-title">SPORT FOUND!</div>
+    <div class="success-subtitle" id="successSubtitle">Amazing! You're a real detective! 🎉</div>
+    <div class="character-card">
+      <div class="char-card-name" id="charName"></div>
+      <div class="char-description" id="charDesc"></div>
+      <div class="fun-facts" id="funFacts"></div>
+    </div>
+    <button class="claim-btn" onclick="claimGift()">🎁 Claim Your Gift!</button>
+    <div class="treat-sticker" id="treatSticker">
+      <div class="sticker-circle">
+        <span class="sticker-emoji" id="stickerEmoji">🎁</span>
+        <span class="sticker-text">Sport!</span>
+      </div>
+      <div class="sticker-label" id="stickerLabel">+1 Sport found! Total: 1/5 🎄</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const STATIONS = {
+  1: {
+    flag: '🇬🇧',
+    location: 'London Stadium',
+    subtitle: 'United Kingdom — Boxing Day ⚽',
+    color: ['#1A237E', '#283593'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '⚽', label: 'Soccer' },
+      { emoji: '🏀', label: 'Basketball' },
+      { emoji: '🎾', label: 'Tennis' },
+      { emoji: '🏐', label: 'Volleyball' },
+    ],
+    clues: [
+      { text: "I'm running on <em>green grass!</em> 🌿", emoji: '🌿' },
+      { text: "I'm playing with my <em>feet</em> — no hands allowed! 🦵", emoji: '🦵' },
+      { text: "I'm <em>fast and strong!</em> 11 friends play with me!", emoji: '⚡' },
+      { text: "On <em>Boxing Day</em> (26th December) everybody watches me on TV! 📺", emoji: '📺' },
+    ],
+    description: '"I\'m running on green grass! I\'m playing with my feet — no hands allowed! I can score goals with a kick! On Boxing Day, families watch me on TV!"',
+    facts: [
+      { icon: '📅', text: 'On Boxing Day (26th December), all big football teams play special matches in the UK!' },
+      { icon: '🧣', text: 'Families wear their team\'s scarf and watch together — a tradition over 100 years old!' },
+      { icon: '⚽', text: 'The UK calls it "football" — in the USA it\'s called "soccer"!' },
+    ],
+    character: 'Lucy the Lioness 🦁',
+  },
+  2: {
+    flag: '🇺🇸',
+    location: 'NFL Stadium',
+    subtitle: 'United States — Christmas Day 🏈',
+    color: ['#0D47A1', '#1565C0'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🏈', label: 'Am. Football' },
+      { emoji: '⚾', label: 'Baseball' },
+      { emoji: '🏒', label: 'Ice Hockey' },
+      { emoji: '🎿', label: 'Skiing' },
+    ],
+    clues: [
+      { text: "I'm running <em>very fast!</em> I'm wearing a big <em>helmet and shoulder pads!</em> 🪖", emoji: '🪖' },
+      { text: "I'm <em>strong and brave!</em> I'm playing with my <em>hands!</em> 🙌", emoji: '🙌' },
+      { text: "I'm throwing a <em>brown oval ball!</em> 🏈", emoji: '🏈' },
+      { text: "On <em>Christmas Day</em>, families eat turkey and watch me on the big screen! 📺", emoji: '📺' },
+    ],
+    description: '"I\'m running very fast! I\'m wearing a big helmet and shoulder pads! On Christmas Day, families open presents and then watch me play!"',
+    facts: [
+      { icon: '🦅', text: 'NFL football games on Christmas Day are a huge American tradition!' },
+      { icon: '🍗', text: 'Families open presents in the morning and watch football together in the afternoon!' },
+      { icon: '🏟️', text: 'American Football stadiums hold more than 80,000 fans — they are enormous!' },
+    ],
+    character: 'Brave Bobby Eagle 🦅',
+  },
+  3: {
+    flag: '🇨🇦',
+    location: 'Frozen Lake',
+    subtitle: 'Canada — Winter Christmas ❄️',
+    color: ['#B71C1C', '#C62828'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🏒', label: 'Ice Hockey' },
+      { emoji: '⛷️', label: 'Skiing' },
+      { emoji: '🛷', label: 'Sledging' },
+      { emoji: '⛸️', label: 'Figure Skating' },
+    ],
+    clues: [
+      { text: "I'm skating on <em>cold, frozen ice!</em> ❄️", emoji: '❄️' },
+      { text: "I'm wearing a <em>helmet, gloves and skates!</em> 🥅", emoji: '🥅' },
+      { text: "I can score goals with my <em>long stick!</em> I'm <em>super fast!</em> ⚡", emoji: '🏒' },
+      { text: "In my country, <em>ice and snow are everywhere</em> at Christmas! 🍁", emoji: '🍁' },
+    ],
+    description: '"I\'m skating on cold, frozen ice! I\'m wearing a helmet, gloves and skates. I can score goals with my long stick! Ice and snow everywhere at Christmas!"',
+    facts: [
+      { icon: '🍁', text: 'In Canada, families play pond hockey on frozen lakes at Christmas!' },
+      { icon: '🎁', text: 'Many Canadian kids get new ice skates as a Christmas present and play outside all day!' },
+      { icon: '🏒', text: 'Ice hockey is Canada\'s national winter sport — Canadians love it!' },
+    ],
+    character: 'Cool Carl Moose 🫎',
+  },
+  4: {
+    flag: '🇦🇺',
+    location: 'Sunny Beach',
+    subtitle: 'Australia & New Zealand — Summer Christmas ☀️',
+    color: ['#006064', '#00838F'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🏄', label: 'Cricket+Surfing' },
+      { emoji: '🏊', label: 'Swimming' },
+      { emoji: '🎾', label: 'Tennis' },
+      { emoji: '🏐', label: 'Beach Volleyball' },
+    ],
+    clues: [
+      { text: "Surprise! Here, Christmas is in <em>summer!</em> ☀️🏖️", emoji: '☀️' },
+      { text: "I'm at the <em>beach</em> with a <em>Santa hat!</em> It's hot and sunny! 🎅", emoji: '🎅' },
+      { text: "I'm hitting a <em>small red ball</em> with a flat wooden bat — <em>OR</em> catching big waves on a board! 🏄", emoji: '🌊' },
+      { text: "I can <em>swim, run and surf!</em> December is our <em>summer</em> holiday! 🌞", emoji: '🌞' },
+    ],
+    description: '"Here Christmas is in summer! I\'m at the beach with a Santa hat! I\'m hitting a ball with a bat, or surfing big waves. I can swim, run and surf!"',
+    facts: [
+      { icon: '☀️', text: 'In Australia and New Zealand, December is summer — families spend Christmas at the beach!' },
+      { icon: '🎅', text: 'Aussie families play beach cricket wearing Santa hats — it\'s a unique Christmas tradition!' },
+      { icon: '📺', text: 'The famous Boxing Day Test cricket match is watched by millions every year!' },
+    ],
+    character: 'Sunny Sammy Kangaroo 🦘',
+  },
+  5: {
+    flag: '🇮🇪',
+    location: 'Leopardstown Track',
+    subtitle: 'Ireland — St Stephen\'s Day 🍀',
+    color: ['#1B5E20', '#2E7D32'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🐎', label: 'Horse Racing' },
+      { emoji: '🏑', label: 'Hurling' },
+      { emoji: '🎿', label: 'Skiing' },
+      { emoji: '🎯', label: 'Archery' },
+    ],
+    clues: [
+      { text: "I'm riding a <em>beautiful, fast animal!</em> 🐴", emoji: '🐴' },
+      { text: "I'm wearing <em>colourful silk clothes</em> and a small <em>helmet!</em> 🪖", emoji: '🪖' },
+      { text: "We're running on a <em>big green track!</em> 🌿", emoji: '🌿' },
+      { text: "On <em>26th December (St Stephen's Day)</em> thousands of people come to cheer! 🎉", emoji: '🎉' },
+    ],
+    description: '"I\'m riding a beautiful, fast horse! I\'m wearing colourful silk clothes and a small helmet. We run on a big green track on St Stephen\'s Day!"',
+    facts: [
+      { icon: '🍀', text: 'The Leopardstown Christmas Festival is a huge horse racing event in Ireland!' },
+      { icon: '📅', text: 'It started in 1888 and thousands of families go every year on 26th December!' },
+      { icon: '🐎', text: 'The jockey (horse rider) wears bright silk clothes — each horse has different colours!' },
+    ],
+    character: 'Lucky Liam Leprechaun 🍀',
+  },
+};
+
+let station = 1;
+let currentClue = 0;
+let tries = 0;
+let solved = false;
+
+function init() {
+  const params = new URLSearchParams(window.location.search);
+  station = parseInt(params.get('s')) || 1;
+  if (station < 1 || station > 5) station = 1;
+
+  const data = STATIONS[station];
+
+  document.getElementById('riddleHeader').style.background =
+    `linear-gradient(160deg, ${data.color[0]}cc, ${data.color[1]}99)`;
+  document.getElementById('riddleHeader').style.borderColor = `${data.color[1]}88`;
+  document.body.style.background =
+    `linear-gradient(160deg, ${data.color[0]}33 0%, #0a1a0f 40%)`;
+
+  document.getElementById('stationBadge').textContent = `⭐ Station ${station}`;
+  document.getElementById('stationMystery').textContent = '?';
+  document.getElementById('locationTitle').textContent = `Mystery Sport`;
+  document.getElementById('locationSubtitle').textContent = 'Read the clues and find the sport! 🔍';
+  document.title = `Station ${station} · Christmas Sports Hunt`;
+
+  // Build clue cards
+  const clueContainer = document.getElementById('clueCards');
+  const progressContainer = document.getElementById('clueProgress');
+  data.clues.forEach((clue, i) => {
+    const card = document.createElement('div');
+    card.className = 'clue-card';
+    card.id = `clue-${i}`;
+    card.innerHTML = `<div class="clue-num">${i + 1}</div><div class="clue-text">${clue.emoji} ${clue.text}</div>`;
+    clueContainer.appendChild(card);
+
+    const dot = document.createElement('div');
+    dot.className = 'clue-dot';
+    dot.id = `dot-${i}`;
+    progressContainer.appendChild(dot);
+  });
+
+  // Build answer choices
+  const grid = document.getElementById('choicesGrid');
+  data.choices.forEach((choice, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.id = `choice-${i}`;
+    btn.innerHTML = `<span class="choice-emoji">${choice.emoji}</span><span>${choice.label}</span>`;
+    btn.addEventListener('click', () => checkChoice(i));
+    grid.appendChild(btn);
+  });
+
+  // Background particles
+  const particles = ['❄️', '⭐', '🎄', '🎁', '🔔', '☃️', '🎅'];
+  const bgAnim = document.getElementById('bgAnim');
+  for (let i = 0; i < 14; i++) {
+    const el = document.createElement('div');
+    el.className = 'bg-particle';
+    el.textContent = particles[Math.floor(Math.random() * particles.length)];
+    el.style.left = `${Math.random() * 100}%`;
+    el.style.animationDuration = `${9 + Math.random() * 12}s`;
+    el.style.animationDelay = `${Math.random() * 10}s`;
+    bgAnim.appendChild(el);
+  }
+
+  showClue(0);
+}
+
+function showClue(index) {
+  const el = document.getElementById(`clue-${index}`);
+  const dot = document.getElementById(`dot-${index}`);
+  if (el) {
+    setTimeout(() => {
+      el.classList.add('visible');
+      if (index === currentClue) el.classList.add('active');
+    }, 50);
+  }
+  if (dot) dot.classList.add('filled');
+}
+
+function showNextClue() {
+  const data = STATIONS[station];
+  const cur = document.getElementById(`clue-${currentClue}`);
+  if (cur) cur.classList.remove('active');
+
+  currentClue++;
+  if (currentClue < data.clues.length) {
+    showClue(currentClue);
+    const next = document.getElementById(`clue-${currentClue}`);
+    if (next) next.classList.add('active');
+  }
+
+  if (currentClue >= data.clues.length - 1) {
+    document.getElementById('nextClueBtn').disabled = true;
+    document.getElementById('nextClueBtn').textContent = 'All clues revealed! 🔍';
+  }
+}
+
+function checkChoice(index) {
+  if (solved) return;
+  const data = STATIONS[station];
+  const btn = document.getElementById(`choice-${index}`);
+
+  if (index === data.correctIndex) {
+    btn.classList.add('correct');
+    // Disable all buttons
+    for (let i = 0; i < 4; i++) {
+      const b = document.getElementById(`choice-${i}`);
+      if (b) b.disabled = true;
+    }
+    onSuccess(data);
+  } else {
+    btn.classList.add('wrong');
+    setTimeout(() => btn.classList.remove('wrong'), 700);
+    tries++;
+    onWrong(data);
+  }
+}
+
+function onWrong(data) {
+  const fb = document.getElementById('feedbackMsg');
+  const tries_el = document.getElementById('triesInfo');
+  fb.className = 'feedback error';
+  fb.textContent = '⚠️ Not quite! Try again! 💪';
+  tries_el.textContent = `Attempt ${tries} — You can do it! Think about the clues!`;
+  if (tries >= 2) {
+    data.clues.forEach((_, i) => showClue(i));
+    currentClue = data.clues.length - 1;
+    document.getElementById('nextClueBtn').disabled = true;
+    document.getElementById('nextClueBtn').textContent = 'All clues revealed! 🔍';
+  }
+}
+
+function onSuccess(data) {
+  solved = true;
+  document.getElementById('answerSection').style.display = 'none';
+  data.clues.forEach((_, i) => showClue(i));
+
+  const panel = document.getElementById('successPanel');
+  panel.classList.add('visible');
+  panel.style.background = `linear-gradient(160deg, ${data.color[0]}33, rgba(255,255,255,0.07))`;
+  panel.style.borderColor = data.color[1];
+
+  document.getElementById('successEmoji').textContent = data.choices[0].emoji;
+  document.getElementById('successSubtitle').textContent = `Amazing! You found the sport! 🎉`;
+  document.getElementById('charName').textContent = `${data.choices[0].emoji} ${data.choices[0].label} — ${data.location}`;
+  document.getElementById('charDesc').textContent = data.description;
+
+  const factsEl = document.getElementById('funFacts');
+  data.facts.forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'fun-fact';
+    div.innerHTML = `<span class="fact-icon">${f.icon}</span><span>${f.text}</span>`;
+    factsEl.appendChild(div);
+  });
+
+  launchConfetti(data.color[0], data.color[1]);
+
+  const saved = JSON.parse(localStorage.getItem('christmas-sports-hunt') || '[]');
+  if (!saved.includes(station)) {
+    saved.push(station);
+    localStorage.setItem('christmas-sports-hunt', JSON.stringify(saved));
+  }
+}
+
+function claimGift() {
+  document.getElementById('treatSticker').classList.add('visible');
+  const stickers = ['⚽', '🏈', '🏒', '🏄', '🐎'];
+  document.getElementById('stickerEmoji').textContent = stickers[(station - 1) % stickers.length];
+
+  const saved = JSON.parse(localStorage.getItem('christmas-sports-hunt') || '[]');
+  document.getElementById('stickerLabel').textContent =
+    `+1 Sport found! Total: ${saved.length}/5 🎄`;
+
+  launchConfetti(STATIONS[station].color[0], STATIONS[station].color[1]);
+  document.querySelector('.claim-btn').style.display = 'none';
+}
+
+function launchConfetti(color1, color2) {
+  const container = document.getElementById('confettiContainer');
+  const colors = [color1, color2, '#C62828', '#F9A825', '#1B5E20', '#81D4FA', '#ffffff'];
+  for (let i = 0; i < 64; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = `${5 + Math.random() * 8}px`;
+    piece.style.height = `${5 + Math.random() * 8}px`;
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    piece.style.animationDuration = `${1.4 + Math.random() * 2}s`;
+    piece.style.animationDelay = `${Math.random() * 0.5}s`;
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), 4000);
+  }
+}
+
+init();
+</script>
+</body>
+</html>

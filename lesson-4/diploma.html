@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1B5E20">
+<title>The Christmas Sports Hunt — Diploma</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0a1a0f;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100dvh;
+    padding: clamp(8px, 2vw, 24px);
+    font-family: 'Fredoka', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .printable-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: clamp(8px, 2vw, 32px);
+  }
+
+  .diploma {
+    width: 794px;
+    min-height: 1123px;
+    max-width: 100%;
+    background: #FFF8F0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* Decorative double border */
+  .diploma::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 3px solid #C62828;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .diploma::after {
+    content: '';
+    position: absolute;
+    inset: 18px;
+    border: 1px solid rgba(198,40,40,0.3);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Corner decorations */
+  .corner-deco {
+    position: absolute;
+    font-size: clamp(26px, 3.8vw, 40px);
+    z-index: 11;
+    line-height: 1;
+  }
+  .c-tl { top: 24px; left: 24px; }
+  .c-tr { top: 24px; right: 24px; }
+  .c-bl { bottom: 24px; left: 24px; }
+  .c-br { bottom: 24px; right: 24px; }
+
+  /* Subtle bg texture */
+  .bg-texture {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(27,94,32,0.04) 0%, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(198,40,40,0.04) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  /* Christmas sky header */
+  .diploma-sky {
+    width: 100%;
+    background: linear-gradient(180deg, #040d1a 0%, #0a1a2e 55%, #0d2240 100%);
+    padding: 32px 60px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Stars in sky */
+  .sky-star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+
+  /* Star of Bethlehem at top center */
+  .sky-star-big {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    filter: drop-shadow(0 0 10px #F9A825);
+    line-height: 1;
+  }
+
+  /* Flying reindeer */
+  .sky-reindeer {
+    position: absolute;
+    top: 14px;
+    font-size: 20px;
+    opacity: 0.65;
+  }
+
+  /* Christmas village silhouette */
+  .christmas-skyline {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0;
+    margin-top: 16px;
+    height: 56px;
+  }
+
+  .snowflake-row {
+    display: flex;
+    justify-content: space-around;
+    font-size: 16px;
+    margin-top: 6px;
+    opacity: 0.6;
+    color: white;
+  }
+
+  /* Main diploma content */
+  .diploma-body {
+    flex: 1;
+    width: 100%;
+    padding: 28px 60px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(14px, 2.2vw, 22px);
+    position: relative;
+    z-index: 2;
+  }
+
+  .diploma-eyebrow {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(11px, 1.7vw, 14px);
+    color: #C62828;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+  }
+
+  .diploma-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(36px, 6.5vw, 60px);
+    color: #1B5E20;
+    text-align: center;
+    line-height: 1.05;
+    text-shadow: 3px 3px 0 rgba(27,94,32,0.12);
+  }
+
+  .diploma-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(13px, 2vw, 17px);
+    color: #C62828;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+
+  .gold-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 80%;
+  }
+
+  .gold-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #F9A825, transparent);
+  }
+
+  .gold-icon { font-size: 20px; }
+
+  .awarded-text {
+    font-size: clamp(14px, 2vw, 17px);
+    color: #555;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .awarded-name-box {
+    width: min(480px, 100%);
+    height: clamp(44px, 6vw, 54px);
+    border-bottom: 3px solid #C62828;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 6px;
+    position: relative;
+  }
+
+  .awarded-name-label {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(10px, 1.5vw, 12px);
+    color: #aaa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: -19px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .awarded-body {
+    font-size: clamp(13px, 1.9vw, 15px);
+    color: #444;
+    text-align: center;
+    line-height: 1.85;
+    max-width: 560px;
+    padding-top: 22px;
+  }
+
+  .awarded-body strong { color: #1B5E20; font-weight: 600; }
+  .awarded-body em { color: #C62828; font-style: normal; font-weight: 600; }
+
+  /* Mini badges row */
+  .badges-row {
+    display: flex;
+    gap: clamp(8px, 1.8vw, 16px);
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: clamp(10px, 1.8vw, 16px) 0;
+  }
+
+  .mini-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: white;
+    border-radius: 12px;
+    padding: 9px 12px;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    min-width: 70px;
+  }
+
+  .badge-emoji { font-size: 22px; }
+  .badge-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .mb1 { border-color: #1A237E; } .mb1 .badge-name { color: #1A237E; }
+  .mb2 { border-color: #0D47A1; } .mb2 .badge-name { color: #0D47A1; }
+  .mb3 { border-color: #C62828; } .mb3 .badge-name { color: #C62828; }
+  .mb4 { border-color: #006064; } .mb4 .badge-name { color: #006064; }
+  .mb5 { border-color: #1B5E20; } .mb5 .badge-name { color: #1B5E20; }
+
+  /* Signature area */
+  .signatures {
+    display: flex;
+    gap: clamp(24px, 5vw, 60px);
+    justify-content: center;
+    width: 100%;
+    padding: clamp(10px, 1.8vw, 18px) 0 0;
+  }
+
+  .sig-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 160px;
+  }
+
+  .sig-line { width: 160px; height: 1px; background: #ccc; margin-bottom: 6px; }
+
+  .sig-label { font-size: clamp(11px, 1.5vw, 13px); color: #888; text-align: center; font-style: italic; }
+
+  /* Footer */
+  .diploma-footer {
+    width: 100%;
+    background: linear-gradient(90deg, #C62828, #F9A825, #1B5E20, #F9A825, #C62828);
+    padding: clamp(10px, 1.8vw, 15px);
+    text-align: center;
+    margin-top: auto;
+  }
+
+  .diploma-footer-text {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(12px, 2vw, 16px);
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.25);
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 820px) {
+    .diploma { transform: scale(calc(100vw / 820)); transform-origin: top center; }
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .printable-wrap { padding: 0; }
+    .diploma { box-shadow: none; transform: none !important; width: 794px; min-height: 1123px; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="printable-wrap">
+<div class="diploma">
+  <div class="bg-texture"></div>
+
+  <!-- Corner decorations -->
+  <div class="corner-deco c-tl">🎄</div>
+  <div class="corner-deco c-tr">🎄</div>
+  <div class="corner-deco c-bl">🎁</div>
+  <div class="corner-deco c-br">🎁</div>
+
+  <!-- Christmas Sky Header -->
+  <div class="diploma-sky">
+    <!-- Stars -->
+    <div class="sky-star" style="width:2px;height:2px;top:18%;left:10%"></div>
+    <div class="sky-star" style="width:3px;height:3px;top:30%;left:22%"></div>
+    <div class="sky-star" style="width:2px;height:2px;top:12%;left:40%"></div>
+    <div class="sky-star" style="width:2px;height:2px;top:25%;left:70%"></div>
+    <div class="sky-star" style="width:3px;height:3px;top:15%;left:82%"></div>
+    <div class="sky-star" style="width:2px;height:2px;top:35%;left:90%"></div>
+
+    <!-- Star of Bethlehem -->
+    <div class="sky-star-big">⭐</div>
+
+    <!-- Flying reindeer -->
+    <div class="sky-reindeer" style="left:6%">🦌</div>
+    <div class="sky-reindeer" style="left:14%;font-size:15px;top:20px;">🦌</div>
+    <div class="sky-reindeer" style="right:8%">🦌</div>
+    <div class="sky-reindeer" style="right:16%;font-size:15px;top:22px;">🦌</div>
+
+    <!-- Christmas village skyline -->
+    <div class="christmas-skyline">
+      <svg viewBox="0 0 560 58" xmlns="http://www.w3.org/2000/svg" style="width:min(520px,82%);height:52px;">
+        <!-- Ground -->
+        <rect x="0" y="52" width="560" height="6" fill="#040d1a"/>
+        <!-- Snow ground strip -->
+        <ellipse cx="280" cy="52" rx="300" ry="5" fill="white" opacity="0.85"/>
+        <!-- Left houses -->
+        <rect x="10" y="30" width="38" height="28" fill="#040d1a"/>
+        <polygon points="10,30 29,12 48,30" fill="#040d1a"/>
+        <rect x="18" y="38" width="8" height="9" fill="#F9A825" opacity="0.7"/>
+        <rect x="30" y="38" width="8" height="9" fill="#81D4FA" opacity="0.6"/>
+        <!-- Snow on roof -->
+        <polygon points="10,30 29,12 48,30" fill="white" opacity="0.55" clip-path="inset(0 0 18px 0)"/>
+
+        <rect x="56" y="36" width="32" height="22" fill="#040d1a"/>
+        <polygon points="56,36 72,20 88,36" fill="#040d1a"/>
+        <rect x="62" y="42" width="7" height="8" fill="#F9A825" opacity="0.6"/>
+        <polygon points="56,36 72,20 88,36" fill="white" opacity="0.5" clip-path="inset(0 0 14px 0)"/>
+
+        <!-- Central Christmas Tree (big) -->
+        <polygon points="244,56 280,8 316,56" fill="#1B5E20"/>
+        <polygon points="252,50 280,18 308,50" fill="#2E7D32"/>
+        <polygon points="260,40 280,24 300,40" fill="#388E3C"/>
+        <!-- Star on top -->
+        <text x="272" y="14" font-size="12" fill="#F9A825">⭐</text>
+        <!-- Trunk -->
+        <rect x="274" y="56" width="12" height="6" fill="#5D4037"/>
+        <!-- Lights -->
+        <circle cx="264" cy="48" r="2.5" fill="#C62828"/>
+        <circle cx="271" cy="38" r="2.5" fill="#F9A825"/>
+        <circle cx="279" cy="30" r="2" fill="#81D4FA"/>
+        <circle cx="290" cy="34" r="2.5" fill="#C62828"/>
+        <circle cx="297" cy="44" r="2.5" fill="#F9A825"/>
+
+        <!-- Right houses -->
+        <rect x="320" y="32" width="36" height="26" fill="#040d1a"/>
+        <polygon points="320,32 338,14 356,32" fill="#040d1a"/>
+        <polygon points="320,32 338,14 356,32" fill="white" opacity="0.5" clip-path="inset(0 0 16px 0)"/>
+        <rect x="328" y="40" width="8" height="9" fill="#F9A825" opacity="0.65"/>
+
+        <rect x="364" y="36" width="34" height="22" fill="#040d1a"/>
+        <polygon points="364,36 381,20 398,36" fill="#040d1a"/>
+        <rect x="372" y="44" width="7" height="8" fill="#81D4FA" opacity="0.6"/>
+
+        <rect x="406" y="28" width="42" height="30" fill="#040d1a"/>
+        <polygon points="406,28 427,8 448,28" fill="#040d1a"/>
+        <polygon points="406,28 427,8 448,28" fill="white" opacity="0.52" clip-path="inset(0 0 18px 0)"/>
+        <rect x="416" y="38" width="9" height="10" fill="#F9A825" opacity="0.7"/>
+        <rect x="432" y="38" width="9" height="10" fill="#81D4FA" opacity="0.6"/>
+
+        <rect x="456" y="38" width="30" height="20" fill="#040d1a"/>
+        <polygon points="456,38 471,24 486,38" fill="#040d1a"/>
+
+        <rect x="490" y="34" width="70" height="24" fill="#040d1a"/>
+
+        <!-- Snow top -->
+        <rect x="0" y="50" width="560" height="3" fill="white" opacity="0.75"/>
+      </svg>
+    </div>
+
+    <div class="snowflake-row">
+      <span>❄️</span><span>❄️</span><span>❄️</span><span>❄️</span><span>❄️</span>
+    </div>
+  </div>
+
+  <!-- Diploma body -->
+  <div class="diploma-body">
+
+    <div class="diploma-eyebrow">🎄 Certificate of Achievement 🎄</div>
+
+    <div class="diploma-title">Christmas Sports<br>Champion</div>
+
+    <div class="diploma-subtitle">Diploma of Achievement — Healthy Habits Hero</div>
+
+    <div class="gold-divider">
+      <div class="gold-line"></div>
+      <div class="gold-icon">🎁</div>
+      <div class="gold-line"></div>
+    </div>
+
+    <div class="awarded-text">This diploma is proudly awarded to</div>
+
+    <div class="awarded-name-box">
+      <span class="awarded-name-label">Student's Name</span>
+    </div>
+
+    <div class="awarded-body">
+      for <strong>completing The Christmas Sports Hunt</strong>,<br>
+      after bravely travelling around the world to discover <em>5 Christmas sports</em><br>
+      in 5 English-speaking countries, and learning that<br>
+      <strong>sport + healthy habits = a happy life!</strong> 🎄🏆<br><br>
+      <span style="color:#1B5E20;font-size:clamp(11px,1.7vw,13px);">
+        "I'm playing soccer / I can skate / I like cricket — <em>Present Continuous + Can + Like Champion!</em>"
+      </span>
+    </div>
+
+    <!-- Mini badges -->
+    <div class="badges-row">
+      <div class="mini-badge mb1">
+        <span class="badge-emoji">🇬🇧⚽</span>
+        <span class="badge-name">Soccer<br>Found!</span>
+      </div>
+      <div class="mini-badge mb2">
+        <span class="badge-emoji">🇺🇸🏈</span>
+        <span class="badge-name">Football<br>Found!</span>
+      </div>
+      <div class="mini-badge mb3">
+        <span class="badge-emoji">🇨🇦🏒</span>
+        <span class="badge-name">Hockey<br>Found!</span>
+      </div>
+      <div class="mini-badge mb4">
+        <span class="badge-emoji">🇦🇺🏄</span>
+        <span class="badge-name">Cricket+Surf<br>Found!</span>
+      </div>
+      <div class="mini-badge mb5">
+        <span class="badge-emoji">🇮🇪🐎</span>
+        <span class="badge-name">Horse Race<br>Found!</span>
+      </div>
+    </div>
+
+    <div class="gold-divider">
+      <div class="gold-line"></div>
+      <div class="gold-icon">🏆</div>
+      <div class="gold-line"></div>
+    </div>
+
+    <!-- Signatures -->
+    <div class="signatures">
+      <div class="sig-block">
+        <div class="sig-line"></div>
+        <div class="sig-label">Teacher's signature</div>
+      </div>
+      <div class="sig-block">
+        <div class="sig-line"></div>
+        <div class="sig-label">Date</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="diploma-footer">
+    <div class="diploma-footer-text">🎄 Christmas Sports Champion · 25th December · Merry Christmas! 🎁</div>
+  </div>
+
+</div>
+</div>
+</body>
+</html>
