@@ -490,31 +490,6 @@
     color: var(--gold);
   }
 
-  /* Confetti */
-  .confetti-container {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    z-index: 9999;
-  }
-
-  .confetti-piece {
-    position: absolute;
-    width: 10px; height: 10px;
-    border-radius: 2px;
-    animation: confetti-fall linear forwards;
-    top: -20px;
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
-  @keyframes confetti-fall {
-    0%   { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 1; }
-    100% { transform: translate3d(0, 100vh, 0) rotate(720deg); opacity: 0; }
-  }
-
   @media (min-width: 600px) {
     .choices-grid { grid-template-columns: 1fr 1fr; }
   }
@@ -529,7 +504,6 @@
 <body>
 
 <div class="bg-anim" id="bgAnim"></div>
-<div class="confetti-container" id="confettiContainer"></div>
 
 <div class="page">
   <div class="riddle-header" id="riddleHeader">
@@ -747,14 +721,21 @@ function init() {
     progressContainer.appendChild(dot);
   });
 
-  // Build answer choices
+  // Build answer choices — shuffle so correct answer isn't always first
   const grid = document.getElementById('choicesGrid');
-  data.choices.forEach((choice, i) => {
+  const shuffled = [...data.choices];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const correctLabel = data.choices[data.correctIndex].label;
+  shuffled.forEach((choice, i) => {
     const btn = document.createElement('button');
     btn.className = 'choice-btn';
     btn.id = `choice-${i}`;
     btn.innerHTML = `<span class="choice-emoji">${choice.emoji}</span><span>${choice.label}</span>`;
-    btn.addEventListener('click', () => checkChoice(i));
+    const isCorrect = choice.label === correctLabel;
+    btn.addEventListener('click', () => checkChoice(i, isCorrect));
     grid.appendChild(btn);
   });
 
@@ -804,14 +785,12 @@ function showNextClue() {
   }
 }
 
-function checkChoice(index) {
+function checkChoice(index, isCorrect) {
   if (solved) return;
-  const data = STATIONS[station];
   const btn = document.getElementById(`choice-${index}`);
 
-  if (index === data.correctIndex) {
+  if (isCorrect) {
     btn.classList.add('correct');
-    // Disable all buttons
     for (let i = 0; i < 4; i++) {
       const b = document.getElementById(`choice-${i}`);
       if (b) b.disabled = true;
@@ -885,21 +864,49 @@ function claimGift() {
 }
 
 function launchConfetti(color1, color2) {
-  const container = document.getElementById('confettiContainer');
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
   const colors = [color1, color2, '#C62828', '#F9A825', '#1B5E20', '#81D4FA', '#ffffff'];
-  for (let i = 0; i < 64; i++) {
-    const piece = document.createElement('div');
-    piece.className = 'confetti-piece';
-    piece.style.left = `${Math.random() * 100}%`;
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.width = `${5 + Math.random() * 8}px`;
-    piece.style.height = `${5 + Math.random() * 8}px`;
-    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-    piece.style.animationDuration = `${1.4 + Math.random() * 2}s`;
-    piece.style.animationDelay = `${Math.random() * 0.5}s`;
-    container.appendChild(piece);
-    setTimeout(() => piece.remove(), 4000);
+  const pieces = [];
+  for (let i = 0; i < 90; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: -20 - Math.random() * 120,
+      w: 5 + Math.random() * 9,
+      h: 5 + Math.random() * 9,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rot: Math.random() * 360,
+      vx: (Math.random() - 0.5) * 3,
+      vy: 3 + Math.random() * 4,
+      vr: (Math.random() - 0.5) * 9,
+      round: Math.random() > 0.5,
+    });
   }
+  const start = Date.now();
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    for (const p of pieces) {
+      if (p.y < canvas.height + 20) {
+        alive = true;
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        if (p.round) { ctx.beginPath(); ctx.arc(0,0,p.w/2,0,Math.PI*2); ctx.fill(); }
+        else { ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); }
+        ctx.restore();
+      }
+    }
+    if (alive && Date.now() - start < 4000) { requestAnimationFrame(draw); }
+    else { canvas.remove(); }
+  }
+  requestAnimationFrame(draw);
 }
 
 init();
