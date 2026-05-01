@@ -77,7 +77,11 @@
 
   .tagline { font-family:'Fredoka One',cursive; font-size:15px; color:white; letter-spacing:2px; text-align:center; text-shadow:0 2px 8px rgba(0,0,0,0.4); }
 
-  @media print { body{background:white;padding:0;} .poster{box-shadow:none;} }
+  @media print {
+    body{background:white;padding:0;margin:0;}
+    .poster{box-shadow:none;width:794px;min-height:1123px;}
+    @page { size: A4; margin: 0; }
+  }
 </style>
 </head>
 <body>

@@ -246,8 +246,9 @@
   }
 
   @media print {
-    body { background: white; padding: 0; }
-    .poster { box-shadow: none; }
+    body { background: white; padding: 0; margin: 0; }
+    .poster { box-shadow: none; width: 794px; min-height: 1123px; }
+    @page { size: A4; margin: 0; }
   }
 </style>
 </head>
