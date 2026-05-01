@@ -490,16 +490,6 @@
     color: var(--gold);
   }
 
-  /* Confetti canvas */
-  #confettiCanvas {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 9999;
-  }
-
   @media (min-width: 600px) {
     .choices-grid { grid-template-columns: 1fr 1fr; }
   }
@@ -563,10 +553,10 @@ const STATIONS = {
     location: 'London Stadium',
     subtitle: 'United Kingdom — Boxing Day ⚽',
     color: ['#1A237E', '#283593'],
-    correctIndex: 0,
+    correctIndex: 1,
     choices: [
-      { emoji: '⚽', label: 'Soccer' },
       { emoji: '🏀', label: 'Basketball' },
+      { emoji: '⚽', label: 'Soccer' },
       { emoji: '🎾', label: 'Tennis' },
       { emoji: '🏐', label: 'Volleyball' },
     ],
@@ -589,12 +579,12 @@ const STATIONS = {
     location: 'NFL Stadium',
     subtitle: 'United States — Christmas Day 🏈',
     color: ['#0D47A1', '#1565C0'],
-    correctIndex: 0,
+    correctIndex: 3,
     choices: [
-      { emoji: '🏈', label: 'Am. Football' },
       { emoji: '⚾', label: 'Baseball' },
       { emoji: '🏒', label: 'Ice Hockey' },
       { emoji: '🎿', label: 'Skiing' },
+      { emoji: '🏈', label: 'Am. Football' },
     ],
     clues: [
       { text: "I'm running <em>very fast!</em> I'm wearing a big <em>helmet and shoulder pads!</em> 🪖", emoji: '🪖' },
@@ -615,12 +605,12 @@ const STATIONS = {
     location: 'Frozen Lake',
     subtitle: 'Canada — Winter Christmas ❄️',
     color: ['#B71C1C', '#C62828'],
-    correctIndex: 0,
+    correctIndex: 2,
     choices: [
-      { emoji: '🏒', label: 'Ice Hockey' },
       { emoji: '⛷️', label: 'Skiing' },
-      { emoji: '🛷', label: 'Sledging' },
       { emoji: '⛸️', label: 'Figure Skating' },
+      { emoji: '🏒', label: 'Ice Hockey' },
+      { emoji: '🛷', label: 'Sledging' },
     ],
     clues: [
       { text: "I'm skating on <em>cold, frozen ice!</em> ❄️", emoji: '❄️' },
@@ -667,10 +657,10 @@ const STATIONS = {
     location: 'Leopardstown Track',
     subtitle: 'Ireland — St Stephen\'s Day 🍀',
     color: ['#1B5E20', '#2E7D32'],
-    correctIndex: 0,
+    correctIndex: 1,
     choices: [
-      { emoji: '🐎', label: 'Horse Racing' },
       { emoji: '🏑', label: 'Hurling' },
+      { emoji: '🐎', label: 'Horse Racing' },
       { emoji: '🎿', label: 'Skiing' },
       { emoji: '🎯', label: 'Archery' },
     ],
@@ -832,9 +822,10 @@ function onSuccess(data) {
   panel.style.background = `linear-gradient(160deg, ${data.color[0]}33, rgba(255,255,255,0.07))`;
   panel.style.borderColor = data.color[1];
 
-  document.getElementById('successEmoji').textContent = data.choices[0].emoji;
+  const winner = data.choices[data.correctIndex];
+  document.getElementById('successEmoji').textContent = winner.emoji;
   document.getElementById('successSubtitle').textContent = `Amazing! You found the sport! 🎉`;
-  document.getElementById('charName').textContent = `${data.choices[0].emoji} ${data.choices[0].label} — ${data.location}`;
+  document.getElementById('charName').textContent = `${winner.emoji} ${winner.label} — ${data.location}`;
   document.getElementById('charDesc').textContent = data.description;
 
   const factsEl = document.getElementById('funFacts');
@@ -876,17 +867,29 @@ function _ensureConfettiCanvas() {
   if (_confettiCanvas) return;
   _confettiCanvas = document.createElement('canvas');
   _confettiCanvas.id = 'confettiCanvas';
+  const s = _confettiCanvas.style;
+  s.position = 'fixed';
+  s.top = '0';
+  s.left = '0';
+  s.pointerEvents = 'none';
+  s.zIndex = '9999';
+  s.display = 'block';
   document.body.appendChild(_confettiCanvas);
   _confettiCtx = _confettiCanvas.getContext('2d');
   _resizeConfettiCanvas();
   window.addEventListener('resize', _resizeConfettiCanvas);
+  window.addEventListener('orientationchange', _resizeConfettiCanvas);
 }
 
 function _resizeConfettiCanvas() {
   if (!_confettiCanvas) return;
   const dpr = window.devicePixelRatio || 1;
-  _confettiCanvas.width = Math.floor(window.innerWidth * dpr);
-  _confettiCanvas.height = Math.floor(window.innerHeight * dpr);
+  const w = window.innerWidth || document.documentElement.clientWidth;
+  const h = window.innerHeight || document.documentElement.clientHeight;
+  _confettiCanvas.style.width = w + 'px';
+  _confettiCanvas.style.height = h + 'px';
+  _confettiCanvas.width = Math.floor(w * dpr);
+  _confettiCanvas.height = Math.floor(h * dpr);
   _confettiCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
