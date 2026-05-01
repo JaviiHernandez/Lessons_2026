@@ -12,7 +12,7 @@
     display: flex; align-items: center; justify-content: center;
     min-height: 100vh;
     font-family: 'Fredoka', sans-serif;
-    padding: 32px;
+    padding: 0;
   }
   .poster {
     width: 794px;
@@ -42,10 +42,13 @@
     opacity: 0.12;
     z-index: 0;
   }
-  /* Gold border */
+  /* Gold border — bottom stops above footer bar */
   .border-frame {
     position: absolute;
-    inset: 14px;
+    top: 14px;
+    left: 14px;
+    right: 14px;
+    bottom: 78px;
     border: 4px solid #D4AF37;
     border-radius: 18px;
     z-index: 10;
@@ -220,7 +223,9 @@
     gap: 12px;
     flex-wrap: wrap;
     border-top: 3px solid #b8952e;
-    margin-bottom: 80px;
+    margin-top: auto;
+    position: relative;
+    z-index: 11;
   }
   .footer-text {
     font-family: 'Uncial Antiqua', cursive;

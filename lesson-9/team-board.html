@@ -9,7 +9,7 @@
   body {
     background:#2d2d2d;
     display:flex; align-items:center; justify-content:center;
-    min-height:100vh; padding:32px;
+    min-height:100vh; padding:0;
     font-family:'Fredoka',sans-serif;
   }
   .board {
@@ -51,11 +51,86 @@
   }
   .board-title { font-family:'Uncial Antiqua',cursive; font-size:24px; color:#FAF6E9; text-shadow:0 2px 8px rgba(0,0,0,0.4); margin-bottom:6px; }
 
-  /* ── PROGRESS ── */
-  .prog-label { font-family:'Fredoka One',cursive; font-size:13px; color:#D4AF37; text-align:center; margin-bottom:4px; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
-  .prog-track { background:rgba(255,255,255,0.2); border-radius:20px; height:26px; border:2px solid #D4AF37; display:flex; width:100%; overflow:hidden; margin-bottom:7px; }
-  .prog-seg { flex:1; display:flex; align-items:center; justify-content:center; font-family:'Fredoka One',cursive; font-size:13px; color:rgba(255,255,255,0.7); border-right:2px solid rgba(212,175,55,0.35); }
-  .prog-seg:last-child { border-right:none; }
+  /* ── PROGRESS — high-contrast version ── */
+  .prog-wrap {
+    width:100%;
+    background:linear-gradient(135deg, #1A6B3C, #2d8f55);
+    border:3px solid #D4AF37;
+    border-radius:18px;
+    padding:11px 14px 13px;
+    margin-bottom:10px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.25), inset 0 0 0 3px rgba(212,175,55,0.2);
+  }
+  .prog-label {
+    font-family:'Fredoka One',cursive;
+    font-size:14px;
+    color:#FAF6E9;
+    text-align:center;
+    margin-bottom:8px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    text-shadow:0 1px 3px rgba(0,0,0,0.5);
+  }
+  .prog-track {
+    display:flex;
+    width:100%;
+    gap:6px;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .prog-seg {
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background:#FAF6E9;
+    border:3px solid #D4AF37;
+    border-radius:12px;
+    padding:6px 4px 5px;
+    font-family:'Fredoka One',cursive;
+    color:#1A6B3C;
+    box-shadow:0 3px 8px rgba(0,0,0,0.18);
+    position:relative;
+  }
+  .prog-num {
+    width:20px; height:20px;
+    background:#1A6B3C;
+    color:#FAF6E9;
+    border-radius:50%;
+    font-size:11px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:3px;
+    border:1.5px solid #D4AF37;
+  }
+  .prog-text {
+    font-size:10.5px;
+    line-height:1.1;
+    color:#1A6B3C;
+    letter-spacing:0.5px;
+  }
+  .prog-arrow {
+    color:#D4AF37;
+    font-family:'Fredoka One',cursive;
+    font-size:14px;
+    flex-shrink:0;
+    text-shadow:0 1px 2px rgba(0,0,0,0.4);
+  }
+  .prog-victory {
+    background:#D4AF37;
+    border:3px solid #FAF6E9;
+    border-radius:50%;
+    width:42px; height:42px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px;
+    flex-shrink:0;
+    box-shadow:0 3px 10px rgba(0,0,0,0.3), inset 0 0 0 2px #b8952e;
+    animation:trophy-glow 2s ease-in-out infinite alternate;
+  }
+  @keyframes trophy-glow {
+    0% { box-shadow:0 3px 10px rgba(0,0,0,0.3), inset 0 0 0 2px #b8952e; }
+    100% { box-shadow:0 3px 18px rgba(212,175,55,0.7), inset 0 0 0 2px #b8952e; }
+  }
 
   /* ── SLOTS ── */
   .paste-section {
@@ -165,13 +240,21 @@
     <div class="board-title">Animal Hunt — Team Board</div>
 
     <!-- Progress -->
-    <div class="prog-label">⭐ Progress — Animals collected ⭐</div>
-    <div class="prog-track">
-      <div class="prog-seg">1</div>
-      <div class="prog-seg">2</div>
-      <div class="prog-seg">3</div>
-      <div class="prog-seg">4</div>
-      <div class="prog-seg">5 🏆</div>
+    <div class="prog-wrap">
+      <div class="prog-label">⭐ Progress — Animals collected ⭐</div>
+      <div class="prog-track">
+        <div class="prog-seg"><div class="prog-num">1</div><div class="prog-text">Stn 1</div></div>
+        <div class="prog-arrow">▸</div>
+        <div class="prog-seg"><div class="prog-num">2</div><div class="prog-text">Stn 2</div></div>
+        <div class="prog-arrow">▸</div>
+        <div class="prog-seg"><div class="prog-num">3</div><div class="prog-text">Stn 3</div></div>
+        <div class="prog-arrow">▸</div>
+        <div class="prog-seg"><div class="prog-num">4</div><div class="prog-text">Stn 4</div></div>
+        <div class="prog-arrow">▸</div>
+        <div class="prog-seg"><div class="prog-num">5</div><div class="prog-text">Stn 5</div></div>
+        <div class="prog-arrow">▸</div>
+        <div class="prog-victory">🏆</div>
+      </div>
     </div>
 
     <!-- Mystery slots -->

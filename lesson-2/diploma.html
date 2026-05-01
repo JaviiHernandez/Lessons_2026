@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:#2d2d2d; display:flex; align-items:center; justify-content:center; min-height:100vh; padding:32px; font-family:'Fredoka',sans-serif; }
+  body { background:#2d2d2d; display:flex; align-items:center; justify-content:center; min-height:100vh; padding:0; font-family:'Fredoka',sans-serif; }
   .diploma { width:794px; height:1123px; background:#FFF8F0; position:relative; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5); display:flex; flex-direction:column; align-items:center; }
 
   /* Background */
@@ -16,18 +16,18 @@
   /* Decorative pattern */
   .dip-pattern { position:absolute; top:0; left:0; right:0; bottom:0; background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(249,168,37,0.04) 20px,rgba(249,168,37,0.04) 21px); }
 
-  /* Border */
-  .dip-border { position:absolute; inset:16px; border:5px solid #F9A825; border-radius:16px; pointer-events:none; z-index:30; }
+  /* Border — bottom stops above footer bar */
+  .dip-border { position:absolute; top:16px; left:16px; right:16px; bottom:74px; border:5px solid #F9A825; border-radius:16px; pointer-events:none; z-index:30; }
   .dip-border::before { content:''; position:absolute; inset:6px; border:1.5px solid rgba(249,168,37,0.3); border-radius:10px; }
   /* Corner ornaments */
   .corner { position:absolute; font-size:22px; z-index:31; }
   .corner.tl { top:22px; left:22px; }
   .corner.tr { top:22px; right:22px; }
-  .corner.bl { bottom:22px; left:22px; }
-  .corner.br { bottom:22px; right:22px; }
+  .corner.bl { bottom:82px; left:22px; }
+  .corner.br { bottom:82px; right:22px; }
 
   /* Content */
-  .content { position:relative; z-index:10; width:100%; flex:1; display:flex; flex-direction:column; align-items:center; padding:46px 70px 150px; }
+  .content { position:relative; z-index:10; width:100%; flex:1; display:flex; flex-direction:column; align-items:center; padding:46px 70px 30px; }
 
   .dip-eco-icons { display:flex; gap:14px; font-size:32px; margin-bottom:10px; }
   .dip-subtitle { font-family:'Fredoka One',cursive; font-size:14px; color:rgba(255,255,255,0.88); letter-spacing:3px; text-transform:uppercase; margin-bottom:10px; }
@@ -62,7 +62,28 @@
   .sig-line { width:200px; border-bottom:2px solid #ccc; height:38px; }
   .sig-label { font-size:11px; color:#aaa; letter-spacing:1px; text-transform:uppercase; font-weight:700; }
 
-  .dip-footer { font-family:'Fredoka One',cursive; font-size:14px; color:#888; letter-spacing:1.5px; text-align:center; }
+  /* Coloured footer bar at the very bottom */
+  .footer-bar {
+    width:100%;
+    background:linear-gradient(90deg, #2E7D32, #4CAF50, #F9A825, #4CAF50, #2E7D32);
+    padding:14px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    border-top:3px solid #F9A825;
+    position:relative;
+    z-index:11;
+  }
+  .footer-bar-text {
+    font-family:'Fredoka One',cursive;
+    font-size:16px;
+    color:white;
+    text-shadow:0 2px 0 rgba(0,0,0,0.3);
+    letter-spacing:1.5px;
+    text-align:center;
+  }
 
   @media print {
     body{background:white;padding:0;margin:0;}
@@ -138,8 +159,11 @@
         <div class="sig-label">Date</div>
       </div>
     </div>
+  </div>
 
-    <div class="dip-footer">💧 Save Water · ⚡ Save Energy · 🌍 Save the Planet</div>
+  <!-- Coloured footer bar -->
+  <div class="footer-bar">
+    <div class="footer-bar-text">💧 Save Water · ⚡ Save Energy · 🌍 Save the Planet</div>
   </div>
 </div>
 </body>

@@ -9,7 +9,6 @@
 <title>The Christmas Sports Hunt — Riddle</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <style>
   img.emoji {
     height: 1em;
@@ -860,16 +859,55 @@ function claimGift() {
 }
 
 function launchConfetti(color1, color2) {
-  if (typeof confetti !== 'function') return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  const w = window.innerWidth, h = window.innerHeight;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
   const colors = [color1, color2, '#C62828', '#F9A825', '#1B5E20', '#81D4FA', '#ffffff'];
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced) return;
-  const defaults = { colors, disableForReducedMotion: true, scalar: 1.1, ticks: 220 };
-  confetti({ ...defaults, particleCount: 80, spread: 70, startVelocity: 45, origin: { x: 0.5, y: 0.6 } });
-  setTimeout(() => {
-    confetti({ ...defaults, particleCount: 50, angle: 60, spread: 55, startVelocity: 50, origin: { x: 0, y: 0.7 } });
-    confetti({ ...defaults, particleCount: 50, angle: 120, spread: 55, startVelocity: 50, origin: { x: 1, y: 0.7 } });
-  }, 120);
+  const pieces = [];
+  for (let i = 0; i < 110; i++) {
+    pieces.push({
+      x: w * 0.5 + (Math.random() - 0.5) * w * 0.4,
+      y: -20 - Math.random() * 100,
+      w: 5 + Math.random() * 9,
+      h: 5 + Math.random() * 9,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rot: Math.random() * 360,
+      vx: (Math.random() - 0.5) * 5,
+      vy: 3 + Math.random() * 5,
+      vr: (Math.random() - 0.5) * 10,
+      round: Math.random() > 0.5,
+    });
+  }
+  const start = Date.now();
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    let alive = false;
+    for (const p of pieces) {
+      if (p.y < h + 20) {
+        alive = true;
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        if (p.round) { ctx.beginPath(); ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2); ctx.fill(); }
+        else { ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); }
+        ctx.restore();
+      }
+    }
+    if (alive && Date.now() - start < 4500) { requestAnimationFrame(draw); }
+    else { canvas.remove(); }
+  }
+  requestAnimationFrame(draw);
 }
 
 init();
