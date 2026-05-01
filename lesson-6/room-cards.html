@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#388E3C">
+<title>Delicious Food Detectives — Character Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<style>
+  img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #1a0f1a;
+    font-family: 'Fredoka', sans-serif;
+    padding: clamp(16px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(28px, 4.5vw, 54px);
+    overflow-x: hidden;
+  }
+
+  .page-heading {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(20px, 3.8vw, 34px);
+    color: #F9A825;
+    text-align: center;
+    padding-top: clamp(8px, 1.5vw, 16px);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  }
+
+  .print-note {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(249,168,37,0.3);
+    border-radius: 8px;
+    padding: clamp(8px,1.5vw,12px) clamp(16px,3vw,24px);
+    color: rgba(255,248,231,0.65);
+    font-size: clamp(12px,1.8vw,14px);
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .card-pair {
+    display: flex;
+    gap: clamp(20px, 3.5vw, 44px);
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .card-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(12px, 1.8vw, 15px);
+    color: rgba(255,248,231,0.5);
+    text-align: center;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .card {
+    width: 238px;
+    height: 332px;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 2px rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+
+  /* ── FRONT ── */
+  .card-front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 16px 12px 12px;
+    position: relative;
+    gap: 10px;
+  }
+
+  .front-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .station-chip {
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .char-emoji-big {
+    font-size: 82px;
+    line-height: 1;
+    filter: drop-shadow(0 4px 14px rgba(0,0,0,0.4));
+    margin: 2px 0;
+  }
+
+  .char-flag {
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .char-name-front {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 19px;
+    color: white;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    text-align: center;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 8px 10px;
+  }
+
+  .stat-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.9);
+    font-family: 'Fredoka One', sans-serif;
+  }
+
+  .stat-label { width: 56px; flex-shrink: 0; letter-spacing: 0.3px; }
+  .stat-icons { font-size: 11px; letter-spacing: 1px; }
+
+  /* Corner ornaments */
+  .corner-orns { position: absolute; inset: 0; pointer-events: none; }
+  .orn { position: absolute; font-size: 15px; opacity: 0.45; }
+  .orn-tl { top: 8px; left: 9px; }
+  .orn-tr { top: 8px; right: 9px; }
+  .orn-bl { bottom: 28px; left: 9px; }
+  .orn-br { bottom: 28px; right: 9px; }
+
+  .card-footer-strip {
+    width: calc(100% + 24px);
+    margin: 0 -12px -12px;
+    padding: 6px 0;
+    background: rgba(0,0,0,0.3);
+    text-align: center;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 9px;
+    color: rgba(255,255,255,0.78);
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
+    border-radius: 0 0 18px 18px;
+  }
+
+  /* ── BACK ── */
+  .card-back {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 12px 11px 10px;
+    gap: 7px;
+    position: relative;
+  }
+
+  .back-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-bottom: 7px;
+    border-bottom: 1.5px solid rgba(255,255,255,0.15);
+  }
+
+  .back-emoji { font-size: 26px; }
+
+  .back-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 14px;
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    line-height: 1.2;
+  }
+
+  .back-station { font-size: 10px; color: rgba(255,255,255,0.6); letter-spacing: 0.8px; text-transform: uppercase; }
+
+  .back-description {
+    font-size: 10.5px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.88);
+    font-style: italic;
+    background: rgba(0,0,0,0.18);
+    border-radius: 8px;
+    padding: 7px 9px;
+    border-left: 3px solid rgba(255,255,255,0.3);
+  }
+
+  .back-grammar {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+    background: rgba(249,168,37,0.2);
+    border-radius: 6px;
+    padding: 5px 8px;
+    color: #F9A825;
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+
+  .back-measure {
+    font-size: 10px;
+    background: rgba(94,53,177,0.25);
+    border-radius: 6px;
+    padding: 5px 8px;
+    color: #D1C4E9;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .back-measure strong { color: #FFE082; }
+
+  .health-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0,0,0,0.25);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.85);
+    font-family: 'Fredoka One', sans-serif;
+    letter-spacing: 0.3px;
+  }
+
+  .health-meter { display: flex; gap: 2px; }
+  .meter-bar { width: 8px; height: 9px; border-radius: 1.5px; }
+  .meter-bar.full-h { background: #66BB6A; }
+  .meter-bar.full-y { background: #FFD54F; }
+  .meter-bar.full-r { background: #ef5350; }
+  .meter-bar.empty  { background: rgba(255,255,255,0.18); }
+
+  .back-facts-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.65);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .back-facts { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+
+  .back-fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 7px;
+    padding: 5px 7px;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.35;
+  }
+
+  .back-fact-icon { font-size: 13px; flex-shrink: 0; }
+
+  /* Themes — food detective palette */
+  .theme-yoghurt    { background: linear-gradient(145deg, #0a3010, #1B5E20, #388E3C); }
+  .theme-chicken    { background: linear-gradient(145deg, #7a0000, #B71C1C, #D32F2F); }
+  .theme-veggies    { background: linear-gradient(145deg, #003008, #1B5E20, #2E7D32); }
+  .theme-cookies    { background: linear-gradient(145deg, #311B92, #5E35B1, #7E57C2); }
+  .theme-tuna       { background: linear-gradient(145deg, #002a52, #01579B, #0288D1); }
+
+  .theme-yoghurt-inv { background: linear-gradient(145deg, #388E3C, #1B5E20, #0a3010); }
+  .theme-chicken-inv { background: linear-gradient(145deg, #D32F2F, #B71C1C, #7a0000); }
+  .theme-veggies-inv { background: linear-gradient(145deg, #2E7D32, #1B5E20, #003008); }
+  .theme-cookies-inv { background: linear-gradient(145deg, #7E57C2, #5E35B1, #311B92); }
+  .theme-tuna-inv    { background: linear-gradient(145deg, #0288D1, #01579B, #002a52); }
+
+  @media (max-width: 540px) { .card-pair { gap: 14px; } }
+
+  @media print {
+    body { background: white; padding: 8px; gap: 18px; }
+    .page-heading, .print-note { display: none; }
+    .card-pair { page-break-after: always; gap: 28px; }
+    .card { box-shadow: 0 0 0 1px rgba(0,0,0,0.15); }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-heading">🔍 Delicious Food Detectives — Character Cards</div>
+<div class="print-note">Print on cardstock · Cut out each card · Glue front to back · Laminate for best results · Hand out when teams find each ingredient!</div>
+
+<!-- ══ DETECTIVE YOGHURT ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-yoghurt">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🔍</span>
+          <span class="orn orn-tr">🥛</span>
+          <span class="orn orn-bl">🍯</span>
+          <span class="orn orn-br">💚</span>
+        </div>
+        <div class="front-top">
+          <div class="station-chip">Station 1 · Breakfast</div>
+          <div class="char-emoji-big">🥛</div>
+          <div class="char-flag">👨‍🍳</div>
+          <div class="char-name-front">Detective Yoghurt</div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-line"><span class="stat-label">Healthy</span><span class="stat-icons">💚💚💚💚💚</span></div>
+          <div class="stat-line"><span class="stat-label">Sweet</span><span class="stat-icons">🍯🍯</span></div>
+          <div class="stat-line"><span class="stat-label">Sour</span><span class="stat-icons">🍋🍋🍋🍋</span></div>
+        </div>
+        <div class="card-footer-strip">🔍 Food Detectives · 🥛 Yoghurt</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-yoghurt-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🥛</div>
+          <div>
+            <div class="back-title">Detective Yoghurt</div>
+            <div class="back-station">Station 1 · Breakfast Kitchen 🌅</div>
+          </div>
+        </div>
+        <div class="back-description">"I'm sour but I'm healthy! I'm white and creamy. People eat me for breakfast with fruit or honey. I come from milk!"</div>
+        <div class="back-grammar">⭐ "I am healthy. I'm baking with honey." — Present Simple/Continuous</div>
+        <div class="back-measure">⚖️ Mix me with <strong>a cup of</strong> fruit + <strong>a spoon of</strong> honey!</div>
+        <div class="health-bar">
+          <span>HEALTHY METER</span>
+          <div class="health-meter">
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+          </div>
+        </div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="back-fact-icon">🏛️</span>Yoghurt was invented thousands of years ago in Asia!</div>
+          <div class="back-fact"><span class="back-fact-icon">🦴</span>I'm full of calcium — strong bones &amp; teeth!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ OFFICER CHICKEN ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-chicken">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🔍</span>
+          <span class="orn orn-tr">🍗</span>
+          <span class="orn orn-bl">🥕</span>
+          <span class="orn orn-br">💪</span>
+        </div>
+        <div class="front-top">
+          <div class="station-chip">Station 2 · Farm</div>
+          <div class="char-emoji-big">🍗</div>
+          <div class="char-flag">👮</div>
+          <div class="char-name-front">Officer Chicken</div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-line"><span class="stat-label">Healthy</span><span class="stat-icons">💚💚💚💚</span></div>
+          <div class="stat-line"><span class="stat-label">Tasty</span><span class="stat-icons">😋😋😋😋😋</span></div>
+          <div class="stat-line"><span class="stat-label">Protein</span><span class="stat-icons">💪💪💪💪💪</span></div>
+        </div>
+        <div class="card-footer-strip">🔍 Food Detectives · 🍗 Chicken</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-chicken-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🍗</div>
+          <div>
+            <div class="back-title">Officer Chicken</div>
+            <div class="back-station">Station 2 · Farm Kitchen 🐔</div>
+          </div>
+        </div>
+        <div class="back-description">"I'm very tasty! I'm a protein. I have feathers when I'm alive. People grill me, bake me, or boil me!"</div>
+        <div class="back-grammar">⭐ "I'm baking. I like chicken." — Present Continuous &amp; Like</div>
+        <div class="back-measure">⚖️ Cook me with <strong>two spoons of</strong> olive oil + vegetables!</div>
+        <div class="health-bar">
+          <span>HEALTHY METER</span>
+          <div class="health-meter">
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar empty"></span>
+          </div>
+        </div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="back-fact-icon">🌍</span>Chicken is one of the most popular foods in the world!</div>
+          <div class="back-fact"><span class="back-fact-icon">💪</span>Protein helps your muscles grow strong!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CAPTAIN VEGGIE ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-veggies">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🔍</span>
+          <span class="orn orn-tr">🥕</span>
+          <span class="orn orn-bl">🥦</span>
+          <span class="orn orn-br">🌈</span>
+        </div>
+        <div class="front-top">
+          <div class="station-chip">Station 3 · Garden</div>
+          <div class="char-emoji-big">🥕</div>
+          <div class="char-flag">🦸</div>
+          <div class="char-name-front">Captain Veggie</div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-line"><span class="stat-label">Healthy</span><span class="stat-icons">💚💚💚💚💚</span></div>
+          <div class="stat-line"><span class="stat-label">Crunchy</span><span class="stat-icons">😋😋😋😋</span></div>
+          <div class="stat-line"><span class="stat-label">Vitamins</span><span class="stat-icons">⭐⭐⭐⭐⭐</span></div>
+        </div>
+        <div class="card-footer-strip">🔍 Food Detectives · 🥕 Vegetables</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-veggies-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🥕</div>
+          <div>
+            <div class="back-title">Captain Veggie</div>
+            <div class="back-station">Station 3 · Garden Kitchen 🌱</div>
+          </div>
+        </div>
+        <div class="back-description">"I'm colourful and crunchy! I'm green, orange, red, or purple. I'm full of vitamins. I grow in the ground!"</div>
+        <div class="back-grammar">⭐ "I like vegetables. I'm eating a salad." — Like / Continuous</div>
+        <div class="back-measure">⚖️ Eat <strong>a bowl of</strong> salad + <strong>a cup of</strong> soup!</div>
+        <div class="health-bar">
+          <span>HEALTHY METER</span>
+          <div class="health-meter">
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+          </div>
+        </div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="back-fact-icon">🌈</span>Eat the rainbow! Different colours = different vitamins!</div>
+          <div class="back-fact"><span class="back-fact-icon">👁️</span>Carrots help your eyes see better — like bunnies!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SUSPECT COOKIE ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-cookies">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🔍</span>
+          <span class="orn orn-tr">🍪</span>
+          <span class="orn orn-bl">🍫</span>
+          <span class="orn orn-br">⚠️</span>
+        </div>
+        <div class="front-top">
+          <div class="station-chip">Station 4 · Dessert</div>
+          <div class="char-emoji-big">🍪</div>
+          <div class="char-flag">🕵️</div>
+          <div class="char-name-front">Suspect Cookie</div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-line"><span class="stat-label">Healthy</span><span class="stat-icons">💚💚</span></div>
+          <div class="stat-line"><span class="stat-label">Sweet</span><span class="stat-icons">🍬🍬🍬🍬🍬</span></div>
+          <div class="stat-line"><span class="stat-label">Crunchy</span><span class="stat-icons">😋😋😋😋</span></div>
+        </div>
+        <div class="card-footer-strip">🔍 Food Detectives · 🍪 Cookies</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-cookies-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🍪</div>
+          <div>
+            <div class="back-title">Suspect Cookie</div>
+            <div class="back-station">Station 4 · Dessert Kitchen 🧁</div>
+          </div>
+        </div>
+        <div class="back-description">"I'm sweet and crunchy! I'm a treat — but not very healthy if you eat too many. I'm baked in the oven!"</div>
+        <div class="back-grammar">⭐ "I don't like junk food. I like 1 cookie." — Don't like</div>
+        <div class="back-measure">⚖️ <strong>Two cups of</strong> flour + <strong>a spoon of</strong> sugar — eat 1 or 2!</div>
+        <div class="health-bar">
+          <span>HEALTHY METER</span>
+          <div class="health-meter">
+            <span class="meter-bar full-y"></span>
+            <span class="meter-bar full-r"></span>
+            <span class="meter-bar empty"></span>
+            <span class="meter-bar empty"></span>
+            <span class="meter-bar empty"></span>
+          </div>
+        </div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="back-fact-icon">🍪</span>Cookies are tasty, but eat just 1 or 2 — not 10!</div>
+          <div class="back-fact"><span class="back-fact-icon">♻️</span>Don't waste old cookies — share with friends!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INSPECTOR TUNA ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-tuna">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🔍</span>
+          <span class="orn orn-tr">🐟</span>
+          <span class="orn orn-bl">🌊</span>
+          <span class="orn orn-br">🧠</span>
+        </div>
+        <div class="front-top">
+          <div class="station-chip">Station 5 · Ocean</div>
+          <div class="char-emoji-big">🐟</div>
+          <div class="char-flag">🕵️‍♂️</div>
+          <div class="char-name-front">Inspector Tuna</div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-line"><span class="stat-label">Healthy</span><span class="stat-icons">💚💚💚💚💚</span></div>
+          <div class="stat-line"><span class="stat-label">Salty</span><span class="stat-icons">🧂🧂🧂🧂</span></div>
+          <div class="stat-line"><span class="stat-label">Brain</span><span class="stat-icons">🧠🧠🧠🧠🧠</span></div>
+        </div>
+        <div class="card-footer-strip">🔍 Food Detectives · 🐟 Tuna</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-tuna-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🐟</div>
+          <div>
+            <div class="back-title">Inspector Tuna</div>
+            <div class="back-station">Station 5 · Ocean Kitchen 🌊</div>
+          </div>
+        </div>
+        <div class="back-description">"I'm salty and I come from the sea! I'm a fish. I swim very fast. People eat me in sandwiches and salads!"</div>
+        <div class="back-grammar">⭐ "I am a fish. I'm swimming fast." — Present Simple/Continuous</div>
+        <div class="back-measure">⚖️ Mix me with <strong>a cup of</strong> rice + <strong>a pinch of</strong> salt!</div>
+        <div class="health-bar">
+          <span>HEALTHY METER</span>
+          <div class="health-meter">
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+            <span class="meter-bar full-h"></span>
+          </div>
+        </div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="back-fact-icon">🧠</span>Fish has Omega-3 — it helps your brain think!</div>
+          <div class="back-fact"><span class="back-fact-icon">🌊</span>Tuna swim 70 km/h — faster than a city car!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>twemoji.parse(document.body,{folder:'svg',ext:'.svg'});</script>
+</body>
+</html>
