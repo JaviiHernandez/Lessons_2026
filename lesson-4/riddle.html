@@ -9,6 +9,7 @@
 <title>The Christmas Sports Hunt — Riddle</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <style>
   img.emoji {
     height: 1em;
@@ -858,94 +859,17 @@ function claimGift() {
   document.querySelector('.claim-btn').style.display = 'none';
 }
 
-let _confettiCanvas = null;
-let _confettiCtx = null;
-let _confettiPieces = [];
-let _confettiRunning = false;
-
-function _ensureConfettiCanvas() {
-  if (_confettiCanvas) return;
-  _confettiCanvas = document.createElement('canvas');
-  _confettiCanvas.id = 'confettiCanvas';
-  const s = _confettiCanvas.style;
-  s.position = 'fixed';
-  s.top = '0';
-  s.left = '0';
-  s.pointerEvents = 'none';
-  s.zIndex = '9999';
-  s.display = 'block';
-  document.body.appendChild(_confettiCanvas);
-  _confettiCtx = _confettiCanvas.getContext('2d');
-  _resizeConfettiCanvas();
-  window.addEventListener('resize', _resizeConfettiCanvas);
-  window.addEventListener('orientationchange', _resizeConfettiCanvas);
-}
-
-function _resizeConfettiCanvas() {
-  if (!_confettiCanvas) return;
-  const dpr = window.devicePixelRatio || 1;
-  const w = window.innerWidth || document.documentElement.clientWidth;
-  const h = window.innerHeight || document.documentElement.clientHeight;
-  _confettiCanvas.style.width = w + 'px';
-  _confettiCanvas.style.height = h + 'px';
-  _confettiCanvas.width = Math.floor(w * dpr);
-  _confettiCanvas.height = Math.floor(h * dpr);
-  _confettiCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
-
 function launchConfetti(color1, color2) {
-  _ensureConfettiCanvas();
+  if (typeof confetti !== 'function') return;
   const colors = [color1, color2, '#C62828', '#F9A825', '#1B5E20', '#81D4FA', '#ffffff'];
-  const w = window.innerWidth;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const count = reduced ? 0 : 90;
-  for (let i = 0; i < count; i++) {
-    _confettiPieces.push({
-      x: Math.random() * w,
-      y: -20 - Math.random() * 120,
-      size: 6 + Math.random() * 8,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      vy: 2.5 + Math.random() * 3,
-      vx: -1.2 + Math.random() * 2.4,
-      rot: Math.random() * Math.PI * 2,
-      vRot: -0.18 + Math.random() * 0.36,
-      shape: Math.random() > 0.5 ? 'rect' : 'circle',
-    });
-  }
-  if (!_confettiRunning && _confettiPieces.length > 0) {
-    _confettiRunning = true;
-    requestAnimationFrame(_confettiFrame);
-  }
-}
-
-function _confettiFrame() {
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  _confettiCtx.clearRect(0, 0, w, h);
-  _confettiPieces = _confettiPieces.filter(p => p.y < h + 40);
-  for (const p of _confettiPieces) {
-    p.y += p.vy;
-    p.x += p.vx;
-    p.rot += p.vRot;
-    _confettiCtx.save();
-    _confettiCtx.translate(p.x, p.y);
-    _confettiCtx.rotate(p.rot);
-    _confettiCtx.fillStyle = p.color;
-    if (p.shape === 'circle') {
-      _confettiCtx.beginPath();
-      _confettiCtx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
-      _confettiCtx.fill();
-    } else {
-      _confettiCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-    }
-    _confettiCtx.restore();
-  }
-  if (_confettiPieces.length > 0) {
-    requestAnimationFrame(_confettiFrame);
-  } else {
-    _confettiRunning = false;
-    _confettiCtx.clearRect(0, 0, w, h);
-  }
+  if (reduced) return;
+  const defaults = { colors, disableForReducedMotion: true, scalar: 1.1, ticks: 220 };
+  confetti({ ...defaults, particleCount: 80, spread: 70, startVelocity: 45, origin: { x: 0.5, y: 0.6 } });
+  setTimeout(() => {
+    confetti({ ...defaults, particleCount: 50, angle: 60, spread: 55, startVelocity: 50, origin: { x: 0, y: 0.7 } });
+    confetti({ ...defaults, particleCount: 50, angle: 120, spread: 55, startVelocity: 50, origin: { x: 1, y: 0.7 } });
+  }, 120);
 }
 
 init();
