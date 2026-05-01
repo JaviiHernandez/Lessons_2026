@@ -306,11 +306,19 @@
     background: linear-gradient(90deg, #C62828, #F9A825, #1B5E20, #F9A825, #C62828);
     padding: clamp(10px, 2vw, 16px) 28px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    flex-wrap: wrap;
     margin-top: auto;
+  }
+
+  .footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
   }
 
   .footer-text {
@@ -319,39 +327,24 @@
     color: white;
     text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
     text-align: center;
-    white-space: nowrap;
   }
 
-  .gift-slots {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    flex-shrink: 0;
-  }
+  .gift-slots { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: center; }
 
   .gift-slot {
-    width: 28px; height: 28px;
+    width: 30px; height: 30px;
     border: 2px solid rgba(255,255,255,0.5);
     border-radius: 50%;
     background: rgba(255,255,255,0.15);
     display: flex; align-items: center; justify-content: center;
     font-size: 14px;
-    flex-shrink: 0;
-  }
-
-  .gift-slot img.emoji,
-  .footer-bar img.emoji {
-    height: 16px !important;
-    width: 16px !important;
-    margin: 0 !important;
-    vertical-align: middle !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
 
   .footer-divider {
     font-family: 'Fredoka One', sans-serif;
     font-size: clamp(13px, 2vw, 17px);
     color: rgba(255,255,255,0.7);
-    flex-shrink: 0;
   }
 
   /* Corner decorations */
@@ -573,16 +566,19 @@
 
   <!-- Footer Bar -->
   <div class="footer-bar">
-    <div class="footer-text">🎁 5 Sports</div>
-    <div class="gift-slots">
-      <div class="gift-slot">⚽</div>
-      <div class="gift-slot">🏈</div>
-      <div class="gift-slot">🏒</div>
-      <div class="gift-slot">🏏</div>
-      <div class="gift-slot">🐎</div>
+    <div class="footer-row">
+      <div class="footer-text">🎁 5 Sports</div>
+      <div class="gift-slots">
+        <div class="gift-slot">⚽</div>
+        <div class="gift-slot">🏈</div>
+        <div class="gift-slot">🏒</div>
+        <div class="gift-slot">🏏</div>
+        <div class="gift-slot">🐎</div>
+      </div>
+      <div class="footer-divider">=</div>
+      <div class="footer-text">CHAMPION 🏆</div>
     </div>
-    <div class="footer-divider">=</div>
-    <div class="footer-text">CHAMPION 🏆 · Stay Healthy! · Merry Christmas! 🎄</div>
+    <div class="footer-text">Stay Healthy! · Merry Christmas! 🎄</div>
   </div>
 
 </div>
