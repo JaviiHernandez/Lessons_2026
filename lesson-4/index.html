@@ -174,15 +174,18 @@ function App() {
         title="🖨️ Printable Classroom Materials"
         subtitle="Open individually in browser · Cmd+P / Ctrl+P to print at correct size"
       >
-        <DCArtboard id="poster" label="poster.html — Intro Poster (A3)" width={560} height={800}>
+        <DCArtboard id="poster" label="poster.html — Intro Poster (A3)" width={560} height={800}
+          download="poster.html" downloadFormat="A3">
           <PageFrame src="poster.html" width={560} height={800} />
         </DCArtboard>
 
-        <DCArtboard id="team-board" label="team-board.html — Team Board (A4)" width={560} height={720}>
+        <DCArtboard id="team-board" label="team-board.html — Team Board (A4)" width={560} height={720}
+          download="team-board.html" downloadFormat="A4">
           <PageFrame src="team-board.html" width={560} height={720} />
         </DCArtboard>
 
-        <DCArtboard id="qr-cards" label="qr-cards.html — 5 QR Station Cards (A5 landscape)" width={560} height={760}>
+        <DCArtboard id="qr-cards" label="qr-cards.html — 5 QR Station Cards (A5 landscape)" width={560} height={760}
+          download="qr-cards.html" downloadFormat="A5">
           <PageFrame src="qr-cards.html" width={560} height={760} />
         </DCArtboard>
       </DCSection>
@@ -220,7 +223,8 @@ function App() {
         title="🃏 Collectible Character Cards"
         subtitle="Print on cardstock · Cut out · Hand to teams when they find each sport"
       >
-        <DCArtboard id="room-cards" label="room-cards.html — 5 Character Cards (front + back)" width={600} height={780}>
+        <DCArtboard id="room-cards" label="room-cards.html — 5 Character Cards (front + back)" width={600} height={780}
+          download="room-cards.html" downloadFormat="A4">
           <PageFrame src="room-cards.html" width={600} height={780} />
         </DCArtboard>
       </DCSection>
@@ -231,15 +235,18 @@ function App() {
         title="🏆 Rewards &amp; Teacher Materials"
         subtitle="Medals · Diploma · Teacher Guide — print at end of session"
       >
-        <DCArtboard id="medal" label="medal.html — 5 Role Medals" width={500} height={560}>
+        <DCArtboard id="medal" label="medal.html — 5 Role Medals" width={500} height={560}
+          download="medal.html" downloadFormat="A4">
           <PageFrame src="medal.html" width={500} height={560} />
         </DCArtboard>
 
-        <DCArtboard id="diploma" label="diploma.html — Christmas Sports Champion Diploma (A4)" width={560} height={720}>
+        <DCArtboard id="diploma" label="diploma.html — Christmas Sports Champion Diploma (A4)" width={560} height={720}
+          download="diploma.html" downloadFormat="A4">
           <PageFrame src="diploma.html" width={560} height={720} />
         </DCArtboard>
 
-        <DCArtboard id="teacher-guide" label="teacher-guide.html — Teacher Guide (2 × A4)" width={560} height={900}>
+        <DCArtboard id="teacher-guide" label="teacher-guide.html — Teacher Guide (2 × A4)" width={560} height={900}
+          download="teacher-guide.html" downloadFormat="2×A4">
           <PageFrame src="teacher-guide.html" width={560} height={900} />
         </DCArtboard>
       </DCSection>

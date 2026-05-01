@@ -36,153 +36,74 @@
   .content {
     position:absolute; inset:0; z-index:20;
     display:flex; flex-direction:column; align-items:center;
-    padding:22px 32px 130px;
+    padding:30px 36px 130px;
     gap:0;
   }
 
   /* ── HEADER ── */
-  .team-label { font-family:'Fredoka One',cursive; font-size:12px; color:rgba(255,255,255,0.9); letter-spacing:3px; text-transform:uppercase; text-shadow:0 1px 4px rgba(0,0,0,0.3); margin-bottom:3px; }
+  .team-label { font-family:'Fredoka One',cursive; font-size:13px; color:rgba(255,255,255,0.9); letter-spacing:3px; text-transform:uppercase; text-shadow:0 1px 4px rgba(0,0,0,0.3); margin-bottom:5px; }
   .team-name-box {
     display:block; width:100%; background:white;
-    border:3px solid #D4AF37; border-radius:12px;
-    padding:6px 20px;
-    font-family:'Fredoka One',cursive; font-size:22px; color:#1A6B3C;
-    text-align:center; margin-bottom:5px;
+    border:3px solid #D4AF37; border-radius:14px;
+    padding:9px 22px;
+    font-family:'Fredoka One',cursive; font-size:24px; color:#1A6B3C;
+    text-align:center; margin-bottom:8px;
   }
-  .board-title { font-family:'Uncial Antiqua',cursive; font-size:24px; color:#FAF6E9; text-shadow:0 2px 8px rgba(0,0,0,0.4); margin-bottom:6px; }
+  .board-title { font-family:'Uncial Antiqua',cursive; font-size:28px; color:#FAF6E9; text-shadow:0 2px 8px rgba(0,0,0,0.4); margin-bottom:14px; }
 
-  /* ── PROGRESS — high-contrast version ── */
-  .prog-wrap {
-    width:100%;
-    background:linear-gradient(135deg, #1A6B3C, #2d8f55);
-    border:3px solid #D4AF37;
-    border-radius:18px;
-    padding:11px 14px 13px;
-    margin-bottom:10px;
-    box-shadow:0 4px 14px rgba(0,0,0,0.25), inset 0 0 0 3px rgba(212,175,55,0.2);
-  }
-  .prog-label {
-    font-family:'Fredoka One',cursive;
-    font-size:14px;
-    color:#FAF6E9;
-    text-align:center;
-    margin-bottom:8px;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    text-shadow:0 1px 3px rgba(0,0,0,0.5);
-  }
-  .prog-track {
-    display:flex;
-    width:100%;
-    gap:6px;
-    align-items:center;
-    justify-content:space-between;
-  }
-  .prog-seg {
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    background:#FAF6E9;
-    border:3px solid #D4AF37;
-    border-radius:12px;
-    padding:6px 4px 5px;
-    font-family:'Fredoka One',cursive;
-    color:#1A6B3C;
-    box-shadow:0 3px 8px rgba(0,0,0,0.18);
-    position:relative;
-  }
-  .prog-num {
-    width:20px; height:20px;
-    background:#1A6B3C;
-    color:#FAF6E9;
-    border-radius:50%;
-    font-size:11px;
-    display:flex; align-items:center; justify-content:center;
-    margin-bottom:3px;
-    border:1.5px solid #D4AF37;
-  }
-  .prog-text {
-    font-size:10.5px;
-    line-height:1.1;
-    color:#1A6B3C;
-    letter-spacing:0.5px;
-  }
-  .prog-arrow {
-    color:#D4AF37;
-    font-family:'Fredoka One',cursive;
-    font-size:14px;
-    flex-shrink:0;
-    text-shadow:0 1px 2px rgba(0,0,0,0.4);
-  }
-  .prog-victory {
-    background:#D4AF37;
-    border:3px solid #FAF6E9;
-    border-radius:50%;
-    width:42px; height:42px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:22px;
-    flex-shrink:0;
-    box-shadow:0 3px 10px rgba(0,0,0,0.3), inset 0 0 0 2px #b8952e;
-    animation:trophy-glow 2s ease-in-out infinite alternate;
-  }
-  @keyframes trophy-glow {
-    0% { box-shadow:0 3px 10px rgba(0,0,0,0.3), inset 0 0 0 2px #b8952e; }
-    100% { box-shadow:0 3px 18px rgba(212,175,55,0.7), inset 0 0 0 2px #b8952e; }
-  }
+  /* (Progress section removed by request — slots are now the primary tracker) */
 
   /* ── SLOTS ── */
   .paste-section {
     width:100%;
     background:linear-gradient(135deg, #fff8e1, #FAF6E9);
     border:3px solid #D4AF37;
-    border-radius:14px;
-    padding:9px 10px 11px;
-    margin-bottom:9px;
+    border-radius:18px;
+    padding:14px 14px 16px;
+    margin-bottom:14px;
     box-shadow:0 3px 10px rgba(0,0,0,0.12), inset 0 0 0 4px rgba(212,175,55,0.08);
   }
   .slots-title {
     font-family:'Fredoka One',cursive;
-    font-size:14px;
+    font-size:16px;
     color:#1A6B3C;
     text-align:center;
-    margin-bottom:9px;
+    margin-bottom:14px;
     letter-spacing:0.5px;
   }
-  .slots-row { display:flex; gap:8px; width:100%; }
-  .slot { flex:1; background:white; border:3px dashed #D4AF37; border-radius:14px; display:flex; flex-direction:column; align-items:center; padding:11px 4px 8px; position:relative; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
-  .slot-num { width:24px; height:24px; background:#1A6B3C; color:white; border-radius:50%; font-family:'Fredoka One',cursive; font-size:13px; display:flex; align-items:center; justify-content:center; position:absolute; top:-11px; left:50%; transform:translateX(-50%); box-shadow:0 2px 6px rgba(0,0,0,0.25); border:2px solid #D4AF37; }
-  .slot-circle { width:58px; height:58px; background:#FAF6E9; border-radius:50%; border:3px solid #D4AF37; display:flex; align-items:center; justify-content:center; margin-bottom:5px; box-shadow:inset 0 2px 6px rgba(0,0,0,0.08); }
-  .slot-q { font-family:'Fredoka One',cursive; font-size:28px; color:#1A6B3C; opacity:0.55; }
-  .slot-label { font-family:'Fredoka One',cursive; font-size:10px; color:#1A6B3C; }
-  .slot-dot { width:12px; height:12px; border-radius:50%; margin-top:4px; box-shadow:0 1px 3px rgba(0,0,0,0.2); }
+  .slots-row { display:flex; gap:10px; width:100%; }
+  .slot { flex:1; background:white; border:3px dashed #D4AF37; border-radius:14px; display:flex; flex-direction:column; align-items:center; padding:16px 4px 11px; position:relative; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
+  .slot-num { width:28px; height:28px; background:#1A6B3C; color:white; border-radius:50%; font-family:'Fredoka One',cursive; font-size:14px; display:flex; align-items:center; justify-content:center; position:absolute; top:-13px; left:50%; transform:translateX(-50%); box-shadow:0 2px 6px rgba(0,0,0,0.25); border:2px solid #D4AF37; }
+  .slot-circle { width:78px; height:78px; background:#FAF6E9; border-radius:50%; border:3px solid #D4AF37; display:flex; align-items:center; justify-content:center; margin-bottom:8px; box-shadow:inset 0 2px 6px rgba(0,0,0,0.08); }
+  .slot-q { font-family:'Fredoka One',cursive; font-size:38px; color:#1A6B3C; opacity:0.55; }
+  .slot-label { font-family:'Fredoka One',cursive; font-size:12px; color:#1A6B3C; }
+  .slot-dot { width:14px; height:14px; border-radius:50%; margin-top:5px; box-shadow:0 1px 3px rgba(0,0,0,0.2); }
 
   /* ── ROLES ── */
-  .section-title { font-family:'Fredoka One',cursive; font-size:14px; color:#D4AF37; text-align:center; margin-bottom:5px; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
-  .roles-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:5px; width:100%; margin-bottom:7px; }
-  .role-card { background:rgba(255,255,255,0.93); border-radius:10px; padding:7px 3px; text-align:center; border:2px solid rgba(212,175,55,0.55); }
-  .role-icon { font-size:17px; display:block; margin-bottom:2px; }
-  .role-name { font-family:'Fredoka One',cursive; font-size:11px; color:#1A6B3C; margin-bottom:2px; }
-  .role-job { font-size:9.5px; color:#555; line-height:1.3; margin-bottom:2px; }
-  .role-who { font-size:9px; color:#aaa; border-top:1px solid #eee; padding-top:2px; font-style:italic; min-height:11px; }
+  .section-title { font-family:'Fredoka One',cursive; font-size:16px; color:#D4AF37; text-align:center; margin-bottom:9px; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
+  .roles-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:7px; width:100%; margin-bottom:14px; }
+  .role-card { background:rgba(255,255,255,0.95); border-radius:12px; padding:10px 4px; text-align:center; border:2px solid rgba(212,175,55,0.55); }
+  .role-icon { font-size:22px; display:block; margin-bottom:4px; }
+  .role-name { font-family:'Fredoka One',cursive; font-size:13px; color:#1A6B3C; margin-bottom:3px; }
+  .role-job { font-size:10.5px; color:#555; line-height:1.35; margin-bottom:4px; }
+  .role-who { font-size:10px; color:#aaa; border-top:1px solid #eee; padding-top:3px; font-style:italic; min-height:13px; }
 
   /* ── TEAMWORK TIPS ── */
-  .tips-grid { display:grid; grid-template-columns:1fr 1fr; gap:5px; width:100%; margin-bottom:8px; }
-  .tip-card { background:rgba(255,255,255,0.88); border-radius:10px; padding:7px 9px; display:flex; align-items:center; gap:7px; border-left:4px solid #D4AF37; }
-  .tip-ico { font-size:16px; flex-shrink:0; }
-  .tip-text { font-size:12px; color:#2a3d2f; font-weight:600; line-height:1.35; }
-  .tip-en { font-size:10px; color:#7a9a7a; font-style:italic; font-weight:400; }
+  .tips-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; margin-bottom:14px; }
+  .tip-card { background:rgba(255,255,255,0.92); border-radius:12px; padding:11px 13px; display:flex; align-items:center; gap:10px; border-left:4px solid #D4AF37; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
+  .tip-ico { font-size:20px; flex-shrink:0; }
+  .tip-text { font-size:13.5px; color:#2a3d2f; font-weight:600; line-height:1.35; }
+  .tip-en { font-size:11px; color:#7a9a7a; font-style:italic; font-weight:400; }
 
   /* ── SAY IT IN ENGLISH (fills bottom) ── */
   .say-section { width:100%; flex:1; display:flex; flex-direction:column; }
-  .say-title { font-family:'Fredoka One',cursive; font-size:14px; color:#D4AF37; text-align:center; margin-bottom:6px; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
-  .bubbles-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; flex:1; }
+  .say-title { font-family:'Fredoka One',cursive; font-size:16px; color:#D4AF37; text-align:center; margin-bottom:10px; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.3); }
+  .bubbles-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; flex:1; }
 
   .bubble {
     background:white;
-    border-radius:16px;
-    padding:10px 14px;
+    border-radius:18px;
+    padding:14px 18px;
     position:relative;
     border:2.5px solid rgba(212,175,55,0.5);
     display:flex; flex-direction:column; justify-content:center;
@@ -206,9 +127,9 @@
     border-top:12px solid rgba(212,175,55,0.5);
   }
 
-  .bubble-situation { font-size:10px; color:#aaa; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
-  .bubble-phrase { font-family:'Fredoka One',cursive; font-size:15px; color:#1A6B3C; line-height:1.3; margin-bottom:2px; }
-  .bubble-translation { font-size:10.5px; color:#888; font-style:italic; }
+  .bubble-situation { font-size:11px; color:#aaa; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:5px; }
+  .bubble-phrase { font-family:'Fredoka One',cursive; font-size:17px; color:#1A6B3C; line-height:1.3; margin-bottom:3px; }
+  .bubble-translation { font-size:12px; color:#888; font-style:italic; }
 
   /* ── BOTTOM ── */
   .victory-bar { position:absolute; bottom:80px; left:0; right:0; display:flex; justify-content:center; z-index:21; }
@@ -238,24 +159,6 @@
     <div class="team-label">🍀 Team Name</div>
     <div class="team-name-box">_______________________________</div>
     <div class="board-title">Animal Hunt — Team Board</div>
-
-    <!-- Progress -->
-    <div class="prog-wrap">
-      <div class="prog-label">⭐ Progress — Animals collected ⭐</div>
-      <div class="prog-track">
-        <div class="prog-seg"><div class="prog-num">1</div><div class="prog-text">Stn 1</div></div>
-        <div class="prog-arrow">▸</div>
-        <div class="prog-seg"><div class="prog-num">2</div><div class="prog-text">Stn 2</div></div>
-        <div class="prog-arrow">▸</div>
-        <div class="prog-seg"><div class="prog-num">3</div><div class="prog-text">Stn 3</div></div>
-        <div class="prog-arrow">▸</div>
-        <div class="prog-seg"><div class="prog-num">4</div><div class="prog-text">Stn 4</div></div>
-        <div class="prog-arrow">▸</div>
-        <div class="prog-seg"><div class="prog-num">5</div><div class="prog-text">Stn 5</div></div>
-        <div class="prog-arrow">▸</div>
-        <div class="prog-victory">🏆</div>
-      </div>
-    </div>
 
     <!-- Mystery slots -->
     <div class="paste-section">

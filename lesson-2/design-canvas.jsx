@@ -50,6 +50,8 @@ if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
     '  background:transparent;color:rgba(60,50,40,.7);display:flex;align-items:center;justify-content:center}',
     '.dc-expand:hover{background:rgba(0,0,0,.06);color:#2a251f}',
     '[data-dc-slot]:hover .dc-expand{opacity:1}',
+    '.dc-download{display:inline-flex;align-items:center;margin-left:8px;padding:4px 10px;font-size:12px;font-weight:500;color:#c96442;background:rgba(201,100,66,0.08);border:1px solid rgba(201,100,66,0.3);border-radius:4px;text-decoration:none;cursor:pointer;transition:background .15s,border-color .15s,color .15s}',
+    '.dc-download:hover{background:rgba(201,100,66,0.18);border-color:#c96442;color:#a04826}',
   ].join('\n');
   document.head.appendChild(s);
 }
@@ -438,6 +440,8 @@ function DCArtboardFrame({ sectionId, artboard, label, order, onRename, onReorde
     document.addEventListener('pointerup', up);
   };
 
+  const download = artboard.props.download;
+  const downloadFormat = artboard.props.downloadFormat;
   return (
     <div ref={ref} data-dc-slot={id} style={{ position: 'relative', flexShrink: 0 }}>
       <div className="dc-labelrow" style={{ position: 'absolute', bottom: '100%', left: -4, marginBottom: 4, color: DC.label }}>
@@ -448,6 +452,21 @@ function DCArtboardFrame({ sectionId, artboard, label, order, onRename, onReorde
           <DCEditable value={label} onChange={onRename} onClick={(e) => e.stopPropagation()}
             style={{ fontSize: 15, fontWeight: 500, color: DC.label, lineHeight: 1 }} />
         </div>
+        {download && (
+          <a
+            className="dc-download"
+            href={download}
+            download
+            title={`Download ${downloadFormat ? '(' + downloadFormat + ')' : ''} for printing`}
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 4 }}>
+              <path d="M6 1v7"/><path d="M3 5l3 3 3-3"/><path d="M1 10h10"/>
+            </svg>
+            {downloadFormat ? `Download ${downloadFormat}` : 'Download'}
+          </a>
+        )}
       </div>
       <button className="dc-expand" onClick={onFocus} onPointerDown={(e) => e.stopPropagation()} title="Focus">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M7 1h4v4M5 11H1V7M11 1L7.5 4.5M1 11l3.5-3.5"/></svg>
