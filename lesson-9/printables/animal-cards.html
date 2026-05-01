@@ -131,45 +131,37 @@
     height: 100%;
   }
   .back-header {
-    padding: 14px 14px 8px;
+    padding: 10px 12px 4px;
     text-align: center;
   }
   .back-title {
     font-family: 'Uncial Antiqua', cursive;
     font-size: 14px;
     color: white;
-    margin-bottom: 2px;
+    margin-bottom: 0;
   }
-  .back-emoji { font-size: 24px; }
+  .back-emoji { font-size: 22px; line-height: 1; }
 
   .back-body {
     flex: 1;
     background: white;
-    margin: 0 10px 10px;
+    margin: 6px 10px 10px;
     border-radius: 12px;
-    padding: 14px 12px;
-    display: flex; flex-direction: column; gap: 10px;
+    padding: 10px 10px;
+    display: flex; flex-direction: column; gap: 6px;
+    justify-content: center;
   }
 
   .fact {
-    display: flex; align-items: flex-start; gap: 8px;
-    padding: 8px 10px;
-    border-radius: 10px;
-    font-size: 13.5px;
+    display: flex; align-items: flex-start; gap: 7px;
+    padding: 6px 9px;
+    border-radius: 9px;
+    font-size: 12.5px;
     font-weight: 600;
     color: #2a2a2a;
-    line-height: 1.45;
+    line-height: 1.35;
   }
-  .fact-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-
-  .back-footer {
-    padding: 6px 14px 12px;
-    text-align: center;
-    font-family: 'Fredoka One', cursive;
-    font-size: 11px;
-    color: rgba(255,255,255,0.65);
-    letter-spacing: 1px;
-  }
+  .fact-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 
   @media print {
     body { background: white; padding: 20px; }
@@ -279,7 +271,6 @@ animals.forEach(a => {
             ${f.t}
           </div>`).join('')}
         </div>
-        <div class="back-footer">🍀 St. Patrick's Animal Hunt 🍀</div>
       </div>
     </div>
   </div>

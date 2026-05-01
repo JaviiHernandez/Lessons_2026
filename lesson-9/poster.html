@@ -202,9 +202,46 @@
     font-family: 'Uncial Antiqua', cursive;
     font-size: 14px;
     color: #1A6B3C;
-    opacity: 0.65;
+    opacity: 0.7;
     letter-spacing: 2px;
     text-align: center;
+    margin-bottom: 14px;
+  }
+
+  /* Footer bar */
+  .footer-bar {
+    width: 100%;
+    background: linear-gradient(90deg, #1A6B3C, #2d8f55, #D4AF37, #2d8f55, #1A6B3C);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: auto;
+    border-top: 3px solid #b8952e;
+  }
+  .footer-text {
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 17px;
+    color: #FAF6E9;
+    text-shadow: 0 2px 0 rgba(0,0,0,0.25);
+    letter-spacing: 1px;
+  }
+  .footer-slots { display:flex; gap:6px; align-items:center; }
+  .footer-slot {
+    width: 30px; height: 30px;
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.55);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .footer-divider {
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 17px;
+    color: rgba(255,255,255,0.85);
   }
 
   @media print {
@@ -329,6 +366,20 @@
     </div>
 
     <div class="tagline">🍀 &nbsp; Save Ireland · Be a Hero · Learn English &nbsp; 🍀</div>
+  </div>
+
+  <!-- Footer Bar -->
+  <div class="footer-bar">
+    <div class="footer-text">🍀 5 Animals</div>
+    <div class="footer-slots">
+      <div class="footer-slot">🐴</div>
+      <div class="footer-slot">🐯</div>
+      <div class="footer-slot">🦜</div>
+      <div class="footer-slot">🐑</div>
+      <div class="footer-slot">🐟</div>
+    </div>
+    <div class="footer-divider">=</div>
+    <div class="footer-text">VICTORY 🏆</div>
   </div>
 </div>
 </body>
