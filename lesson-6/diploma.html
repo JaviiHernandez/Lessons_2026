@@ -48,11 +48,14 @@
     overflow: hidden;
   }
 
-  /* Decorative double border */
+  /* Decorative double border — bottom stops above the footer so they don't overlap */
   .diploma::before {
     content: '';
     position: absolute;
-    inset: 12px;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 64px;
     border: 3px solid #D32F2F;
     pointer-events: none;
     z-index: 10;
@@ -61,7 +64,10 @@
   .diploma::after {
     content: '';
     position: absolute;
-    inset: 18px;
+    top: 18px;
+    left: 18px;
+    right: 18px;
+    bottom: 70px;
     border: 1px solid rgba(211,47,47,0.3);
     pointer-events: none;
     z-index: 10;
@@ -76,8 +82,8 @@
   }
   .c-tl { top: 24px; left: 24px; }
   .c-tr { top: 24px; right: 24px; }
-  .c-bl { bottom: 24px; left: 24px; }
-  .c-br { bottom: 24px; right: 24px; }
+  .c-bl { bottom: 76px; left: 24px; }
+  .c-br { bottom: 76px; right: 24px; }
 
   /* Subtle bg texture */
   .bg-texture {

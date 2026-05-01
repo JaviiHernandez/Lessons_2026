@@ -548,27 +548,6 @@
     color: var(--honey);
   }
 
-  .next-station-btn {
-    display: none;
-    margin-top: clamp(10px, 2vw, 14px);
-    background: rgba(94,53,177,0.25);
-    border: 2px solid rgba(94,53,177,0.6);
-    color: #D1C4E9;
-    border-radius: 50px;
-    padding: clamp(11px, 2.2vw, 14px) clamp(20px, 4vw, 28px);
-    font-family: 'Fredoka One', sans-serif;
-    font-size: clamp(13px, 2.3vw, 16px);
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.15s;
-    width: 100%;
-    text-align: center;
-    touch-action: manipulation;
-  }
-
-  .next-station-btn.visible { display: inline-block; }
-  .next-station-btn:hover { background: rgba(94,53,177,0.4); transform: translateY(-2px); }
-
   @media (min-width: 600px) {
     .choices-grid { grid-template-columns: 1fr 1fr; }
   }
@@ -626,7 +605,6 @@
       </div>
       <div class="sticker-label" id="stickerLabel">+1 Ingredient saved! Total: 1/5 🥗</div>
     </div>
-    <a class="next-station-btn" id="nextStationBtn" href="#">Next Station 👉</a>
   </div>
 </div>
 
@@ -979,19 +957,6 @@ function claimGift() {
 
   launchConfetti(STATIONS[station].color[0], STATIONS[station].color[1]);
   document.querySelector('.claim-btn').style.display = 'none';
-
-  // Show next-station button if applicable
-  const next = document.getElementById('nextStationBtn');
-  if (station < 5) {
-    next.href = `riddle.html?s=${station + 1}`;
-    next.textContent = `Next Station (${station + 1}/5) 👉`;
-    next.classList.add('visible');
-  } else {
-    next.href = '#';
-    next.textContent = '🏆 All 5 ingredients saved! Healthy Food Detective!';
-    next.classList.add('visible');
-    next.onclick = (e) => e.preventDefault();
-  }
 }
 
 function launchConfetti(color1, color2) {
