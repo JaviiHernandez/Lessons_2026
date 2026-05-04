@@ -455,17 +455,17 @@ function DCArtboardFrame({ sectionId, artboard, label, order, onRename, onReorde
         {download && (
           <a
             className="dc-download"
-            href={`${download}${download.includes('?') ? '&' : '?'}print=1`}
+            href={`${download}${download.includes('?') ? '&' : '?'}pdf=1${downloadFormat ? '&size=' + encodeURIComponent(downloadFormat) : ''}`}
             target="_blank"
             rel="noopener"
-            title={`Open print dialog ${downloadFormat ? '(' + downloadFormat + ')' : ''} — print to paper or save as PDF`}
+            title={`Download PDF ${downloadFormat ? '(' + downloadFormat + ')' : ''} ready to print`}
             onPointerDown={(e) => e.stopPropagation()}
             onClick={(e) => e.stopPropagation()}
           >
-            <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 4 }}>
-              <path d="M4 5V2h6v3"/><rect x="2" y="5" width="10" height="6" rx="1"/><path d="M4 9h6v3H4z"/>
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 4 }}>
+              <path d="M6 1v7"/><path d="M3 5l3 3 3-3"/><path d="M1 10h10"/>
             </svg>
-            {downloadFormat ? `Print ${downloadFormat}` : 'Print'}
+            {downloadFormat ? `Download PDF ${downloadFormat}` : 'Download PDF'}
           </a>
         )}
       </div>
