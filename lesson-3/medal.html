@@ -3,36 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>The Midnight Hunt — Medals</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<title>The Midnight Hunt — Role Medals</title>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Fredoka+One&family=Fredoka:wght@400;500;600&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
+  img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+  }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: #1a0a2e;
+    background: #1a0f2a;
     font-family: 'Fredoka', sans-serif;
     padding: clamp(16px, 3vw, 40px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: clamp(24px, 4vw, 48px);
+    gap: clamp(22px, 3.8vw, 44px);
+    overflow-x: hidden;
   }
 
   .page-heading {
-    font-family: 'Fredoka One', sans-serif;
-    font-size: clamp(22px, 4vw, 34px);
-    color: #F9A825;
+    font-family: 'Creepster', cursive;
+    font-size: clamp(22px, 4vw, 36px);
+    color: #FF8C00;
     text-align: center;
     padding-top: clamp(8px, 1.5vw, 16px);
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5), 0 0 12px rgba(255,140,0,0.4);
+    letter-spacing: 2px;
   }
 
   .print-note {
     background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(249,168,37,0.3);
+    border: 1px solid rgba(255,140,0,0.35);
     border-radius: 8px;
     padding: clamp(8px,1.5vw,12px) clamp(16px,3vw,24px);
-    color: rgba(255,248,240,0.65);
+    color: rgba(255,248,240,0.7);
     font-size: clamp(12px,1.8vw,14px);
     text-align: center;
     max-width: 600px;
@@ -41,7 +52,7 @@
   .medals-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: clamp(24px, 4vw, 48px);
+    gap: clamp(28px, 4.5vw, 56px);
     justify-content: center;
     align-items: flex-start;
   }
@@ -50,107 +61,170 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
+    padding: 30px 22px 24px;
+    position: relative;
   }
 
-  /* Medal shape: 160×220 px total (ribbon + circle) */
+  .medal-wrap::before {
+    content: '';
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background:
+      repeating-conic-gradient(
+        from 0deg,
+        rgba(255,140,0,0.20) 0deg 8deg,
+        transparent 8deg 24deg
+      );
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .sparkle {
+    position: absolute;
+    color: #FF8C00;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 18px;
+    text-shadow: 0 0 8px rgba(255,140,0,0.8);
+    z-index: 4;
+    line-height: 1;
+  }
+  .sparkle.s1 { top: 14px; left: 12px; font-size: 16px; }
+  .sparkle.s2 { top: 8px; right: 14px; font-size: 22px; }
+  .sparkle.s3 { top: 110px; left: 6px; font-size: 14px; opacity: 0.85; }
+  .sparkle.s4 { top: 130px; right: 4px; font-size: 14px; opacity: 0.85; }
+
   .medal {
-    width: 160px;
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 10px 28px rgba(0,0,0,0.6));
+    position: relative;
+    z-index: 2;
   }
 
-  /* Ribbon top */
   .ribbon-top {
-    display: flex;
-    width: 80px;
-    height: 32px;
+    width: 110px;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     position: relative;
     z-index: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  }
+  .ribbon-strip { height: 100%; }
+  .ribbon-strip.center { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.18); }
+
+  .ribbon-knot {
+    width: 28px;
+    height: 14px;
+    margin-top: -6px;
+    background: linear-gradient(180deg, #FF8C00 0%, #8a3200 100%);
+    border-radius: 50%;
+    border: 2px solid #FFB74D;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 3;
   }
 
-  .ribbon-half {
-    flex: 1;
-    height: 100%;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
-  }
-
-  /* Medal body */
   .medal-body {
-    width: 140px;
-    height: 140px;
+    width: 168px;
+    height: 168px;
     border-radius: 50%;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 2;
-    margin-top: -6px;
+    margin-top: -4px;
   }
 
-  /* Outer ring */
   .medal-ring {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: conic-gradient(
-      #F9A825 0deg, #fff3c0 30deg, #F9A825 60deg,
-      #e0a800 90deg, #F9A825 120deg, #fff3c0 150deg,
-      #F9A825 180deg, #e0a800 210deg, #F9A825 240deg,
-      #fff3c0 270deg, #F9A825 300deg, #e0a800 330deg, #F9A825 360deg
-    );
-    box-shadow: 0 0 0 3px rgba(255,255,255,0.2), 0 4px 16px rgba(0,0,0,0.4);
+    background:
+      radial-gradient(circle at 30% 30%, #FFB74D 0%, #FF8C00 22%, #C76B00 50%, #7a3a00 78%, #441e00 100%);
+    box-shadow:
+      inset 0 4px 8px rgba(255,255,255,0.4),
+      inset 0 -4px 8px rgba(0,0,0,0.4),
+      0 0 0 2px rgba(255,255,255,0.15),
+      0 4px 16px rgba(0,0,0,0.5);
   }
 
-  /* Inner circle */
+  .medal-ring-dots {
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(255,255,255,0.3);
+    z-index: 1;
+  }
+
   .medal-inner {
-    width: 112px;
-    height: 112px;
+    width: 132px;
+    height: 132px;
     border-radius: 50%;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 3px;
     z-index: 2;
-    border: 3px solid rgba(255,255,255,0.15);
+    border: 3px solid rgba(255,255,255,0.18);
+    box-shadow:
+      inset 0 0 18px rgba(0,0,0,0.45),
+      inset 0 4px 8px rgba(255,255,255,0.12);
+    overflow: hidden;
+    padding: 6px;
   }
 
-  /* Sunburst pattern */
-  .medal-inner::before {
+  .medal-inner::after {
     content: '';
     position: absolute;
-    inset: 0;
+    top: 4px;
+    left: 12px;
+    right: 12px;
+    height: 35%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%);
     border-radius: 50%;
-    background: repeating-conic-gradient(
-      rgba(255,255,255,0.06) 0deg 15deg,
-      transparent 15deg 30deg
-    );
+    pointer-events: none;
+    z-index: 1;
   }
 
-  .medal-event {
-    font-family: 'Fredoka One', sans-serif;
-    font-size: 9px;
-    color: #fff;
+  .medal-banner {
+    font-family: 'Creepster', cursive;
+    font-size: 10px;
+    color: #FFB74D;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.4px;
+    line-height: 1.1;
     text-align: center;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,140,0,0.5);
+    border-radius: 4px;
+    padding: 2px 7px;
     position: relative;
     z-index: 3;
-    line-height: 1.2;
-    background: rgba(0,0,0,0.35);
-    border-radius: 6px;
-    padding: 2px 6px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.4);
+    max-width: 105px;
   }
 
   .medal-role-icon {
-    font-size: 28px;
+    font-size: 36px;
     position: relative;
     z-index: 3;
-    margin: 2px 0;
+    margin: 1px 0;
+    line-height: 1;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
   }
 
   .medal-role {
@@ -158,190 +232,276 @@
     font-size: 14px;
     color: white;
     text-align: center;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    text-shadow: 1.5px 1.5px 0 rgba(0,0,0,0.5), 0 0 6px rgba(0,0,0,0.4);
     position: relative;
     z-index: 3;
-    line-height: 1.1;
-    padding: 0 6px;
+    line-height: 1.05;
+    letter-spacing: 0.2px;
   }
 
-  /* Name line below medal */
+  .medal-deco {
+    font-size: 11px;
+    letter-spacing: 4px;
+    line-height: 1;
+    color: #FF8C00;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    position: relative;
+    z-index: 3;
+    margin-top: 1px;
+  }
+
+  .laurel {
+    position: absolute;
+    top: 50%;
+    width: 38px;
+    height: 90px;
+    transform: translateY(-50%);
+    z-index: 1;
+    opacity: 0.95;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4));
+  }
+  .laurel-left { left: -24px; }
+  .laurel-right { right: -24px; transform: translateY(-50%) scaleX(-1); }
+
   .name-area {
     text-align: center;
-    margin-top: 4px;
+    margin-top: 8px;
+    position: relative;
+    z-index: 3;
   }
-
   .name-label {
-    font-family: 'Fredoka One', sans-serif;
-    font-size: 11px;
-    color: rgba(255,255,255,0.5);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-family: 'Creepster', cursive;
+    font-size: 12px;
+    color: #FF8C00;
+    letter-spacing: 2px;
     display: block;
     margin-bottom: 4px;
+    text-shadow: 0 0 6px rgba(255,140,0,0.4);
   }
-
   .name-line-box {
-    width: 140px;
-    height: 28px;
-    border: 2px solid rgba(255,255,255,0.2);
-    border-radius: 6px;
+    width: 165px;
+    height: 32px;
+    border: 2px solid rgba(255,140,0,0.5);
+    border-radius: 8px;
     background: rgba(255,255,255,0.05);
+    position: relative;
   }
+  .name-line-box::before,
+  .name-line-box::after {
+    content: '✦';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #FF8C00;
+    font-size: 12px;
+    line-height: 1;
+  }
+  .name-line-box::before { left: -16px; }
+  .name-line-box::after { right: -16px; }
 
-  /* Theme colours */
-  /* Reader — orange */
-  .r1 .ribbon-half:first-child { background: #FF6B1A; }
-  .r1 .ribbon-half:last-child  { background: #e55a0a; }
-  .r1 .medal-inner { background: radial-gradient(circle at 35% 35%, #6A1B9A, #4a0080); }
+  /* ── Halloween role themes ── */
+  .r1 .ribbon-strip:nth-child(1) { background: linear-gradient(180deg, #FFA726, #E65100); }
+  .r1 .ribbon-strip:nth-child(2) { background: linear-gradient(180deg, #E65100, #7a3200); }
+  .r1 .ribbon-strip:nth-child(3) { background: linear-gradient(180deg, #FFA726, #E65100); }
+  .r1 .medal-inner { background: radial-gradient(circle at 35% 30%, #FFA726 0%, #E65100 45%, #4a1f00 100%); }
 
-  /* Writer — purple */
-  .r2 .ribbon-half:first-child { background: #9c27b0; }
-  .r2 .ribbon-half:last-child  { background: #6A1B9A; }
-  .r2 .medal-inner { background: radial-gradient(circle at 35% 35%, #c62828, #8B0000); }
+  .r2 .ribbon-strip:nth-child(1) { background: linear-gradient(180deg, #BA68C8, #6A1B9A); }
+  .r2 .ribbon-strip:nth-child(2) { background: linear-gradient(180deg, #6A1B9A, #311B92); }
+  .r2 .ribbon-strip:nth-child(3) { background: linear-gradient(180deg, #BA68C8, #6A1B9A); }
+  .r2 .medal-inner { background: radial-gradient(circle at 35% 30%, #BA68C8 0%, #6A1B9A 45%, #1f0d3a 100%); }
 
-  /* Scanner — dark teal */
-  .r3 .ribbon-half:first-child { background: #37474F; }
-  .r3 .ribbon-half:last-child  { background: #263238; }
-  .r3 .medal-inner { background: radial-gradient(circle at 35% 35%, #37474F, #1a2c35); }
+  .r3 .ribbon-strip:nth-child(1) { background: linear-gradient(180deg, #ef5350, #B71C1C); }
+  .r3 .ribbon-strip:nth-child(2) { background: linear-gradient(180deg, #B71C1C, #5a0000); }
+  .r3 .ribbon-strip:nth-child(3) { background: linear-gradient(180deg, #ef5350, #B71C1C); }
+  .r3 .medal-inner { background: radial-gradient(circle at 35% 30%, #ef5350 0%, #B71C1C 45%, #3a0000 100%); }
 
-  /* Speaker — green */
-  .r4 .ribbon-half:first-child { background: #558B2F; }
-  .r4 .ribbon-half:last-child  { background: #33691E; }
-  .r4 .medal-inner { background: radial-gradient(circle at 35% 35%, #33691E, #1b3a0a); }
+  .r4 .ribbon-strip:nth-child(1) { background: linear-gradient(180deg, #9CCC65, #558B2F); }
+  .r4 .ribbon-strip:nth-child(2) { background: linear-gradient(180deg, #558B2F, #2a5a0e); }
+  .r4 .ribbon-strip:nth-child(3) { background: linear-gradient(180deg, #9CCC65, #558B2F); }
+  .r4 .medal-inner { background: radial-gradient(circle at 35% 30%, #9CCC65 0%, #558B2F 45%, #1a3408 100%); }
 
-  /* Decider — blood red */
-  .r5 .ribbon-half:first-child { background: #8B0000; }
-  .r5 .ribbon-half:last-child  { background: #5a0000; }
-  .r5 .medal-inner { background: radial-gradient(circle at 35% 35%, #1a237e, #0d1440); }
+  .r5 .ribbon-strip:nth-child(1) { background: linear-gradient(180deg, #5C6BC0, #283593); }
+  .r5 .ribbon-strip:nth-child(2) { background: linear-gradient(180deg, #283593, #0d1654); }
+  .r5 .ribbon-strip:nth-child(3) { background: linear-gradient(180deg, #5C6BC0, #283593); }
+  .r5 .medal-inner { background: radial-gradient(circle at 35% 30%, #5C6BC0 0%, #283593 45%, #060938 100%); }
 
   @media print {
-    body { background: white; padding: 10px; gap: 20px; }
+    body { background: white; padding: 10px; gap: 18px; }
     .page-heading, .print-note { display: none; }
     .medals-grid { page-break-after: always; }
     .medal { filter: none; }
-    .medal-ring { box-shadow: 0 0 0 2px #ccc; }
+    @page { size: A4; margin: 0; }
   }
 </style>
 </head>
 <body>
 
-<div class="page-heading">🏅 The Midnight Hunt — Role Medals</div>
+<div class="page-heading">🎃 The Midnight Hunt — Role Medals</div>
 <div class="print-note">Print on cardstock · Cut out each medal · Laminate · Add a ribbon or lanyard · Award at the end of the activity!</div>
+
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="laurel" viewBox="0 0 38 90">
+    <path d="M30 5 Q 12 30 12 50 Q 12 70 26 86" stroke="#5E35B1" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <g fill="#FF8C00" stroke="#5E35B1" stroke-width="0.8">
+      <ellipse cx="20" cy="14" rx="6" ry="3" transform="rotate(-25 20 14)"/>
+      <ellipse cx="14" cy="26" rx="7" ry="3.5" transform="rotate(-15 14 26)"/>
+      <ellipse cx="9" cy="40" rx="7.5" ry="3.8" transform="rotate(0 9 40)"/>
+      <ellipse cx="9" cy="54" rx="7.5" ry="3.8" transform="rotate(15 9 54)"/>
+      <ellipse cx="14" cy="68" rx="7" ry="3.5" transform="rotate(30 14 68)"/>
+      <ellipse cx="22" cy="80" rx="6" ry="3" transform="rotate(45 22 80)"/>
+    </g>
+    <g fill="#9575CD" stroke="#311B92" stroke-width="0.8" opacity="0.85">
+      <ellipse cx="26" cy="20" rx="5" ry="2.5" transform="rotate(20 26 20)"/>
+      <ellipse cx="20" cy="32" rx="6" ry="3" transform="rotate(35 20 32)"/>
+      <ellipse cx="16" cy="46" rx="6.5" ry="3" transform="rotate(50 16 46)"/>
+      <ellipse cx="16" cy="60" rx="6.5" ry="3" transform="rotate(65 16 60)"/>
+      <ellipse cx="20" cy="74" rx="6" ry="3" transform="rotate(80 20 74)"/>
+    </g>
+    <ellipse cx="30" cy="5" rx="3.5" ry="2.5" fill="#5E35B1"/>
+    <ellipse cx="34" cy="6" rx="2.5" ry="1.8" fill="#5E35B1"/>
+    <circle cx="30" cy="5" r="1.2" fill="#FF8C00"/>
+  </symbol>
+</svg>
 
 <div class="medals-grid">
 
-  <!-- Best Reader -->
   <div class="medal-wrap">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle s2">★</span>
+    <span class="sparkle s3">✦</span>
+    <span class="sparkle s4">★</span>
     <div class="medal r1">
-      <div class="ribbon-top">
-        <div class="ribbon-half"></div>
-        <div class="ribbon-half"></div>
-      </div>
+      <div class="ribbon-top"><div class="ribbon-strip"></div><div class="ribbon-strip center"></div><div class="ribbon-strip"></div></div>
+      <div class="ribbon-knot"></div>
       <div class="medal-body">
+        <svg class="laurel laurel-left"><use href="#laurel"/></svg>
+        <svg class="laurel laurel-right"><use href="#laurel"/></svg>
         <div class="medal-ring"></div>
+        <div class="medal-ring-dots"></div>
         <div class="medal-inner">
-          <div class="medal-event">The Midnight Hunt</div>
+          <div class="medal-banner">Midnight Hunt</div>
           <div class="medal-role-icon">📖</div>
           <div class="medal-role">Best<br>Reader</div>
+          <div class="medal-deco">★ 🎃 ★</div>
         </div>
       </div>
     </div>
     <div class="name-area">
-      <span class="name-label">Name</span>
+      <span class="name-label">Awarded to</span>
       <div class="name-line-box"></div>
     </div>
   </div>
 
-  <!-- Best Writer -->
   <div class="medal-wrap">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle s2">★</span>
+    <span class="sparkle s3">✦</span>
+    <span class="sparkle s4">★</span>
     <div class="medal r2">
-      <div class="ribbon-top">
-        <div class="ribbon-half"></div>
-        <div class="ribbon-half"></div>
-      </div>
+      <div class="ribbon-top"><div class="ribbon-strip"></div><div class="ribbon-strip center"></div><div class="ribbon-strip"></div></div>
+      <div class="ribbon-knot"></div>
       <div class="medal-body">
+        <svg class="laurel laurel-left"><use href="#laurel"/></svg>
+        <svg class="laurel laurel-right"><use href="#laurel"/></svg>
         <div class="medal-ring"></div>
+        <div class="medal-ring-dots"></div>
         <div class="medal-inner">
-          <div class="medal-event">The Midnight Hunt</div>
+          <div class="medal-banner">Midnight Hunt</div>
           <div class="medal-role-icon">✏️</div>
           <div class="medal-role">Best<br>Writer</div>
+          <div class="medal-deco">★ 🎃 ★</div>
         </div>
       </div>
     </div>
     <div class="name-area">
-      <span class="name-label">Name</span>
+      <span class="name-label">Awarded to</span>
       <div class="name-line-box"></div>
     </div>
   </div>
 
-  <!-- Best Scanner -->
   <div class="medal-wrap">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle s2">★</span>
+    <span class="sparkle s3">✦</span>
+    <span class="sparkle s4">★</span>
     <div class="medal r3">
-      <div class="ribbon-top">
-        <div class="ribbon-half"></div>
-        <div class="ribbon-half"></div>
-      </div>
+      <div class="ribbon-top"><div class="ribbon-strip"></div><div class="ribbon-strip center"></div><div class="ribbon-strip"></div></div>
+      <div class="ribbon-knot"></div>
       <div class="medal-body">
+        <svg class="laurel laurel-left"><use href="#laurel"/></svg>
+        <svg class="laurel laurel-right"><use href="#laurel"/></svg>
         <div class="medal-ring"></div>
+        <div class="medal-ring-dots"></div>
         <div class="medal-inner">
-          <div class="medal-event">The Midnight Hunt</div>
+          <div class="medal-banner">Midnight Hunt</div>
           <div class="medal-role-icon">📱</div>
           <div class="medal-role">Best<br>Scanner</div>
+          <div class="medal-deco">★ 🎃 ★</div>
         </div>
       </div>
     </div>
     <div class="name-area">
-      <span class="name-label">Name</span>
+      <span class="name-label">Awarded to</span>
       <div class="name-line-box"></div>
     </div>
   </div>
 
-  <!-- Best Speaker -->
   <div class="medal-wrap">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle s2">★</span>
+    <span class="sparkle s3">✦</span>
+    <span class="sparkle s4">★</span>
     <div class="medal r4">
-      <div class="ribbon-top">
-        <div class="ribbon-half"></div>
-        <div class="ribbon-half"></div>
-      </div>
+      <div class="ribbon-top"><div class="ribbon-strip"></div><div class="ribbon-strip center"></div><div class="ribbon-strip"></div></div>
+      <div class="ribbon-knot"></div>
       <div class="medal-body">
+        <svg class="laurel laurel-left"><use href="#laurel"/></svg>
+        <svg class="laurel laurel-right"><use href="#laurel"/></svg>
         <div class="medal-ring"></div>
+        <div class="medal-ring-dots"></div>
         <div class="medal-inner">
-          <div class="medal-event">The Midnight Hunt</div>
+          <div class="medal-banner">Midnight Hunt</div>
           <div class="medal-role-icon">🗣️</div>
           <div class="medal-role">Best<br>Speaker</div>
+          <div class="medal-deco">★ 🎃 ★</div>
         </div>
       </div>
     </div>
     <div class="name-area">
-      <span class="name-label">Name</span>
+      <span class="name-label">Awarded to</span>
       <div class="name-line-box"></div>
     </div>
   </div>
 
-  <!-- Best Decider -->
   <div class="medal-wrap">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle s2">★</span>
+    <span class="sparkle s3">✦</span>
+    <span class="sparkle s4">★</span>
     <div class="medal r5">
-      <div class="ribbon-top">
-        <div class="ribbon-half"></div>
-        <div class="ribbon-half"></div>
-      </div>
+      <div class="ribbon-top"><div class="ribbon-strip"></div><div class="ribbon-strip center"></div><div class="ribbon-strip"></div></div>
+      <div class="ribbon-knot"></div>
       <div class="medal-body">
+        <svg class="laurel laurel-left"><use href="#laurel"/></svg>
+        <svg class="laurel laurel-right"><use href="#laurel"/></svg>
         <div class="medal-ring"></div>
+        <div class="medal-ring-dots"></div>
         <div class="medal-inner">
-          <div class="medal-event">The Midnight Hunt</div>
+          <div class="medal-banner">Midnight Hunt</div>
           <div class="medal-role-icon">🎯</div>
           <div class="medal-role">Best<br>Decider</div>
+          <div class="medal-deco">★ 🎃 ★</div>
         </div>
       </div>
     </div>
     <div class="name-area">
-      <span class="name-label">Name</span>
+      <span class="name-label">Awarded to</span>
       <div class="name-line-box"></div>
     </div>
   </div>
 
 </div>
-<script>/* auto-print/pdf on ?print=1 or ?pdf=1 */(function(){var p=new URLSearchParams(location.search);var pdf=p.get("pdf");var prn=p.get("print");if(pdf!=="1"&&prn!=="1")return;function whenReady(cb){if(document.readyState==="complete")setTimeout(cb,900);else window.addEventListener("load",function(){setTimeout(cb,1100);});}function preloadEmojis(){return new Promise(function(resolve){var imgs=document.querySelectorAll("img.emoji");if(!imgs.length){console.log("[PDF] no emojis");return resolve();}console.log("[PDF] preloading "+imgs.length+" emojis as PNG");var pending=imgs.length;var ok=0,fail=0;var safety=setTimeout(function(){console.warn("[PDF] emoji preload timeout ok="+ok+" fail="+fail);resolve();},20000);var done=function(){pending--;if(pending<=0){clearTimeout(safety);console.log("[PDF] emoji preload done ok="+ok+" fail="+fail);resolve();}};imgs.forEach(function(img){if(/^data:/.test(img.src)){ok++;done();return;}var m=img.src.match(/\/([a-f0-9\-]+)\.(?:svg|png)/i);if(!m){fail++;done();return;}var cp=m[1];var urls=["https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/twitter/twemoji@v14.0.2/assets/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/72x72/"+cp+".png"];var i=0;(function tryNext(){if(i>=urls.length){fail++;console.warn("[PDF] all URLs failed for "+cp);done();return;}var u=urls[i++];fetch(u).then(function(r){if(!r.ok)return Promise.reject("HTTP "+r.status);return r.blob();}).then(function(blob){var reader=new FileReader();reader.onloadend=function(){if(typeof reader.result==="string"&&reader.result.indexOf("data:image/png")===0){img.src=reader.result;ok++;done();}else{tryNext();}};reader.onerror=function(){tryNext();};reader.readAsDataURL(blob);}).catch(function(err){tryNext();});})();});});}function loadScript(src){return new Promise(function(resolve,reject){var s=document.createElement("script");s.src=src;s.crossOrigin="anonymous";s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}function loadLibs(){var p1=(typeof html2canvas==="function")?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");var p2=((window.jspdf&&window.jspdf.jsPDF)||window.jsPDF)?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");return Promise.all([p1,p2]);}if(pdf==="1"){whenReady(function(){var size=(p.get("size")||"A4").toUpperCase();var orientation=(size==="A5")?"landscape":"portrait";var format=size.toLowerCase().replace(/[^a-z0-9]/g,"");if(format==="2xa4"||format==="2a4")format="a4";if(["a3","a4","a5"].indexOf(format)<0)format="a4";var sizeMM={"a3":[297,420],"a4":[210,297],"a5":[148,210]};var paper=sizeMM[format]||[210,297];var pdfW=(orientation==="landscape")?paper[1]:paper[0];var pdfH=(orientation==="landscape")?paper[0]:paper[1];var fn=(document.title||"lesson_print").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"").toLowerCase()+".pdf";function shotElem(elem){return html2canvas(elem,{scale:3,useCORS:true,allowTaint:true,logging:false,backgroundColor:"#ffffff",imageTimeout:9000,onclone:function(doc){var b=doc.body;b.style.padding="0";b.style.margin="0";b.style.minHeight="0";b.style.background="#ffffff";Array.prototype.forEach.call(doc.querySelectorAll(".print-note,.page-heading,.card-label"),function(el){el.style.display="none";});}});}function placeImage(doc,canvas,marginMM){var aspect=canvas.width/canvas.height;var availW=pdfW-marginMM*2;var availH=pdfH-marginMM*2;var imgW=availW,imgH=availW/aspect;if(imgH>availH){imgH=availH;imgW=availH*aspect;}var x=(pdfW-imgW)/2,y=(pdfH-imgH)/2;doc.addImage(canvas.toDataURL("image/png"),"PNG",x,y,imgW,imgH,undefined,"FAST");}function newDoc(){var Ctor=(window.jspdf&&window.jspdf.jsPDF)||window.jsPDF;return new Ctor({orientation:orientation,unit:"mm",format:format,compress:true});}function renderHero(elem){var doc=newDoc();return shotElem(elem).then(function(canvas){placeImage(doc,canvas,4);doc.save(fn);});}function renderMulti(elements,marginMM){var doc=newDoc();return elements.reduce(function(prev,elem,idx){return prev.then(function(){return shotElem(elem).then(function(canvas){if(idx>0)doc.addPage(format,orientation);placeImage(doc,canvas,marginMM);});});},Promise.resolve()).then(function(){doc.save(fn);});}function gen(){var hero=document.querySelector(".poster, .diploma, .board");var pages=document.querySelectorAll(".page");var cards=document.querySelectorAll(".card-pair, .card-wrap, .medal-wrap, .row, .qr-card");if(cards.length>=2){console.log("[PDF] multi-page: "+cards.length+" cards/medals");return renderMulti(Array.prototype.slice.call(cards),10);}if(pages.length>=2){console.log("[PDF] multi-page: "+pages.length+" pages, full-bleed");return renderMulti(Array.prototype.slice.call(pages),0);}if(hero){console.log("[PDF] hero: "+hero.className);return renderHero(hero);}console.log("[PDF] fallback to body");return renderHero(document.body);}preloadEmojis().then(loadLibs).then(gen).catch(function(err){console.error("[PDF] failed:",err);alert("Could not generate the PDF. Reload and try again. Error: "+(err.message||err));});});}else{whenReady(function(){window.print();});}})();</script>
+<script>twemoji.parse(document.body,{folder:'svg',ext:'.svg'});</script>
+<script>/* auto-print/pdf on ?print=1 or ?pdf=1 */(function(){var p=new URLSearchParams(location.search);var pdf=p.get("pdf");var prn=p.get("print");if(pdf!=="1"&&prn!=="1")return;function whenReady(cb){if(document.readyState==="complete")setTimeout(cb,900);else window.addEventListener("load",function(){setTimeout(cb,1100);});}function preloadEmojis(){return new Promise(function(resolve){var imgs=document.querySelectorAll("img.emoji");if(!imgs.length){console.log("[PDF] no emojis");return resolve();}console.log("[PDF] preloading "+imgs.length+" emojis as PNG");var pending=imgs.length;var ok=0,fail=0;var safety=setTimeout(function(){console.warn("[PDF] emoji preload timeout ok="+ok+" fail="+fail);resolve();},20000);var done=function(){pending--;if(pending<=0){clearTimeout(safety);console.log("[PDF] emoji preload done ok="+ok+" fail="+fail);resolve();}};imgs.forEach(function(img){if(/^data:/.test(img.src)){ok++;done();return;}var m=img.src.match(/\/([a-f0-9\-]+)\.(?:svg|png)/i);if(!m){fail++;done();return;}var cp=m[1];var urls=["https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/twitter/twemoji@v14.0.2/assets/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/72x72/"+cp+".png"];var i=0;(function tryNext(){if(i>=urls.length){fail++;console.warn("[PDF] all URLs failed for "+cp);done();return;}var u=urls[i++];fetch(u).then(function(r){if(!r.ok)return Promise.reject("HTTP "+r.status);return r.blob();}).then(function(blob){var reader=new FileReader();reader.onloadend=function(){if(typeof reader.result==="string"&&reader.result.indexOf("data:image/png")===0){img.src=reader.result;ok++;done();}else{tryNext();}};reader.onerror=function(){tryNext();};reader.readAsDataURL(blob);}).catch(function(err){tryNext();});})();});});}function loadScript(src){return new Promise(function(resolve,reject){var s=document.createElement("script");s.src=src;s.crossOrigin="anonymous";s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}function loadLibs(){var p1=(typeof html2canvas==="function")?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");var p2=((window.jspdf&&window.jspdf.jsPDF)||window.jsPDF)?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");return Promise.all([p1,p2]);}if(pdf==="1"){whenReady(function(){var size=(p.get("size")||"A4").toUpperCase();var orientation=(size==="A5")?"landscape":"portrait";var format=size.toLowerCase().replace(/[^a-z0-9]/g,"");if(format==="2xa4"||format==="2a4")format="a4";if(["a3","a4","a5"].indexOf(format)<0)format="a4";var sizeMM={"a3":[297,420],"a4":[210,297],"a5":[148,210]};var paper=sizeMM[format]||[210,297];var pdfW=(orientation==="landscape")?paper[1]:paper[0];var pdfH=(orientation==="landscape")?paper[0]:paper[1];var fn=(document.title||"lesson_print").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"").toLowerCase()+".pdf";function shotElem(elem){return html2canvas(elem,{scale:3,useCORS:true,allowTaint:true,logging:false,backgroundColor:"#ffffff",imageTimeout:9000,onclone:function(doc){var b=doc.body;b.style.padding="0";b.style.margin="0";b.style.minHeight="0";b.style.background="#ffffff";Array.prototype.forEach.call(doc.querySelectorAll(".print-note,.page-heading,.card-label"),function(el){el.style.display="none";});Array.prototype.forEach.call(doc.querySelectorAll(".page,.guide"),function(el){el.style.minHeight="1123px";el.style.width="794px";el.style.maxWidth="none";el.style.boxShadow="none";el.style.transform="none";el.style.display="flex";el.style.flexDirection="column";});Array.prototype.forEach.call(doc.querySelectorAll(".page-footer,.footer-bar"),function(el){el.style.marginTop="auto";});}});}function placeImage(doc,canvas,marginMM){var aspect=canvas.width/canvas.height;var availW=pdfW-marginMM*2;var availH=pdfH-marginMM*2;var imgW=availW,imgH=availW/aspect;if(imgH>availH){imgH=availH;imgW=availH*aspect;}var x=(pdfW-imgW)/2,y=(pdfH-imgH)/2;doc.addImage(canvas.toDataURL("image/png"),"PNG",x,y,imgW,imgH,undefined,"FAST");}function newDoc(){var Ctor=(window.jspdf&&window.jspdf.jsPDF)||window.jsPDF;return new Ctor({orientation:orientation,unit:"mm",format:format,compress:true});}function renderHero(elem){var doc=newDoc();return shotElem(elem).then(function(canvas){placeImage(doc,canvas,4);doc.save(fn);});}function renderMulti(elements,marginMM){var doc=newDoc();return elements.reduce(function(prev,elem,idx){return prev.then(function(){return shotElem(elem).then(function(canvas){if(idx>0)doc.addPage(format,orientation);placeImage(doc,canvas,marginMM);});});},Promise.resolve()).then(function(){doc.save(fn);});}function gen(){var hero=document.querySelector(".poster, .diploma, .board");var pages=document.querySelectorAll(".page, .guide");var cards=document.querySelectorAll(".card-pair, .card-wrap, .medal-wrap, .row, .qr-card");if(cards.length>=2){console.log("[PDF] multi-page: "+cards.length+" cards/medals");return renderMulti(Array.prototype.slice.call(cards),10);}if(pages.length>=2){console.log("[PDF] multi-page: "+pages.length+" pages, full-bleed");return renderMulti(Array.prototype.slice.call(pages),0);}if(hero){console.log("[PDF] hero: "+hero.className);return renderHero(hero);}console.log("[PDF] fallback to body");return renderHero(document.body);}preloadEmojis().then(loadLibs).then(gen).catch(function(err){console.error("[PDF] failed:",err);alert("Could not generate the PDF. Reload and try again. Error: "+(err.message||err));});});}else{whenReady(function(){window.print();});}})();</script>
 </body>
 </html>

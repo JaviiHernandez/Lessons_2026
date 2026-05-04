@@ -116,6 +116,41 @@
     min-height: 0;
   }
 </style>
+<style id="dl-all-style">
+  .dl-all-btn {
+    background: linear-gradient(135deg, #C62828, #F9A825);
+    color: white !important;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 13px;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    margin: 0 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.18);
+    transition: filter .15s, transform .12s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dl-all-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+  .dl-all-btn:active { transform: translateY(0); }
+</style>
+<script id="dl-all-script">
+function downloadAllPrintables(){
+  var p=[{u:'poster.html',s:'A3'},{u:'team-board.html',s:'A4'},{u:'qr-cards.html',s:'A5'},{u:'room-cards.html',s:'A4'},{u:'medal.html',s:'A4'},{u:'diploma.html',s:'A4'},{u:'teacher-guide.html',s:'2xA4'}];
+  if(!confirm('This will open '+p.length+' tabs to download all printables as PDF.\nMake sure popups are allowed for this site.\nContinue?')) return;
+  p.forEach(function(it,i){
+    setTimeout(function(){
+      var w=window.open(it.u+'?pdf=1&size='+encodeURIComponent(it.s),'_blank');
+      if(!w && i===0) alert('Popups blocked. Please allow popups for this site and try again.');
+    }, i*1500);
+  });
+}
+</script>
 </head>
 <body>
 
@@ -131,7 +166,7 @@
     <a class="riddle-link rl4" href="riddle.html?s=4" target="_blank">👻 Ghost</a>
     <a class="riddle-link rl5" href="riddle.html?s=5" target="_blank">🧟 Zombie</a>
   </div>
-  <div class="bar-spacer"></div>
+  <a class="dl-all-btn" href="#" onclick="event.preventDefault();downloadAllPrintables();return false;" title="Open one tab per printable; each downloads its own PDF">📦 Download all PDFs</a><div class="bar-spacer"></div>
   <div class="bar-hint">Scroll · Pan · Pinch to zoom</div>
 </div>
 
