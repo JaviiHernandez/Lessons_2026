@@ -141,39 +141,101 @@
 </style>
 <script id="dl-all-script">
 function downloadAllPrintables(){
-  var p=[{u:'poster.html',s:'A3'},{u:'team-board.html',s:'A4'},{u:'qr-cards.html',s:'A5'},{u:'room-cards.html',s:'A4'},{u:'medal.html',s:'A4'},{u:'diploma.html',s:'A4'},{u:'teacher-guide.html',s:'2xA4'}];
-  var msg='This will generate '+p.length+' PDFs (one per printable).\n\nIMPORTANT: your browser may ask permission to download multiple files â€” click "Allow".\n\nGeneration will take 30-60 seconds total. Continue?';
-  if(!confirm(msg)) return;
-  // Build a hidden host for the iframes (off-screen, sized like a desktop viewport so html2canvas measures correctly)
+  var P=[{u:'poster.html',s:'A3'},{u:'team-board.html',s:'A4'},{u:'qr-cards.html',s:'A5'},{u:'room-cards.html',s:'A4'},{u:'medal.html',s:'A4'},{u:'diploma.html',s:'A4'},{u:'teacher-guide.html',s:'2xA4'}];
+  if(!confirm('This will generate '+P.length+' PDFs and bundle them into a single ZIP ("Lesson3_Printables.zip").\nGeneration takes ~60 seconds. Continue?')) return;
+  // Hidden host for the iframes (off-screen, large enough for html2canvas to measure correctly)
   var host=document.createElement('div');
   host.id='dl-all-host';
   host.style.cssText='position:fixed;top:-99999px;left:-99999px;width:0;height:0;overflow:hidden;pointer-events:none;';
   document.body.appendChild(host);
-  // Tiny progress toast
+  // Toast
   var toast=document.createElement('div');
-  toast.style.cssText='position:fixed;bottom:20px;right:20px;background:#1a1a1a;color:#F9A825;font-family:Fredoka,sans-serif;padding:14px 20px;border-radius:10px;border:2px solid #F9A825;box-shadow:0 8px 24px rgba(0,0,0,0.6);z-index:99999;font-size:14px;font-weight:600;max-width:320px;';
-  toast.innerHTML='<div>ðŸ“¦ Generating PDFs...</div><div id="dl-all-progress" style="font-size:12px;font-weight:400;color:#bdbdbd;margin-top:6px;">Starting (0/'+p.length+')</div>';
+  toast.style.cssText='position:fixed;bottom:20px;right:20px;background:#1a1a1a;color:#F9A825;font-family:Fredoka,sans-serif;padding:14px 20px;border-radius:10px;border:2px solid #F9A825;box-shadow:0 8px 24px rgba(0,0,0,0.6);z-index:99999;font-size:14px;font-weight:600;max-width:340px;';
+  toast.innerHTML='<div>ðŸ“¦ Building ZIP of printables...</div><div id="dl-all-progress" style="font-size:12px;font-weight:400;color:#bdbdbd;margin-top:6px;">Loading JSZipâ€¦</div>';
   document.body.appendChild(toast);
-  function setProgress(i,name){var el=document.getElementById('dl-all-progress');if(el)el.textContent='('+i+'/'+p.length+') '+(name||'');}
-  function spawnIframe(idx){
-    if(idx>=p.length){
-      setProgress(p.length,'Done!');
-      setTimeout(function(){try{host.remove();toast.remove();}catch(e){}},5000);
-      return;
-    }
-    var it=p[idx];
-    setProgress(idx+1,it.u);
-    var iframe=document.createElement('iframe');
-    iframe.src=it.u+'?pdf=1&size='+encodeURIComponent(it.s);
-    iframe.style.cssText='width:1100px;height:1500px;border:0;';
-    host.appendChild(iframe);
-    // Wait long enough for emoji preload + html2canvas + jsPDF.save() to finish, then move on
-    setTimeout(function(){
-      try{iframe.remove();}catch(e){}
-      spawnIframe(idx+1);
-    }, 9000);
+  function setProgress(t){var el=document.getElementById('dl-all-progress');if(el)el.textContent=t;}
+  function cleanup(){try{host.remove();toast.remove();}catch(e){}}
+
+  // Load JSZip
+  function loadJSZip(){
+    return new Promise(function(resolve,reject){
+      if(typeof JSZip!=='undefined') return resolve();
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+      s.crossOrigin='anonymous';
+      s.onload=resolve;
+      s.onerror=function(){reject(new Error('Failed to load JSZip'));};
+      document.head.appendChild(s);
+    });
   }
-  spawnIframe(0);
+
+  loadJSZip().then(function(){
+    var zip=new JSZip();
+    var collected=0;
+    var pdfFor={}; // expected filename per index, used for timeout fallback
+    var doneFor={}; // marks indices that have been resolved
+    var resolveAll;
+    var done=new Promise(function(res){resolveAll=res;});
+
+    function handleMessage(e){
+      var d=e.data;
+      if(!d||typeof d!=='object') return;
+      if(d.type==='pdf-blob'&&d.name&&d.blob){
+        zip.file(d.name,d.blob);
+        collected++;
+        setProgress('Collected '+collected+'/'+P.length+' (last: '+d.name+')');
+      } else if(d.type==='pdf-error'){
+        console.warn('[DL-ALL] iframe error:',d.error);
+      }
+    }
+    window.addEventListener('message',handleMessage);
+
+    // Spawn iframes one by one, 11s apart
+    var idx=0;
+    function spawn(){
+      if(idx>=P.length){
+        // Wait a bit for last message, then build ZIP
+        setProgress('Finalising ZIPâ€¦');
+        setTimeout(function(){
+          window.removeEventListener('message',handleMessage);
+          if(collected===0){
+            cleanup();
+            alert('Could not collect any PDF. The lesson page must be served (not opened from file://) so the iframes can load. Open the page through the local server / deployed site and try again.');
+            return;
+          }
+          zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}}).then(function(content){
+            var url=URL.createObjectURL(content);
+            var a=document.createElement('a');
+            a.href=url; a.download='Lesson3_Printables.zip';
+            document.body.appendChild(a); a.click();
+            setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1000);
+            setProgress('âœ… Downloaded Lesson3_Printables.zip ('+collected+'/'+P.length+' PDFs)');
+            setTimeout(cleanup,5000);
+          }).catch(function(err){
+            cleanup();
+            alert('Could not build ZIP: '+(err.message||err));
+          });
+        }, 4000);
+        return;
+      }
+      var it=P[idx];
+      setProgress('Generating '+(idx+1)+'/'+P.length+': '+it.u);
+      var iframe=document.createElement('iframe');
+      iframe.src=it.u+'?pdf=1&dlall=1&size='+encodeURIComponent(it.s);
+      iframe.style.cssText='width:1100px;height:1500px;border:0;';
+      host.appendChild(iframe);
+      // After 11s, kill the iframe and move on (gives time for emoji preload + render + postMessage)
+      setTimeout(function(){
+        try{iframe.remove();}catch(e){}
+        idx++;
+        spawn();
+      },11000);
+    }
+    spawn();
+  }).catch(function(err){
+    cleanup();
+    alert('Could not load JSZip: '+(err.message||err));
+  });
 }
 </script>
 </head>
