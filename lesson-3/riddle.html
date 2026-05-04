@@ -889,9 +889,8 @@ function claimTreat() {
   document.getElementById('stickerEmoji').textContent =
     stickers[(station - 1) % stickers.length];
 
-  const saved = JSON.parse(localStorage.getItem('midnight-hunt-treats') || '[]');
   document.getElementById('stickerLabel').textContent =
-    `+1 Treat collected! Total: ${saved.length}/5 🎃`;
+    `+1 Treat collected! Station ${station}/5 🎃`;
 
   // Extra confetti burst
   launchConfetti(STATIONS[station].color[0], STATIONS[station].color[1]);

@@ -951,9 +951,8 @@ function claimGift() {
   const stickers = ['🥛', '🍗', '🥕', '🍪', '🐟'];
   document.getElementById('stickerEmoji').textContent = stickers[(station - 1) % stickers.length];
 
-  const saved = JSON.parse(localStorage.getItem('food-detectives') || '[]');
   document.getElementById('stickerLabel').textContent =
-    `+1 Ingredient saved! Total: ${saved.length}/5 🥗`;
+    `+1 Ingredient saved! Station ${station}/5 🥗`;
 
   launchConfetti(STATIONS[station].color[0], STATIONS[station].color[1]);
   document.querySelector('.claim-btn').style.display = 'none';
