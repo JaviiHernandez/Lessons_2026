@@ -3,274 +3,515 @@
 <head>
 <meta charset="UTF-8">
 <title>St. Patrick's Animal Hunt — Role Medals</title>
-<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Fredoka+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Fredoka+One&family=Fredoka:wght@400;500;600&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
+  img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    background:#1e1e1e;
-    font-family:'Fredoka',sans-serif;
-    padding:40px;
-    display:flex; flex-direction:column; align-items:center; gap:40px;
+    background: #0a3010;
+    font-family: 'Fredoka', sans-serif;
+    padding: clamp(16px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(22px, 3.8vw, 44px);
+    overflow-x: hidden;
   }
-  h1 { color:rgba(255,255,255,0.45); font-family:'Fredoka One',cursive; font-size:18px; text-align:center; }
-  .hint { color:rgba(255,255,255,0.3); font-size:13px; text-align:center; margin-top:-30px; }
 
-  /* Grid of medals */
+  .page-heading {
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: clamp(20px, 3.8vw, 32px);
+    color: #D4AF37;
+    text-align: center;
+    padding-top: clamp(8px, 1.5vw, 16px);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  }
+
+  .print-note {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 8px;
+    padding: clamp(8px,1.5vw,12px) clamp(16px,3vw,24px);
+    color: rgba(250,246,233,0.65);
+    font-size: clamp(12px,1.8vw,14px);
+    text-align: center;
+    max-width: 600px;
+  }
+
   .medals-grid {
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:36px;
-    max-width:760px;
-    width:100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(28px, 4.5vw, 56px);
+    justify-content: center;
+    align-items: flex-start;
   }
+
   .medal-wrap {
-    display:flex; flex-direction:column; align-items:center; gap:0;
-  }
-
-  /* ── RIBBON ── */
-  .ribbon-top {
-    width:70px; height:60px;
-    display:flex; flex-direction:column; align-items:center;
-    position:relative; z-index:1;
-  }
-  .ribbon-bar {
-    width:36px; height:100%;
-    border-radius:4px 4px 0 0;
-  }
-  .ribbon-v {
-    position:absolute; bottom:-4px;
-    display:flex;
-    filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-  }
-  .rv-l { width:0; height:0; border-top:16px solid transparent; border-right:22px solid transparent; }
-  .rv-r { width:0; height:0; border-top:16px solid transparent; border-left:22px solid transparent; }
-
-  /* ── MEDAL CIRCLE ── */
-  .medal-circle {
-    width:190px; height:190px;
-    border-radius:50%;
-    position:relative;
-    display:flex; align-items:center; justify-content:center;
-    box-shadow: 0 10px 36px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
-  }
-
-  /* Outer gold ring with ridged effect */
-  .medal-ring {
-    position:absolute; inset:0;
-    border-radius:50%;
-    background: conic-gradient(
-      #D4AF37 0deg, #f5d47a 18deg,
-      #D4AF37 36deg, #f5d47a 54deg,
-      #D4AF37 72deg, #f5d47a 90deg,
-      #D4AF37 108deg, #f5d47a 126deg,
-      #D4AF37 144deg, #f5d47a 162deg,
-      #D4AF37 180deg, #f5d47a 198deg,
-      #D4AF37 216deg, #f5d47a 234deg,
-      #D4AF37 252deg, #f5d47a 270deg,
-      #D4AF37 288deg, #f5d47a 306deg,
-      #D4AF37 324deg, #f5d47a 342deg,
-      #D4AF37 360deg
-    );
-  }
-
-  /* Inner colored disc */
-  .medal-inner {
-    width:154px; height:154px;
-    border-radius:50%;
-    position:relative;
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
-    gap:2px;
-    overflow:hidden;
-    box-shadow: inset 0 4px 14px rgba(0,0,0,0.35), inset 0 -2px 6px rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 30px 22px 24px;
+    position: relative;
   }
 
   /* Sunburst rays */
-  .sunburst {
-    position:absolute; inset:0; border-radius:50%;
-    background: repeating-conic-gradient(rgba(255,255,255,0.06) 0deg 9deg, transparent 9deg 18deg);
+  .medal-wrap::before {
+    content: '';
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background:
+      repeating-conic-gradient(
+        from 0deg,
+        rgba(212,175,55,0.18) 0deg 8deg,
+        transparent 8deg 24deg
+      );
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
   }
 
-  /* Shine spot */
-  .shine {
-    position:absolute; top:12px; left:26px;
-    width:40px; height:22px;
-    background:radial-gradient(ellipse, rgba(255,255,255,0.22) 0%, transparent 80%);
-    border-radius:50%;
+  /* Shamrock + star sparkles */
+  .sparkle {
+    position: absolute;
+    color: #D4AF37;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 18px;
+    text-shadow: 0 0 8px rgba(212,175,55,0.7);
+    z-index: 4;
+    line-height: 1;
+  }
+  .sparkle.shamrock { color: #7FB069; font-size: 16px; text-shadow: 0 0 6px rgba(127,176,105,0.7); }
+  .sparkle.s1 { top: 14px; left: 12px; font-size: 16px; }
+  .sparkle.s2 { top: 8px; right: 14px; font-size: 22px; }
+  .sparkle.s3 { top: 110px; left: 6px; font-size: 14px; opacity: 0.85; }
+  .sparkle.s4 { top: 130px; right: 4px; font-size: 14px; opacity: 0.85; }
+
+  .medal {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    filter: drop-shadow(0 10px 28px rgba(0,0,0,0.55));
+    position: relative;
+    z-index: 2;
   }
 
-  /* Inner gold ring line */
-  .inner-ring {
-    position:absolute; inset:8px; border-radius:50%;
-    border:1.5px solid rgba(212,175,55,0.45);
+  .ribbon-top {
+    width: 110px;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    position: relative;
+    z-index: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  }
+  .ribbon-strip { height: 100%; }
+  .ribbon-strip.center { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.18); }
+
+  .ribbon-knot {
+    width: 28px;
+    height: 14px;
+    margin-top: -6px;
+    background: linear-gradient(180deg, #D4AF37 0%, #8a6210 100%);
+    border-radius: 50%;
+    border: 2px solid #fff3c0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 3;
   }
 
-  /* Content */
-  .m-top-text {
-    font-family:'Fredoka One',cursive; font-size:9px;
-    color:#fff; letter-spacing:2px; text-transform:uppercase;
-    position:relative; z-index:2;
-    background:rgba(0,0,0,0.45);
-    padding:2px 8px; border-radius:10px;
-    text-shadow:0 1px 3px rgba(0,0,0,0.8);
+  .medal-body {
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    margin-top: -4px;
   }
-  .m-icon { font-size:42px; position:relative; z-index:2; filter:drop-shadow(0 3px 8px rgba(0,0,0,0.35)); }
-  .m-role { font-family:'Uncial Antiqua',cursive; font-size:16px; color:white; text-align:center; line-height:1.2; position:relative; z-index:2; text-shadow:0 2px 4px rgba(0,0,0,0.5); }
-  .m-subtitle { font-family:'Fredoka One',cursive; font-size:9px; color:rgba(255,255,255,0.65); letter-spacing:1px; text-transform:uppercase; position:relative; z-index:2; }
 
-  /* Name plate below medal */
-  .name-plate {
-    width:160px;
-    background:white;
-    border:2px solid #D4AF37;
-    border-radius:8px;
-    padding:5px 10px;
-    text-align:center;
-    margin-top:8px;
-    box-shadow:0 3px 10px rgba(0,0,0,0.2);
+  .medal-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 30%, #fff3c0 0%, #D4AF37 22%, #b8952e 50%, #8a6210 78%, #5a4108 100%);
+    box-shadow:
+      inset 0 4px 8px rgba(255,255,255,0.4),
+      inset 0 -4px 8px rgba(0,0,0,0.3),
+      0 0 0 2px rgba(255,255,255,0.2),
+      0 4px 16px rgba(0,0,0,0.4);
   }
-  .name-label { font-size:9px; color:#aaa; letter-spacing:2px; text-transform:uppercase; font-weight:600; margin-bottom:2px; }
-  .name-line { border-bottom:1.5px solid #1A6B3C; height:20px; }
 
-  /* Bottom shamrocks */
-  .medal-shamrocks { font-size:13px; color:rgba(255,255,255,0.3); margin-top:4px; letter-spacing:3px; }
+  .medal-ring-dots {
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(255,255,255,0.35);
+    z-index: 1;
+  }
 
-  /* Page break for print */
+  .medal-inner {
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    z-index: 2;
+    border: 3px solid rgba(255,255,255,0.18);
+    box-shadow:
+      inset 0 0 18px rgba(0,0,0,0.35),
+      inset 0 4px 8px rgba(255,255,255,0.15);
+    overflow: hidden;
+    padding: 6px;
+  }
+
+  .medal-inner::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 12px;
+    right: 12px;
+    height: 35%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, transparent 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .medal-banner {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 8.5px;
+    color: #fff3c0;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    line-height: 1.1;
+    text-align: center;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,243,192,0.4);
+    border-radius: 4px;
+    padding: 2px 8px;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.4);
+  }
+
+  .medal-role-icon {
+    font-size: 36px;
+    position: relative;
+    z-index: 3;
+    margin: 1px 0;
+    line-height: 1;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4));
+  }
+
+  .medal-role {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    text-shadow: 1.5px 1.5px 0 rgba(0,0,0,0.45), 0 0 6px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 3;
+    line-height: 1.05;
+    letter-spacing: 0.2px;
+  }
+
+  /* Decorative shamrock row at the bottom of the inner circle */
+  .medal-deco {
+    font-size: 11px;
+    letter-spacing: 4px;
+    line-height: 1;
+    color: #D4AF37;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 3;
+    margin-top: 1px;
+  }
+
+  /* Laurel wreath — green leaves with shamrock-coloured bow */
+  .laurel {
+    position: absolute;
+    top: 50%;
+    width: 38px;
+    height: 90px;
+    transform: translateY(-50%);
+    z-index: 1;
+    opacity: 0.95;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+  }
+  .laurel-left { left: -24px; }
+  .laurel-right { right: -24px; transform: translateY(-50%) scaleX(-1); }
+
+  .name-area {
+    text-align: center;
+    margin-top: 8px;
+    position: relative;
+    z-index: 3;
+  }
+  .name-label {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 9px;
+    color: #D4AF37;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .name-line-box {
+    width: 165px;
+    height: 32px;
+    border: 2px solid rgba(212,175,55,0.5);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    position: relative;
+  }
+  .name-line-box::before,
+  .name-line-box::after {
+    content: '✦';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #D4AF37;
+    font-size: 12px;
+    line-height: 1;
+  }
+  .name-line-box::before { left: -16px; }
+  .name-line-box::after { right: -16px; }
+
+  /* ── Irish role themes ── */
+  /* Reader — Shamrock Green */
+  .r1 .ribbon-strip:nth-child(1) { background: linear-gradient(180deg, #7FB069, #1A6B3C); }
+  .r1 .ribbon-strip:nth-child(2) { background: linear-gradient(180deg, #1A6B3C, #0a3010); }
+  .r1 .ribbon-strip:nth-child(3) { background: linear-gradient(180deg, #7FB069, #1A6B3C); }
+  .r1 .medal-inner { background: radial-gradient(circle at 35% 30%, #7FB069 0%, #1A6B3C 45%, #0a3010 100%); }
+
+  /* Writer — Sunny Orange */
+  .r2 .ribbon-strip:nth-child(1) { background: linear-gradient(180deg, #FFB74D, #E8833A); }
+  .r2 .ribbon-strip:nth-child(2) { background: linear-gradient(180deg, #E8833A, #b85a14); }
+  .r2 .ribbon-strip:nth-child(3) { background: linear-gradient(180deg, #FFB74D, #E8833A); }
+  .r2 .medal-inner { background: radial-gradient(circle at 35% 30%, #FFB74D 0%, #E8833A 45%, #6e3000 100%); }
+
+  /* Scanner — Celtic Teal */
+  .r3 .ribbon-strip:nth-child(1) { background: linear-gradient(180deg, #4DB6AC, #2A9D8F); }
+  .r3 .ribbon-strip:nth-child(2) { background: linear-gradient(180deg, #2A9D8F, #0e5a52); }
+  .r3 .ribbon-strip:nth-child(3) { background: linear-gradient(180deg, #4DB6AC, #2A9D8F); }
+  .r3 .medal-inner { background: radial-gradient(circle at 35% 30%, #4DB6AC 0%, #2A9D8F 45%, #08322d 100%); }
+
+  /* Speaker — Royal Purple */
+  .r4 .ribbon-strip:nth-child(1) { background: linear-gradient(180deg, #B39DDB, #7B5EA7); }
+  .r4 .ribbon-strip:nth-child(2) { background: linear-gradient(180deg, #7B5EA7, #4527A0); }
+  .r4 .ribbon-strip:nth-child(3) { background: linear-gradient(180deg, #B39DDB, #7B5EA7); }
+  .r4 .medal-inner { background: radial-gradient(circle at 35% 30%, #B39DDB 0%, #7B5EA7 45%, #2a1660 100%); }
+
+  /* Decider — Ocean Blue */
+  .r5 .ribbon-strip:nth-child(1) { background: linear-gradient(180deg, #4FC3F7, #2176AE); }
+  .r5 .ribbon-strip:nth-child(2) { background: linear-gradient(180deg, #2176AE, #0d4570); }
+  .r5 .ribbon-strip:nth-child(3) { background: linear-gradient(180deg, #4FC3F7, #2176AE); }
+  .r5 .medal-inner { background: radial-gradient(circle at 35% 30%, #4FC3F7 0%, #2176AE 45%, #062842 100%); }
+
   @media print {
-    body{background:white;padding:20px;}
-    h1,.hint{display:none;}
-    .medals-grid{grid-template-columns:repeat(3,1fr);gap:20px;}
-    .medal-circle{box-shadow:none;}
-    .name-plate{box-shadow:none;}
+    body { background: white; padding: 10px; gap: 18px; }
+    .page-heading, .print-note { display: none; }
+    .medals-grid { page-break-after: always; }
+    .medal { filter: none; }
+    @page { size: A4; margin: 0; }
   }
 </style>
 </head>
 <body>
-<h1>🏅 Role Medals — One per student, based on their team role</h1>
-<div class="hint">Print on cardstock · Cut · Punch a hole at the top of the ribbon · Thread a green ribbon or string</div>
+
+<div class="page-heading">🍀 St. Patrick's Animal Hunt — Role Medals</div>
+<div class="print-note">Print on cardstock · Cut · Punch a hole at the top of the ribbon · Thread a green ribbon or string</div>
+
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="laurel" viewBox="0 0 38 90">
+    <path d="M30 5 Q 12 30 12 50 Q 12 70 26 86" stroke="#1A6B3C" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <g fill="#7FB069" stroke="#1A6B3C" stroke-width="0.8">
+      <ellipse cx="20" cy="14" rx="6" ry="3" transform="rotate(-25 20 14)"/>
+      <ellipse cx="14" cy="26" rx="7" ry="3.5" transform="rotate(-15 14 26)"/>
+      <ellipse cx="9" cy="40" rx="7.5" ry="3.8" transform="rotate(0 9 40)"/>
+      <ellipse cx="9" cy="54" rx="7.5" ry="3.8" transform="rotate(15 9 54)"/>
+      <ellipse cx="14" cy="68" rx="7" ry="3.5" transform="rotate(30 14 68)"/>
+      <ellipse cx="22" cy="80" rx="6" ry="3" transform="rotate(45 22 80)"/>
+    </g>
+    <g fill="#D4AF37" stroke="#1A6B3C" stroke-width="0.8" opacity="0.85">
+      <ellipse cx="26" cy="20" rx="5" ry="2.5" transform="rotate(20 26 20)"/>
+      <ellipse cx="20" cy="32" rx="6" ry="3" transform="rotate(35 20 32)"/>
+      <ellipse cx="16" cy="46" rx="6.5" ry="3" transform="rotate(50 16 46)"/>
+      <ellipse cx="16" cy="60" rx="6.5" ry="3" transform="rotate(65 16 60)"/>
+      <ellipse cx="20" cy="74" rx="6" ry="3" transform="rotate(80 20 74)"/>
+    </g>
+    <!-- Gold Celtic bow -->
+    <ellipse cx="30" cy="5" rx="3.5" ry="2.5" fill="#D4AF37"/>
+    <ellipse cx="34" cy="6" rx="2.5" ry="1.8" fill="#D4AF37"/>
+    <circle cx="30" cy="5" r="1.2" fill="#FFD700"/>
+  </symbol>
+</svg>
 
 <div class="medals-grid">
-  <script>
-  const roles = [
-    {
-      role:'Reader', icon:'📖', color1:'#1565C0', color2:'#0d3b6e',
-      ribbon:'#1565C0', rvColor:'#0d3b6e',
-      sub:'Best Reader',
-      top:'St. Patrick\'s Hunt',
-    },
-    {
-      role:'Writer', icon:'✏️', color1:'#6A1B9A', color2:'#38006b',
-      ribbon:'#6A1B9A', rvColor:'#38006b',
-      sub:'Best Writer',
-      top:'St. Patrick\'s Hunt',
-    },
-    {
-      role:'Scanner', icon:'📱', color1:'#00796B', color2:'#003d33',
-      ribbon:'#00796B', rvColor:'#003d33',
-      sub:'Best Scanner',
-      top:'St. Patrick\'s Hunt',
-    },
-    {
-      role:'Speaker', icon:'🗣️', color1:'#E65100', color2:'#8c2e00',
-      ribbon:'#E65100', rvColor:'#8c2e00',
-      sub:'Best Speaker',
-      top:'St. Patrick\'s Hunt',
-    },
-    {
-      role:'Decider', icon:'🎯', color1:'#B71C1C', color2:'#7f0000',
-      ribbon:'#B71C1C', rvColor:'#7f0000',
-      sub:'Best Decider',
-      top:'St. Patrick\'s Hunt',
-    },
-    {
-      role:'Champion', icon:'🏆', color1:'#1A6B3C', color2:'#0e3d22',
-      ribbon:'#D4AF37', rvColor:'#b8952e',
-      sub:'Snake Expeller!',
-      top:'St. Patrick\'s Hunt',
-    },
-  ];
 
-  roles.forEach(r => {
-    document.write(`
-    <div class="medal-wrap">
-      <!-- Ribbon -->
-      <div class="ribbon-top">
-        <div class="ribbon-bar" style="background:linear-gradient(180deg,${r.ribbon},${r.rvColor});"></div>
-        <div class="ribbon-v">
-          <div class="rv-l" style="border-right-color:${r.ribbon};"></div>
-          <div class="rv-r" style="border-left-color:${r.ribbon};"></div>
-        </div>
-      </div>
-
-      <!-- Medal -->
-      <div class="medal-circle">
+  <div class="medal-wrap">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle shamrock s2">🍀</span>
+    <span class="sparkle s3">★</span>
+    <span class="sparkle shamrock s4">🍀</span>
+    <div class="medal r1">
+      <div class="ribbon-top"><div class="ribbon-strip"></div><div class="ribbon-strip center"></div><div class="ribbon-strip"></div></div>
+      <div class="ribbon-knot"></div>
+      <div class="medal-body">
+        <svg class="laurel laurel-left"><use href="#laurel"/></svg>
+        <svg class="laurel laurel-right"><use href="#laurel"/></svg>
         <div class="medal-ring"></div>
-        <div class="medal-inner" style="background:radial-gradient(circle at 35% 30%, ${r.color1} 0%, ${r.color2} 100%);">
-          <div class="sunburst"></div>
-          <div class="shine"></div>
-          <div class="inner-ring"></div>
-          <div class="m-top-text">${r.top}</div>
-          <div class="m-icon">${r.icon}</div>
-          <div class="m-role">${r.role}</div>
-          <div class="m-subtitle">${r.sub}</div>
+        <div class="medal-ring-dots"></div>
+        <div class="medal-inner">
+          <div class="medal-banner">✦ Animal Hunt ✦</div>
+          <div class="medal-role-icon">📖</div>
+          <div class="medal-role">Best<br>Reader</div>
+          <div class="medal-deco">★ ✦ ★</div>
         </div>
       </div>
-
-      <!-- Name plate -->
-      <div class="name-plate">
-        <div class="name-label">Name</div>
-        <div class="name-line"></div>
-      </div>
-      <div class="medal-shamrocks">🍀 🍀 🍀</div>
     </div>
-    `);
-  });
-  </script>
-</div>
-
-<!-- Second row: mini versions (4-up per page for extra copies) -->
-<h1 style="margin-top:20px;">Mini versions — 6 per page (extra copies)</h1>
-<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:20px;max-width:760px;width:100%;">
-<script>
-const roles2 = [
-  { role:'Reader',   icon:'📖', c1:'#1565C0', c2:'#0d3b6e', rb:'#1565C0', rv:'#0d3b6e' },
-  { role:'Writer',   icon:'✏️', c1:'#6A1B9A', c2:'#38006b', rb:'#6A1B9A', rv:'#38006b' },
-  { role:'Scanner',  icon:'📱', c1:'#00796B', c2:'#003d33', rb:'#00796B', rv:'#003d33' },
-  { role:'Speaker',  icon:'🗣️', c1:'#E65100', c2:'#8c2e00', rb:'#E65100', rv:'#8c2e00' },
-  { role:'Decider',  icon:'🎯', c1:'#B71C1C', c2:'#7f0000', rb:'#B71C1C', rv:'#7f0000' },
-  { role:'Champion', icon:'🏆', c1:'#1A6B3C', c2:'#0e3d22', rb:'#D4AF37', rv:'#b8952e' },
-];
-roles2.forEach(r=>{
-  document.write(`
-  <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
-    <div style="width:36px;height:30px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;">
-      <div style="width:18px;height:100%;background:linear-gradient(180deg,${r.rb},${r.rv});border-radius:3px 3px 0 0;"></div>
-      <div style="position:absolute;bottom:-3px;display:flex;">
-        <div style="width:0;height:0;border-top:9px solid ${r.rb};border-right:13px solid transparent;"></div>
-        <div style="width:0;height:0;border-top:9px solid ${r.rb};border-left:13px solid transparent;"></div>
-      </div>
-    </div>
-    <div style="width:90px;height:90px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.4);">
-      <div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(#D4AF37 0deg,#f5d47a 20deg,#D4AF37 40deg,#f5d47a 60deg,#D4AF37 80deg,#f5d47a 100deg,#D4AF37 120deg,#f5d47a 140deg,#D4AF37 160deg,#f5d47a 180deg,#D4AF37 200deg,#f5d47a 220deg,#D4AF37 240deg,#f5d47a 260deg,#D4AF37 280deg,#f5d47a 300deg,#D4AF37 320deg,#f5d47a 340deg,#D4AF37 360deg);"></div>
-      <div style="width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 35% 30%,${r.c1},${r.c2});display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;position:relative;overflow:hidden;box-shadow:inset 0 3px 10px rgba(0,0,0,0.35);">
-        <div style="position:absolute;inset:0;border-radius:50%;background:repeating-conic-gradient(rgba(255,255,255,0.06) 0deg 9deg,transparent 9deg 18deg);"></div>
-        <div style="font-size:22px;position:relative;z-index:2;">${r.icon}</div>
-        <div style="font-family:'Fredoka One',cursive;font-size:8px;color:white;position:relative;z-index:2;letter-spacing:0.5px;text-align:center;">${r.role}</div>
-      </div>
-    </div>
-    <div style="width:80px;background:white;border:1.5px solid #D4AF37;border-radius:6px;padding:3px 6px;text-align:center;margin-top:4px;">
-      <div style="font-size:7px;color:#aaa;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px;">Name</div>
-      <div style="border-bottom:1px solid #1A6B3C;height:14px;"></div>
+    <div class="name-area">
+      <span class="name-label">✧ Awarded to ✧</span>
+      <div class="name-line-box"></div>
     </div>
   </div>
-  `);
-});
-</script>
+
+  <div class="medal-wrap">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle shamrock s2">🍀</span>
+    <span class="sparkle s3">★</span>
+    <span class="sparkle shamrock s4">🍀</span>
+    <div class="medal r2">
+      <div class="ribbon-top"><div class="ribbon-strip"></div><div class="ribbon-strip center"></div><div class="ribbon-strip"></div></div>
+      <div class="ribbon-knot"></div>
+      <div class="medal-body">
+        <svg class="laurel laurel-left"><use href="#laurel"/></svg>
+        <svg class="laurel laurel-right"><use href="#laurel"/></svg>
+        <div class="medal-ring"></div>
+        <div class="medal-ring-dots"></div>
+        <div class="medal-inner">
+          <div class="medal-banner">✦ Animal Hunt ✦</div>
+          <div class="medal-role-icon">✏️</div>
+          <div class="medal-role">Best<br>Writer</div>
+          <div class="medal-deco">★ ✦ ★</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">✧ Awarded to ✧</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+  <div class="medal-wrap">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle shamrock s2">🍀</span>
+    <span class="sparkle s3">★</span>
+    <span class="sparkle shamrock s4">🍀</span>
+    <div class="medal r3">
+      <div class="ribbon-top"><div class="ribbon-strip"></div><div class="ribbon-strip center"></div><div class="ribbon-strip"></div></div>
+      <div class="ribbon-knot"></div>
+      <div class="medal-body">
+        <svg class="laurel laurel-left"><use href="#laurel"/></svg>
+        <svg class="laurel laurel-right"><use href="#laurel"/></svg>
+        <div class="medal-ring"></div>
+        <div class="medal-ring-dots"></div>
+        <div class="medal-inner">
+          <div class="medal-banner">✦ Animal Hunt ✦</div>
+          <div class="medal-role-icon">📱</div>
+          <div class="medal-role">Best<br>Scanner</div>
+          <div class="medal-deco">★ ✦ ★</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">✧ Awarded to ✧</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+  <div class="medal-wrap">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle shamrock s2">🍀</span>
+    <span class="sparkle s3">★</span>
+    <span class="sparkle shamrock s4">🍀</span>
+    <div class="medal r4">
+      <div class="ribbon-top"><div class="ribbon-strip"></div><div class="ribbon-strip center"></div><div class="ribbon-strip"></div></div>
+      <div class="ribbon-knot"></div>
+      <div class="medal-body">
+        <svg class="laurel laurel-left"><use href="#laurel"/></svg>
+        <svg class="laurel laurel-right"><use href="#laurel"/></svg>
+        <div class="medal-ring"></div>
+        <div class="medal-ring-dots"></div>
+        <div class="medal-inner">
+          <div class="medal-banner">✦ Animal Hunt ✦</div>
+          <div class="medal-role-icon">🗣️</div>
+          <div class="medal-role">Best<br>Speaker</div>
+          <div class="medal-deco">★ ✦ ★</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">✧ Awarded to ✧</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
+  <div class="medal-wrap">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle shamrock s2">🍀</span>
+    <span class="sparkle s3">★</span>
+    <span class="sparkle shamrock s4">🍀</span>
+    <div class="medal r5">
+      <div class="ribbon-top"><div class="ribbon-strip"></div><div class="ribbon-strip center"></div><div class="ribbon-strip"></div></div>
+      <div class="ribbon-knot"></div>
+      <div class="medal-body">
+        <svg class="laurel laurel-left"><use href="#laurel"/></svg>
+        <svg class="laurel laurel-right"><use href="#laurel"/></svg>
+        <div class="medal-ring"></div>
+        <div class="medal-ring-dots"></div>
+        <div class="medal-inner">
+          <div class="medal-banner">✦ Animal Hunt ✦</div>
+          <div class="medal-role-icon">🎯</div>
+          <div class="medal-role">Best<br>Decider</div>
+          <div class="medal-deco">★ ✦ ★</div>
+        </div>
+      </div>
+    </div>
+    <div class="name-area">
+      <span class="name-label">✧ Awarded to ✧</span>
+      <div class="name-line-box"></div>
+    </div>
+  </div>
+
 </div>
-
-
-
-
-<script>/* auto-print/pdf on ?print=1 or ?pdf=1 */(function(){var p=new URLSearchParams(location.search);var pdf=p.get("pdf");var prn=p.get("print");if(pdf!=="1"&&prn!=="1")return;function whenReady(cb){if(document.readyState==="complete")setTimeout(cb,900);else window.addEventListener("load",function(){setTimeout(cb,1100);});}function preloadEmojis(){return new Promise(function(resolve){var imgs=document.querySelectorAll("img.emoji");if(!imgs.length){console.log("[PDF] no emojis");return resolve();}console.log("[PDF] preloading "+imgs.length+" emojis as PNG");var pending=imgs.length;var ok=0,fail=0;var safety=setTimeout(function(){console.warn("[PDF] emoji preload timeout ok="+ok+" fail="+fail);resolve();},20000);var done=function(){pending--;if(pending<=0){clearTimeout(safety);console.log("[PDF] emoji preload done ok="+ok+" fail="+fail);resolve();}};imgs.forEach(function(img){if(/^data:/.test(img.src)){ok++;done();return;}var m=img.src.match(/\/([a-f0-9\-]+)\.(?:svg|png)/i);if(!m){fail++;done();return;}var cp=m[1];var urls=["https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/twitter/twemoji@v14.0.2/assets/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/72x72/"+cp+".png"];var i=0;(function tryNext(){if(i>=urls.length){fail++;console.warn("[PDF] all URLs failed for "+cp);done();return;}var u=urls[i++];fetch(u).then(function(r){if(!r.ok)return Promise.reject("HTTP "+r.status);return r.blob();}).then(function(blob){var reader=new FileReader();reader.onloadend=function(){if(typeof reader.result==="string"&&reader.result.indexOf("data:image/png")===0){img.src=reader.result;ok++;done();}else{tryNext();}};reader.onerror=function(){tryNext();};reader.readAsDataURL(blob);}).catch(function(err){tryNext();});})();});});}function loadScript(src){return new Promise(function(resolve,reject){var s=document.createElement("script");s.src=src;s.crossOrigin="anonymous";s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}function loadLibs(){var p1=(typeof html2canvas==="function")?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");var p2=((window.jspdf&&window.jspdf.jsPDF)||window.jsPDF)?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");return Promise.all([p1,p2]);}if(pdf==="1"){whenReady(function(){var size=(p.get("size")||"A4").toUpperCase();var orientation=(size==="A5")?"landscape":"portrait";var format=size.toLowerCase().replace(/[^a-z0-9]/g,"");if(format==="2xa4"||format==="2a4")format="a4";if(["a3","a4","a5"].indexOf(format)<0)format="a4";var sizeMM={"a3":[297,420],"a4":[210,297],"a5":[148,210]};var paper=sizeMM[format]||[210,297];var pdfW=(orientation==="landscape")?paper[1]:paper[0];var pdfH=(orientation==="landscape")?paper[0]:paper[1];var fn=(document.title||"lesson_print").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"").toLowerCase()+".pdf";function shotElem(elem){return html2canvas(elem,{scale:3,useCORS:true,allowTaint:true,logging:false,backgroundColor:"#ffffff",imageTimeout:9000,onclone:function(doc){var b=doc.body;b.style.padding="0";b.style.margin="0";b.style.minHeight="0";b.style.background="#ffffff";Array.prototype.forEach.call(doc.querySelectorAll(".print-note,.page-heading,.card-label"),function(el){el.style.display="none";});}});}function placeImage(doc,canvas,marginMM){var aspect=canvas.width/canvas.height;var availW=pdfW-marginMM*2;var availH=pdfH-marginMM*2;var imgW=availW,imgH=availW/aspect;if(imgH>availH){imgH=availH;imgW=availH*aspect;}var x=(pdfW-imgW)/2,y=(pdfH-imgH)/2;doc.addImage(canvas.toDataURL("image/png"),"PNG",x,y,imgW,imgH,undefined,"FAST");}function newDoc(){var Ctor=(window.jspdf&&window.jspdf.jsPDF)||window.jsPDF;return new Ctor({orientation:orientation,unit:"mm",format:format,compress:true});}function renderHero(elem){var doc=newDoc();return shotElem(elem).then(function(canvas){placeImage(doc,canvas,4);doc.save(fn);});}function renderMulti(elements){var doc=newDoc();return elements.reduce(function(prev,elem,idx){return prev.then(function(){return shotElem(elem).then(function(canvas){if(idx>0)doc.addPage(format,orientation);placeImage(doc,canvas,10);});});},Promise.resolve()).then(function(){doc.save(fn);});}function gen(){var hero=document.querySelector(".poster, .diploma, .board");var pages=document.querySelectorAll(".page");var cards=document.querySelectorAll(".card-pair, .card-wrap, .medal-wrap");if(cards.length>=2){console.log("[PDF] multi-page: "+cards.length+" cards/medals");return renderMulti(Array.prototype.slice.call(cards));}if(pages.length>=2){console.log("[PDF] multi-page: "+pages.length+" pages");return renderMulti(Array.prototype.slice.call(pages));}if(hero){console.log("[PDF] hero: "+hero.className);return renderHero(hero);}console.log("[PDF] fallback to body");return renderHero(document.body);}preloadEmojis().then(loadLibs).then(gen).catch(function(err){console.error("[PDF] failed:",err);alert("Could not generate the PDF. Reload and try again. Error: "+(err.message||err));});});}else{whenReady(function(){window.print();});}})();</script>
+<script>twemoji.parse(document.body,{folder:'svg',ext:'.svg'});</script>
+<script>/* auto-print/pdf on ?print=1 or ?pdf=1 */(function(){var p=new URLSearchParams(location.search);var pdf=p.get("pdf");var prn=p.get("print");if(pdf!=="1"&&prn!=="1")return;function whenReady(cb){if(document.readyState==="complete")setTimeout(cb,900);else window.addEventListener("load",function(){setTimeout(cb,1100);});}function preloadEmojis(){return new Promise(function(resolve){var imgs=document.querySelectorAll("img.emoji");if(!imgs.length){console.log("[PDF] no emojis");return resolve();}console.log("[PDF] preloading "+imgs.length+" emojis as PNG");var pending=imgs.length;var ok=0,fail=0;var safety=setTimeout(function(){console.warn("[PDF] emoji preload timeout ok="+ok+" fail="+fail);resolve();},20000);var done=function(){pending--;if(pending<=0){clearTimeout(safety);console.log("[PDF] emoji preload done ok="+ok+" fail="+fail);resolve();}};imgs.forEach(function(img){if(/^data:/.test(img.src)){ok++;done();return;}var m=img.src.match(/\/([a-f0-9\-]+)\.(?:svg|png)/i);if(!m){fail++;done();return;}var cp=m[1];var urls=["https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/twitter/twemoji@v14.0.2/assets/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/72x72/"+cp+".png"];var i=0;(function tryNext(){if(i>=urls.length){fail++;console.warn("[PDF] all URLs failed for "+cp);done();return;}var u=urls[i++];fetch(u).then(function(r){if(!r.ok)return Promise.reject("HTTP "+r.status);return r.blob();}).then(function(blob){var reader=new FileReader();reader.onloadend=function(){if(typeof reader.result==="string"&&reader.result.indexOf("data:image/png")===0){img.src=reader.result;ok++;done();}else{tryNext();}};reader.onerror=function(){tryNext();};reader.readAsDataURL(blob);}).catch(function(err){tryNext();});})();});});}function loadScript(src){return new Promise(function(resolve,reject){var s=document.createElement("script");s.src=src;s.crossOrigin="anonymous";s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}function loadLibs(){var p1=(typeof html2canvas==="function")?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");var p2=((window.jspdf&&window.jspdf.jsPDF)||window.jsPDF)?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");return Promise.all([p1,p2]);}if(pdf==="1"){whenReady(function(){var size=(p.get("size")||"A4").toUpperCase();var orientation=(size==="A5")?"landscape":"portrait";var format=size.toLowerCase().replace(/[^a-z0-9]/g,"");if(format==="2xa4"||format==="2a4")format="a4";if(["a3","a4","a5"].indexOf(format)<0)format="a4";var sizeMM={"a3":[297,420],"a4":[210,297],"a5":[148,210]};var paper=sizeMM[format]||[210,297];var pdfW=(orientation==="landscape")?paper[1]:paper[0];var pdfH=(orientation==="landscape")?paper[0]:paper[1];var fn=(document.title||"lesson_print").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"").toLowerCase()+".pdf";function shotElem(elem){return html2canvas(elem,{scale:3,useCORS:true,allowTaint:true,logging:false,backgroundColor:"#ffffff",imageTimeout:9000,onclone:function(doc){var b=doc.body;b.style.padding="0";b.style.margin="0";b.style.minHeight="0";b.style.background="#ffffff";Array.prototype.forEach.call(doc.querySelectorAll(".print-note,.page-heading,.card-label"),function(el){el.style.display="none";});}});}function placeImage(doc,canvas,marginMM){var aspect=canvas.width/canvas.height;var availW=pdfW-marginMM*2;var availH=pdfH-marginMM*2;var imgW=availW,imgH=availW/aspect;if(imgH>availH){imgH=availH;imgW=availH*aspect;}var x=(pdfW-imgW)/2,y=(pdfH-imgH)/2;doc.addImage(canvas.toDataURL("image/png"),"PNG",x,y,imgW,imgH,undefined,"FAST");}function newDoc(){var Ctor=(window.jspdf&&window.jspdf.jsPDF)||window.jsPDF;return new Ctor({orientation:orientation,unit:"mm",format:format,compress:true});}function renderHero(elem){var doc=newDoc();return shotElem(elem).then(function(canvas){placeImage(doc,canvas,4);doc.save(fn);});}function renderMulti(elements,marginMM){var doc=newDoc();return elements.reduce(function(prev,elem,idx){return prev.then(function(){return shotElem(elem).then(function(canvas){if(idx>0)doc.addPage(format,orientation);placeImage(doc,canvas,marginMM);});});},Promise.resolve()).then(function(){doc.save(fn);});}function gen(){var hero=document.querySelector(".poster, .diploma, .board");var pages=document.querySelectorAll(".page");var cards=document.querySelectorAll(".card-pair, .card-wrap, .medal-wrap, .row, .qr-card");if(cards.length>=2){console.log("[PDF] multi-page: "+cards.length+" cards/medals");return renderMulti(Array.prototype.slice.call(cards),10);}if(pages.length>=2){console.log("[PDF] multi-page: "+pages.length+" pages, full-bleed");return renderMulti(Array.prototype.slice.call(pages),0);}if(hero){console.log("[PDF] hero: "+hero.className);return renderHero(hero);}console.log("[PDF] fallback to body");return renderHero(document.body);}preloadEmojis().then(loadLibs).then(gen).catch(function(err){console.error("[PDF] failed:",err);alert("Could not generate the PDF. Reload and try again. Error: "+(err.message||err));});});}else{whenReady(function(){window.print();});}})();</script>
 </body>
 </html>
