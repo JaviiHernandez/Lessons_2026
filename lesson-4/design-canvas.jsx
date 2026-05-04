@@ -46,7 +46,7 @@ if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
     '.dc-labeltext{cursor:pointer;border-radius:4px;padding:3px 6px;display:flex;align-items:center;transition:background .12s}',
     '.dc-labeltext:hover{background:rgba(0,0,0,.05)}',
     '.dc-expand{position:absolute;bottom:100%;right:0;margin-bottom:5px;z-index:2;opacity:0;transition:opacity .12s,background .12s;',
-    '  width:22px;height:22px;border-radius:5px;border:none;cursor:pointer;padding:0;',
+    '  width:22px;height:22px;border-radius:5px;border:none;cursor:pointer;padding:0;text-decoration:none;',
     '  background:transparent;color:rgba(60,50,40,.7);display:flex;align-items:center;justify-content:center}',
     '.dc-expand:hover{background:rgba(0,0,0,.06);color:#2a251f}',
     '[data-dc-slot]:hover .dc-expand{opacity:1}',
@@ -442,6 +442,21 @@ function DCArtboardFrame({ sectionId, artboard, label, order, onRename, onReorde
 
   const download = artboard.props.download;
   const downloadFormat = artboard.props.downloadFormat;
+
+  // Walk children to find the iframe src (if any) so the expand button can
+  // open the artboard in a new tab at full window size.
+  const findFrameSrc = (node) => {
+    if (!node) return null;
+    if (Array.isArray(node)) { for (const c of node) { const r = findFrameSrc(c); if (r) return r; } return null; }
+    if (typeof node !== 'object') return null;
+    if (node.props) {
+      if (typeof node.props.src === 'string') return node.props.src;
+      if (node.props.children) return findFrameSrc(node.props.children);
+    }
+    return null;
+  };
+  const frameSrc = findFrameSrc(children);
+
   return (
     <div ref={ref} data-dc-slot={id} style={{ position: 'relative', flexShrink: 0 }}>
       <div className="dc-labelrow" style={{ position: 'absolute', bottom: '100%', left: -4, marginBottom: 4, color: DC.label }}>
@@ -469,9 +484,19 @@ function DCArtboardFrame({ sectionId, artboard, label, order, onRename, onReorde
           </a>
         )}
       </div>
-      <button className="dc-expand" onClick={onFocus} onPointerDown={(e) => e.stopPropagation()} title="Focus">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M7 1h4v4M5 11H1V7M11 1L7.5 4.5M1 11l3.5-3.5"/></svg>
-      </button>
+      {frameSrc ? (
+        <a className="dc-expand" href={frameSrc} target="_blank" rel="noopener"
+          onPointerDown={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}
+          title="Open fullscreen in new tab">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 1h4v4"/><path d="M11 1L6.5 5.5"/><path d="M9 7v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h3"/>
+          </svg>
+        </a>
+      ) : (
+        <button className="dc-expand" onClick={onFocus} onPointerDown={(e) => e.stopPropagation()} title="Focus">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M7 1h4v4M5 11H1V7M11 1L7.5 4.5M1 11l3.5-3.5"/></svg>
+        </button>
+      )}
       <div className="dc-card"
         style={{ borderRadius: 2, boxShadow: '0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06)', overflow: 'hidden', width, height, background: '#fff', ...style }}>
         {children || <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#bbb', fontSize: 13, fontFamily: DC.font }}>{id}</div>}
