@@ -150,13 +150,38 @@
 <script id="dl-all-script">
 function downloadAllPrintables(){
   var p=[{u:'poster.html',s:'A3'},{u:'team-board.html',s:'A4'},{u:'qr-cards.html',s:'A5'},{u:'room-cards.html',s:'A4'},{u:'medal.html',s:'A4'},{u:'diploma.html',s:'A4'},{u:'teacher-guide.html',s:'2xA4'}];
-  if(!confirm('This will open '+p.length+' tabs to download all printables as PDF.\nMake sure popups are allowed for this site.\nContinue?')) return;
-  p.forEach(function(it,i){
+  var msg='This will generate '+p.length+' PDFs (one per printable).\n\nIMPORTANT: your browser may ask permission to download multiple files â€” click "Allow".\n\nGeneration will take 30-60 seconds total. Continue?';
+  if(!confirm(msg)) return;
+  // Build a hidden host for the iframes (off-screen, sized like a desktop viewport so html2canvas measures correctly)
+  var host=document.createElement('div');
+  host.id='dl-all-host';
+  host.style.cssText='position:fixed;top:-99999px;left:-99999px;width:0;height:0;overflow:hidden;pointer-events:none;';
+  document.body.appendChild(host);
+  // Tiny progress toast
+  var toast=document.createElement('div');
+  toast.style.cssText='position:fixed;bottom:20px;right:20px;background:#1a1a1a;color:#F9A825;font-family:Fredoka,sans-serif;padding:14px 20px;border-radius:10px;border:2px solid #F9A825;box-shadow:0 8px 24px rgba(0,0,0,0.6);z-index:99999;font-size:14px;font-weight:600;max-width:320px;';
+  toast.innerHTML='<div>ðŸ“¦ Generating PDFs...</div><div id="dl-all-progress" style="font-size:12px;font-weight:400;color:#bdbdbd;margin-top:6px;">Starting (0/'+p.length+')</div>';
+  document.body.appendChild(toast);
+  function setProgress(i,name){var el=document.getElementById('dl-all-progress');if(el)el.textContent='('+i+'/'+p.length+') '+(name||'');}
+  function spawnIframe(idx){
+    if(idx>=p.length){
+      setProgress(p.length,'Done!');
+      setTimeout(function(){try{host.remove();toast.remove();}catch(e){}},5000);
+      return;
+    }
+    var it=p[idx];
+    setProgress(idx+1,it.u);
+    var iframe=document.createElement('iframe');
+    iframe.src=it.u+'?pdf=1&size='+encodeURIComponent(it.s);
+    iframe.style.cssText='width:1100px;height:1500px;border:0;';
+    host.appendChild(iframe);
+    // Wait long enough for emoji preload + html2canvas + jsPDF.save() to finish, then move on
     setTimeout(function(){
-      var w=window.open(it.u+'?pdf=1&size='+encodeURIComponent(it.s),'_blank');
-      if(!w && i===0) alert('Popups blocked. Please allow popups for this site and try again.');
-    }, i*1500);
-  });
+      try{iframe.remove();}catch(e){}
+      spawnIframe(idx+1);
+    }, 9000);
+  }
+  spawnIframe(0);
 }
 </script>
 </head>
