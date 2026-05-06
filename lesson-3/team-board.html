@@ -28,7 +28,7 @@
 
   .board {
     width: 794px;
-    min-height: 1123px;
+    height: 1123px;
     max-width: 100%;
     background: #FFF8F0;
     border: 5px solid #FF6B1A;
@@ -38,8 +38,15 @@
     display: flex;
     flex-direction: column;
   }
-  .board-content { flex: 1; }
-  .board-footer { margin-top: auto; }
+  .board-header { flex-shrink: 0; }
+  .board-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .board-content > .section-title:first-child { flex-shrink: 0; }
+  .board-footer { margin-top: auto; flex-shrink: 0; }
 
   /* Header */
   .board-header {
@@ -115,7 +122,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: clamp(8px, 1.5vw, 14px);
-    margin-bottom: clamp(12px, 2.5vw, 20px);
+    margin-bottom: clamp(8px, 1.6vw, 12px);
   }
 
   .treat-slot {
@@ -180,10 +187,10 @@
     align-items: center;
     justify-content: center;
     gap: clamp(4px, 1vw, 10px);
-    margin-bottom: clamp(12px, 2.5vw, 20px);
+    margin-bottom: clamp(8px, 1.6vw, 12px);
     background: linear-gradient(135deg, #1a0a3e, #2d0a4e);
     border-radius: 50px;
-    padding: clamp(10px, 2vw, 16px) clamp(16px, 3vw, 28px);
+    padding: clamp(8px, 1.5vw, 12px) clamp(16px, 3vw, 28px);
     border: 2px solid rgba(249,168,37,0.4);
     box-shadow: inset 0 0 20px rgba(106,27,154,0.2);
   }
@@ -220,7 +227,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: clamp(12px, 2.5vw, 20px);
-    margin-bottom: clamp(12px, 2.5vw, 20px);
+    margin-bottom: clamp(8px, 1.6vw, 12px);
   }
 
   /* Team Roles */
@@ -299,8 +306,8 @@
     background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
     border: 3px solid #558B2F;
     border-radius: 12px;
-    padding: clamp(12px, 2vw, 18px);
-    margin-bottom: clamp(12px, 2.5vw, 20px);
+    padding: clamp(10px, 1.8vw, 14px);
+    margin-bottom: 0;
   }
 
   .bubbles-grid {
