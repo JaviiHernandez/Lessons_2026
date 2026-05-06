@@ -39,13 +39,7 @@
     flex-direction: column;
   }
   .board-header { flex-shrink: 0; }
-  .board-content {
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-  }
-  .board-content > .section-title:first-child { flex-shrink: 0; }
-  .board-footer { margin-top: auto; flex-shrink: 0; }
+  .board-footer { flex-shrink: 0; }
 
   /* Header */
   .board-header {
@@ -103,7 +97,10 @@
 
   /* Main content area */
   .board-content {
-    padding: clamp(14px, 3vw, 24px) clamp(16px, 3.5vw, 32px);
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    padding: clamp(14px, 3vw, 24px) clamp(16px, 3.5vw, 32px) clamp(20px, 3vw, 28px);
   }
 
   /* Treat Bag Tracker */
@@ -234,15 +231,15 @@
     background: linear-gradient(135deg, #f3e5f5, #fce4ec);
     border: 3px solid #6A1B9A;
     border-radius: 12px;
-    padding: clamp(12px, 2vw, 18px);
+    padding: clamp(10px, 1.6vw, 14px);
   }
 
   .role-item {
     display: flex;
     align-items: center;
     gap: clamp(6px, 1.2vw, 10px);
-    margin-bottom: clamp(8px, 1.5vw, 12px);
-    padding-bottom: clamp(6px, 1.2vw, 10px);
+    margin-bottom: clamp(5px, 1vw, 8px);
+    padding-bottom: clamp(4px, 0.8vw, 6px);
     border-bottom: 1px solid rgba(106,27,154,0.15);
   }
   .role-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
@@ -273,15 +270,15 @@
     background: linear-gradient(135deg, #fff3e0, #fff8e1);
     border: 3px solid #FF6B1A;
     border-radius: 12px;
-    padding: clamp(12px, 2vw, 18px);
+    padding: clamp(10px, 1.6vw, 14px);
   }
 
   .tip-item {
     display: flex;
     align-items: flex-start;
     gap: clamp(6px, 1.2vw, 10px);
-    margin-bottom: clamp(8px, 1.5vw, 12px);
-    padding-bottom: clamp(6px, 1.2vw, 10px);
+    margin-bottom: clamp(5px, 1vw, 8px);
+    padding-bottom: clamp(4px, 0.8vw, 6px);
     border-bottom: 1px solid rgba(255,107,26,0.15);
   }
   .tip-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
@@ -319,13 +316,13 @@
   .bubble {
     background: white;
     border-radius: 12px;
-    padding: clamp(8px, 1.5vw, 12px);
+    padding: clamp(6px, 1.2vw, 10px);
     border: 2px solid #aed581;
     position: relative;
     font-size: clamp(11px, 1.7vw, 14px);
     color: #33691E;
     font-weight: 500;
-    line-height: 1.4;
+    line-height: 1.3;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   }
 
