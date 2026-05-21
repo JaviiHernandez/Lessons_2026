@@ -160,7 +160,7 @@ function downloadAllPrintables(){
   // Toast
   var toast=document.createElement('div');
   toast.style.cssText='position:fixed;bottom:20px;right:20px;background:#1a1a1a;color:#F9A825;font-family:Fredoka,sans-serif;padding:14px 20px;border-radius:10px;border:2px solid #F9A825;box-shadow:0 8px 24px rgba(0,0,0,0.6);z-index:99999;font-size:14px;font-weight:600;max-width:340px;';
-  toast.innerHTML='<div>📦 Building ZIP of printables...</div><div id="dl-all-progress" style="font-size:12px;font-weight:400;color:#bdbdbd;margin-top:6px;">Loading JSZipâ€¦</div>';
+  toast.innerHTML='<div>📦 Building ZIP of printables...</div><div id="dl-all-progress" style="font-size:12px;font-weight:400;color:#bdbdbd;margin-top:6px;">Loading JSZip…</div>';
   document.body.appendChild(toast);
   function setProgress(t){var el=document.getElementById('dl-all-progress');if(el)el.textContent=t;}
   function cleanup(){try{host.remove();toast.remove();}catch(e){}}
@@ -204,7 +204,7 @@ function downloadAllPrintables(){
     function spawn(){
       if(idx>=P.length){
         // Wait a bit for last message, then build ZIP
-        setProgress('Finalising ZIPâ€¦');
+        setProgress('Finalising ZIP…');
         setTimeout(function(){
           window.removeEventListener('message',handleMessage);
           if(collected===0){
