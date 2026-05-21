@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="../favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>🎄 The Christmas Sports Hunt — Lesson 4</title>
+<title>🎄 The Christmas Sports Hunt — Lesson 5</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
@@ -151,7 +151,7 @@
 <script id="dl-all-script">
 function downloadAllPrintables(){
   var P=[{u:'poster.html',s:'A3'},{u:'team-board.html',s:'A4'},{u:'qr-cards.html',s:'A5'},{u:'room-cards.html',s:'A4'},{u:'medal.html',s:'A4'},{u:'diploma.html',s:'A4'},{u:'teacher-guide.html',s:'2xA4'}];
-  if(!confirm('This will generate '+P.length+' PDFs and bundle them into a single ZIP ("Lesson4_Printables.zip").\nGeneration takes ~60 seconds. Continue?')) return;
+  if(!confirm('This will generate '+P.length+' PDFs and bundle them into a single ZIP ("Lesson5_Printables.zip").\nGeneration takes ~60 seconds. Continue?')) return;
   // Hidden host for the iframes (off-screen, large enough for html2canvas to measure correctly)
   var host=document.createElement('div');
   host.id='dl-all-host';
@@ -215,10 +215,10 @@ function downloadAllPrintables(){
           zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}}).then(function(content){
             var url=URL.createObjectURL(content);
             var a=document.createElement('a');
-            a.href=url; a.download='Lesson4_Printables.zip';
+            a.href=url; a.download='Lesson5_Printables.zip';
             document.body.appendChild(a); a.click();
             setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1000);
-            setProgress('✅ Downloaded Lesson4_Printables.zip ('+collected+'/'+P.length+' PDFs)');
+            setProgress('✅ Downloaded Lesson5_Printables.zip ('+collected+'/'+P.length+' PDFs)');
             setTimeout(cleanup,5000);
           }).catch(function(err){
             cleanup();
@@ -252,7 +252,7 @@ function downloadAllPrintables(){
 
 <!-- Top navigation bar -->
 <div class="top-bar">
-  <div class="bar-brand">🎄 The Christmas Sports Hunt — Lesson 4</div>
+  <div class="bar-brand">🎄 The Christmas Sports Hunt — Lesson 5</div>
   <div class="bar-divider"></div>
   <div class="riddle-bar">
     <div class="riddle-bar-label">Open riddle:</div>
