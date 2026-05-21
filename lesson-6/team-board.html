@@ -39,13 +39,19 @@
 
   .board {
     width: 794px;
+    height: 1123px;
     max-width: 100%;
     background: #FFF8E7;
     border: 5px solid #D32F2F;
     box-shadow: 0 0 0 2px #F9A825, 0 20px 60px rgba(0,0,0,0.5);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
+  .board-header { flex-shrink: 0; }
+  .board-content { flex: 1; min-height: 0; }
+  .board-footer { flex-shrink: 0; margin-top: auto; }
 
   /* Header */
   .board-header {
