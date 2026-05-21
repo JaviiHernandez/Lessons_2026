@@ -16,12 +16,18 @@
 
   .page {
     width: 794px;
+    height: 1123px;
     background: #FAF6E9;
     position: relative;
     box-shadow: 0 12px 40px rgba(0,0,0,0.4);
     padding: 52px 60px 48px;
     margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
+  .page-content { flex: 1; min-height: 0; }
+  .page-footer { margin-top: auto; }
   .page:first-of-type { border-radius: 12px 12px 0 0; }
   .page:last-of-type  { border-radius: 0 0 12px 12px; margin-bottom: 0; }
 
