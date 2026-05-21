@@ -198,11 +198,27 @@
   }
 
   @media print {
-    body { background: white; padding: 8px; }
+    @page { size: A4 landscape; margin: 0; }
+    html, body { margin: 0; padding: 0; background: white; }
+    body { display: block; gap: 0; }
     .page-heading, .print-note { display: none; }
-    .card-wrap { page-break-after: always; margin: 0; padding: 20px 0; }
-    .qr-card { box-shadow: none; transform: none !important; }
-    @page { size: A5 landscape; margin: 0; }
+    .card-wrap {
+      width: 297mm;
+      height: 210mm;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      page-break-after: always;
+      page-break-inside: avoid;
+      overflow: hidden;
+    }
+    .qr-card {
+      box-shadow: none !important;
+      transform: scale(2) !important;
+      transform-origin: center center !important;
+    }
   }
 </style>
 </head>

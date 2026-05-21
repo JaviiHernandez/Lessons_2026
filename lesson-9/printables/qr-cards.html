@@ -141,9 +141,28 @@
   }
 
   @media print {
-    body{background:white;padding:0;}
-    .card{box-shadow:none;margin:16px auto;break-after:page;}
-    h1{display:none;}
+    @page { size: A4 landscape; margin: 0; }
+    html, body { margin: 0; padding: 0; background: white; }
+    body { display: block; gap: 0; }
+    h1 { display: none; }
+    .card-wrap {
+      width: 297mm;
+      height: 210mm;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      page-break-after: always;
+      page-break-inside: avoid;
+      overflow: hidden;
+    }
+    .card {
+      box-shadow: none !important;
+      margin: 0 !important;
+      transform: scale(2) !important;
+      transform-origin: center center !important;
+    }
   }
 </style>
 </head>
@@ -159,6 +178,7 @@ const stations = [
 ];
 
 document.write(stations.map(s=>`
+<div class="card-wrap">
 <div class="card" style="background:linear-gradient(135deg,${s.color} 0%,${s.dark} 100%);">
   <div class="inner-border"></div>
 
@@ -188,6 +208,7 @@ document.write(stations.map(s=>`
   </div>
 
   <div class="brand-strip">🍀 St. Patrick's Animal Hunt 🍀</div>
+</div>
 </div>
 `).join(''));
 </script>

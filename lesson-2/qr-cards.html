@@ -120,9 +120,27 @@
   }
 
   @media print {
-    body{background:white;padding:16px;gap:16px;}
-    .qr-card{box-shadow:none;page-break-after:always;}
-    h1{display:none;}
+    @page { size: A4 landscape; margin: 0; }
+    html, body { margin: 0; padding: 0; background: white; }
+    body { display: block; gap: 0; }
+    h1 { display: none; }
+    .card-wrap {
+      width: 297mm;
+      height: 210mm;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      page-break-after: always;
+      page-break-inside: avoid;
+      overflow: hidden;
+    }
+    .qr-card {
+      box-shadow: none !important;
+      transform: scale(1.6) !important;
+      transform-origin: center center !important;
+    }
   }
 </style>
 </head>
@@ -140,6 +158,7 @@ const stations = [
 
 stations.forEach(s => {
   document.write(`
+  <div class="card-wrap">
   <div class="qr-card">
     <!-- LEFT -->
     <div class="left" style="background:linear-gradient(145deg,${s.color},${s.dark});">
@@ -165,6 +184,7 @@ stations.forEach(s => {
     <div class="card-footer-strip" style="background:${s.color}cc;">
       🌿 Eco House Hunt · Save Energy · Save Water 🌿
     </div>
+  </div>
   </div>
   `);
 });
