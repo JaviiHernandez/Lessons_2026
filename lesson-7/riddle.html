@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="../favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2E7D32">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Non-teachy Hobbies Hunt — Riddle</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<style>
+  img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --camp: #E65100;
+    --pine: #2E7D32;
+    --gold: #F9A825;
+    --cream: #FFF8E7;
+    --indigo: #283593;
+    --bg: #11241a;
+    --white: #FFF8E7;
+  }
+
+  body {
+    font-family: 'Fredoka', sans-serif;
+    min-height: 100dvh;
+    background: var(--bg);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .bg-anim {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .bg-particle {
+    position: absolute;
+    font-size: clamp(14px, 2.8vw, 26px);
+    animation: float-particle linear infinite;
+    opacity: 0.12;
+  }
+
+  @keyframes float-particle {
+    0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.12; }
+    90%  { opacity: 0.12; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    padding: clamp(16px, 3vw, 32px) clamp(16px, 4vw, 32px);
+    gap: clamp(14px, 2.5vw, 22px);
+  }
+
+  /* Header */
+  .riddle-header {
+    text-align: center;
+    padding: clamp(16px, 3vw, 26px) clamp(16px, 4vw, 28px);
+    border-radius: 20px;
+    border: 3px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .station-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(13px, 2.2vw, 16px);
+    color: rgba(255,255,255,0.9);
+    margin-bottom: clamp(8px, 1.5vw, 12px);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .station-mystery-big {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(52px, 11vw, 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(80px, 16vw, 110px);
+    height: clamp(80px, 16vw, 110px);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 3px solid rgba(255,255,255,0.25);
+    margin: 0 auto clamp(4px, 1vw, 8px);
+    box-shadow: 0 0 30px rgba(255,255,255,0.1), inset 0 0 20px rgba(255,255,255,0.05);
+    animation: pulse 2s ease-in-out infinite;
+    color: white;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  }
+
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+  .location-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(24px, 5vw, 44px);
+    line-height: 1.1;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  }
+
+  .location-subtitle {
+    font-size: clamp(13px, 2.3vw, 17px);
+    opacity: 0.75;
+    margin-top: 4px;
+  }
+
+  /* Clues section */
+  .clues-section {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: clamp(16px, 3vw, 26px);
+    backdrop-filter: blur(4px);
+  }
+
+  .clues-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--gold);
+    margin-bottom: clamp(12px, 2.5vw, 18px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .clue-cards { display: flex; flex-direction: column; gap: clamp(8px, 1.5vw, 11px); }
+
+  .clue-card {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: clamp(10px, 2vw, 15px) clamp(14px, 2.5vw, 20px);
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 2vw, 16px);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  .clue-card.visible { opacity: 1; transform: translateX(0); }
+
+  .clue-card.active {
+    border-color: var(--gold);
+    background: rgba(249,168,37,0.12);
+    box-shadow: 0 0 18px rgba(249,168,37,0.2);
+  }
+
+  .clue-num {
+    width: clamp(30px, 4.8vw, 38px);
+    height: clamp(30px, 4.8vw, 38px);
+    border-radius: 50%;
+    background: var(--camp);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.4vw, 17px);
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(230,81,0,0.4);
+  }
+
+  .clue-text {
+    font-size: clamp(14px, 2.4vw, 17px);
+    line-height: 1.5;
+    color: var(--white);
+  }
+
+  .clue-text em { color: var(--gold); font-style: normal; font-weight: 600; }
+
+  .next-clue-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--pine), #1B5E20);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: clamp(12px, 2.5vw, 15px) clamp(24px, 5vw, 36px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 19px);
+    cursor: pointer;
+    margin-top: clamp(12px, 2.5vw, 16px);
+    width: 100%;
+    min-height: 52px;
+    box-shadow: 0 4px 16px rgba(46,125,50,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    touch-action: manipulation;
+  }
+
+  .next-clue-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46,125,50,0.5); }
+  .next-clue-btn:active { transform: translateY(0); }
+  .next-clue-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Answer section — multiple choice */
+  .answer-section {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: clamp(16px, 3vw, 26px);
+    backdrop-filter: blur(4px);
+  }
+
+  .answer-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--gold);
+    margin-bottom: clamp(12px, 2.5vw, 16px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .choices-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(8px, 1.5vw, 12px);
+  }
+
+  .choice-btn {
+    background: rgba(255,255,255,0.08);
+    border: 2.5px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: clamp(14px, 2.5vw, 18px) clamp(10px, 2vw, 16px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.4vw, 17px);
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-height: 80px;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .choice-btn .choice-emoji { font-size: clamp(26px, 5vw, 38px); }
+
+  .choice-btn:hover {
+    background: rgba(249,168,37,0.12);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(249,168,37,0.2);
+  }
+
+  .choice-btn:active { transform: scale(0.97); }
+
+  .choice-btn.correct {
+    background: rgba(46,125,50,0.4);
+    border-color: #66BB6A;
+    box-shadow: 0 0 20px rgba(102,187,106,0.4);
+    animation: correct-flash 0.4s ease;
+  }
+
+  .choice-btn.wrong {
+    background: rgba(230,81,0,0.3);
+    border-color: #ff7043;
+    animation: shake 0.4s ease;
+    opacity: 0.6;
+  }
+
+  @keyframes correct-flash {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+
+  .feedback {
+    margin-top: clamp(10px, 2vw, 14px);
+    padding: clamp(10px, 2vw, 13px) clamp(14px, 2.5vw, 18px);
+    border-radius: 12px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.6vw, 17px);
+    text-align: center;
+    display: none;
+  }
+
+  .feedback.error {
+    display: block;
+    background: rgba(230,81,0,0.2);
+    border: 2px solid #ff7043;
+    color: #ffccbc;
+  }
+
+  .tries-info {
+    text-align: center;
+    font-size: clamp(11px, 1.8vw, 14px);
+    color: rgba(255,248,231,0.5);
+    margin-top: clamp(6px, 1.2vw, 10px);
+  }
+
+  .clue-progress { display: flex; gap: 6px; justify-content: center; margin-top: clamp(10px, 2vw, 14px); }
+  .clue-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); transition: background 0.3s; }
+  .clue-dot.filled { background: var(--gold); }
+
+  /* Success panel */
+  .success-panel {
+    display: none;
+    background: rgba(255,255,255,0.07);
+    border: 3px solid var(--gold);
+    border-radius: 20px;
+    padding: clamp(20px, 4vw, 34px) clamp(16px, 4vw, 30px);
+    text-align: center;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    backdrop-filter: blur(8px);
+  }
+
+  .success-panel.visible { display: block; }
+
+  @keyframes pop-in {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .success-emoji-big {
+    font-size: clamp(46px, 9vw, 76px);
+    display: block;
+    margin-bottom: clamp(8px, 1.5vw, 12px);
+    animation: bounce 0.6s ease 0.3s both;
+  }
+
+  @keyframes bounce {
+    0% { transform: translateY(20px); opacity: 0; }
+    60% { transform: translateY(-10px); }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  .success-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(26px, 5.5vw, 50px);
+    color: var(--gold);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    margin-bottom: 4px;
+  }
+
+  .success-subtitle {
+    font-size: clamp(13px, 2.4vw, 17px);
+    color: rgba(255,248,231,0.85);
+    margin-bottom: clamp(14px, 3vw, 22px);
+  }
+
+  .character-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: clamp(14px, 2.5vw, 20px);
+    margin-bottom: clamp(14px, 2.5vw, 20px);
+    border: 2px solid rgba(255,255,255,0.12);
+    text-align: left;
+  }
+
+  .char-card-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(17px, 3.3vw, 24px);
+    color: var(--gold);
+    margin-bottom: clamp(6px, 1.2vw, 9px);
+  }
+
+  .char-description {
+    font-size: clamp(12px, 2vw, 15px);
+    line-height: 1.6;
+    color: rgba(255,248,231,0.92);
+    margin-bottom: clamp(10px, 2vw, 13px);
+    font-style: italic;
+  }
+
+  /* Teachy / non-teachy badge */
+  .health-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(11px, 1.8vw, 14px);
+    margin-bottom: clamp(10px, 2vw, 14px);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .health-badge.healthy   { background: rgba(46,125,50,0.25); color: #A5D6A7; border: 1.5px solid #66BB6A; }
+  .health-badge.unhealthy { background: rgba(230,81,0,0.22); color: #FFCC80; border: 1.5px solid #ff7043; }
+
+  /* In/out tip */
+  .measure-tip {
+    background: rgba(40,53,147,0.2);
+    border: 2px solid rgba(40,53,147,0.5);
+    border-radius: 12px;
+    padding: clamp(8px, 1.6vw, 12px) clamp(11px, 2vw, 15px);
+    font-size: clamp(12px, 2vw, 14px);
+    color: #C5CAE9;
+    margin-bottom: clamp(10px, 2vw, 13px);
+    line-height: 1.5;
+  }
+  .measure-tip strong { color: var(--gold); font-weight: 600; }
+
+  /* Unplug tip */
+  .plate-tip {
+    background: rgba(46,125,50,0.18);
+    border: 2px solid rgba(46,125,50,0.45);
+    border-radius: 12px;
+    padding: clamp(8px, 1.6vw, 12px) clamp(11px, 2vw, 15px);
+    font-size: clamp(12px, 2vw, 14px);
+    color: #C8E6C9;
+    margin-bottom: clamp(10px, 2vw, 13px);
+    line-height: 1.5;
+  }
+  .plate-tip strong { color: #FFF59D; font-weight: 600; }
+
+  .fun-facts { display: flex; flex-direction: column; gap: clamp(6px, 1.2vw, 9px); }
+
+  .fun-fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: clamp(7px, 1.4vw, 11px) clamp(10px, 2vw, 13px);
+    font-size: clamp(12px, 1.9vw, 14px);
+    color: rgba(255,248,231,0.88);
+    line-height: 1.4;
+  }
+
+  .fact-icon { font-size: clamp(15px, 2.4vw, 19px); flex-shrink: 0; }
+
+  .world-msg {
+    margin-top: clamp(8px, 1.5vw, 12px);
+    padding: clamp(8px, 1.6vw, 12px) clamp(11px, 2vw, 15px);
+    background: rgba(249,168,37,0.12);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    font-size: clamp(11px, 1.8vw, 13px);
+    color: rgba(255,248,231,0.92);
+    line-height: 1.5;
+    text-align: left;
+  }
+  .world-msg strong { color: var(--gold); }
+
+  .claim-btn {
+    background: linear-gradient(135deg, var(--pine), var(--gold));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: clamp(14px, 3vw, 19px) clamp(28px, 6vw, 46px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(17px, 3.3vw, 24px);
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(46,125,50,0.5);
+    transition: transform 0.15s, box-shadow 0.15s;
+    min-height: 58px;
+    width: 100%;
+    touch-action: manipulation;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 4px 20px rgba(46,125,50,0.4); }
+    100% { box-shadow: 0 4px 40px rgba(249,168,37,0.7), 0 0 60px rgba(46,125,50,0.3); }
+  }
+
+  .claim-btn:hover { transform: translateY(-2px) scale(1.02); }
+
+  .treat-sticker {
+    display: none;
+    margin: clamp(14px, 3vw, 22px) auto 0;
+    text-align: center;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .treat-sticker.visible { display: block; }
+
+  .sticker-circle {
+    width: clamp(96px, 19vw, 134px);
+    height: clamp(96px, 19vw, 134px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #FFE082, var(--pine));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto clamp(8px, 1.5vw, 12px);
+    box-shadow: 0 0 40px rgba(46,125,50,0.5), 0 0 0 4px var(--gold), 0 0 0 8px rgba(249,168,37,0.3);
+    animation: spin-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes spin-in {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .sticker-emoji { font-size: clamp(34px, 6.5vw, 52px); }
+  .sticker-text {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(7px, 1.3vw, 10px);
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .sticker-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--gold);
+  }
+
+  @media (min-width: 600px) {
+    .choices-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bg-particle, .station-mystery-big { animation: none; }
+    .clue-card { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-anim" id="bgAnim"></div>
+
+<div class="page">
+  <div class="riddle-header" id="riddleHeader">
+    <div class="station-badge" id="stationBadge">🧭 Station 1</div>
+    <div class="station-mystery-big" id="stationMystery">?</div>
+    <div class="location-title" id="locationTitle">Mystery Hobby</div>
+    <div class="location-subtitle" id="locationSubtitle">Read the clues and find the screen-free hobby! 🏕️</div>
+  </div>
+
+  <div class="clues-section">
+    <div class="clues-title">🔍 Clues from Tim &amp; Indi!</div>
+    <div class="clue-cards" id="clueCards"></div>
+    <div class="clue-progress" id="clueProgress"></div>
+    <button class="next-clue-btn" id="nextClueBtn" onclick="showNextClue()">Next Clue 👉</button>
+  </div>
+
+  <div class="answer-section" id="answerSection">
+    <div class="answer-title">🤔 Which hobby is it?</div>
+    <div class="choices-grid" id="choicesGrid"></div>
+    <div class="feedback" id="feedbackMsg"></div>
+    <div class="tries-info" id="triesInfo"></div>
+  </div>
+
+  <div class="success-panel" id="successPanel">
+    <span class="success-emoji-big" id="successEmoji">🎸</span>
+    <div class="success-title">HOBBY FOUND!</div>
+    <div class="success-subtitle" id="successSubtitle">Amazing! You're a real Hobby Scout! 🎉</div>
+    <div class="character-card">
+      <div class="char-card-name" id="charName"></div>
+      <div class="char-description" id="charDesc"></div>
+      <span class="health-badge" id="healthBadge"></span>
+      <div class="measure-tip" id="measureTip"></div>
+      <div class="plate-tip" id="plateTip"></div>
+      <div class="fun-facts" id="funFacts"></div>
+      <div class="world-msg" id="worldMsg" style="display:none;"></div>
+    </div>
+    <button class="claim-btn" onclick="claimGift()">🏅 Earn your Scout Badge!</button>
+    <div class="treat-sticker" id="treatSticker">
+      <div class="sticker-circle">
+        <span class="sticker-emoji" id="stickerEmoji">🎸</span>
+        <span class="sticker-text">Found!</span>
+      </div>
+      <div class="sticker-label" id="stickerLabel">+1 Scout Badge! Total: 1/5 🏅</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const STATIONS = {
+  1: {
+    location: 'The Music Camp',
+    subtitle: 'Read the clues and find the screen-free hobby! 🔍',
+    color: ['#E65100', '#FB8C00'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🎸', label: 'Guitar' },
+      { emoji: '📺', label: 'TV' },
+      { emoji: '🥁', label: 'Drums' },
+      { emoji: '🎹', label: 'Piano' },
+    ],
+    clues: [
+      { text: "I have got <em>six strings</em>, but I am not a spider's web! 🕸️", emoji: '🕸️' },
+      { text: "You play me with your <em>fingers</em> — no screens, no batteries! 🔌", emoji: '🔌' },
+      { text: "I am made of <em>wood</em> and I am easy to carry. 🪵", emoji: '🪵' },
+      { text: "Yesterday Tim <em>played</em> me by the campfire and everybody sang! 🔥", emoji: '🔥' },
+    ],
+    description: '"I have got six strings. You play me with your fingers. I am made of wood. Yesterday Tim played me by the campfire. What hobby am I?"',
+    healthy: true,
+    measure: 'This hobby is <strong>Play an instrument!</strong> 🎶 You can play indoors or <strong>outdoors</strong> — and write your own songs!',
+    plate: '📵 <strong>Unplug tip:</strong> Switch off the screen and play a real song with your friends. Music is more fun together!',
+    facts: [
+      { icon: '🎶', text: 'Long ago, families made music together every night — no TV, no phones!' },
+      { icon: '🧠', text: 'Playing an instrument makes your brain strong and happy!' },
+      { icon: '📦', text: 'You can build a little guitar with a box and rubber bands. Try it!' },
+    ],
+    character: 'Tim the Guitar Scout 🎸',
+    worldMsg: null,
+  },
+  2: {
+    location: 'The Campsite',
+    subtitle: 'Read the clues and find the screen-free hobby! 🔍',
+    color: ['#1B5E20', '#2E7D32'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '⛺', label: 'Tent' },
+      { emoji: '🏠', label: 'House' },
+      { emoji: '📱', label: 'Phone' },
+      { emoji: '🚗', label: 'Car' },
+    ],
+    clues: [
+      { text: "I am made of <em>cloth</em> and I have got no doors! 🚪", emoji: '🚪' },
+      { text: "You sleep <em>inside</em> me, but I am not a house! 🏠", emoji: '🏠' },
+      { text: "I live <em>outdoors</em>, in the forest or by the lake! 🌲", emoji: '🌲' },
+      { text: "Last night Indi <em>slept</em> in me and watched the stars! ⭐", emoji: '⭐' },
+    ],
+    description: '"I am made of cloth. You sleep inside me. I live outdoors. Last night Indi slept in me and watched the stars. What hobby am I?"',
+    healthy: true,
+    measure: 'This hobby is <strong>Go camping!</strong> ⛺ It is an <strong>outdoor</strong> hobby — fresh air, fires and stars, with no Wi-Fi at all!',
+    plate: '📵 <strong>Unplug tip:</strong> Take a torch, not a phone! Reduce your screen time and discover real adventures outdoors. 🔦',
+    facts: [
+      { icon: '🌌', text: 'Long ago, people camped under the stars with no electricity!' },
+      { icon: '🍃', text: 'Being outdoors and moving your body is a great healthy habit!' },
+      { icon: '📵', text: 'You don\'t need Wi-Fi to have fun in a tent — only friends!' },
+    ],
+    character: 'Indi the Camp Scout ⛺',
+    worldMsg: '🌲 <strong>Scout message:</strong> When you go outdoors, keep nature clean. Take your rubbish home, reduce waste, and switch off your screen to enjoy the real world! ♻️',
+  },
+  3: {
+    location: 'The Camp Kitchen',
+    subtitle: 'Read the clues and find the screen-free hobby! 🔍',
+    color: ['#C62828', '#E53935'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🍳', label: 'Spatula' },
+      { emoji: '🔨', label: 'Hammer' },
+      { emoji: '📱', label: 'Phone' },
+      { emoji: '✏️', label: 'Pencil' },
+    ],
+    clues: [
+      { text: "I am a <em>kitchen tool</em>. I am flat and I have got a long handle. 🥄", emoji: '🥄' },
+      { text: "You use me to <em>flip</em> pancakes and eggs! 🥞", emoji: '🥞' },
+      { text: "I help you <em>cook</em> tasty, healthy food — no apps needed! 🍅", emoji: '🍅' },
+      { text: "Last weekend Tim <em>cooked</em> a healthy soup with me! 🍲", emoji: '🍲' },
+    ],
+    description: '"I am a kitchen tool with a long handle. You use me to flip pancakes. I help you cook. Last weekend Tim cooked a healthy soup with me. What hobby am I?"',
+    healthy: true,
+    measure: 'This hobby is <strong>Cook!</strong> 👨‍🍳 It is an <strong>indoor</strong> hobby. You choose fresh food and learn maths: <strong>a cup of</strong> flour, <strong>two spoons of</strong> sugar!',
+    plate: '📵 <strong>Unplug tip:</strong> Switch off the TV at dinner. Cook and eat together — talking is better than screens! 🍽️',
+    facts: [
+      { icon: '🍲', text: 'Long ago, families cooked together and shared stories — no screens at the table!' },
+      { icon: '🥕', text: 'Cooking is a healthy habit — you choose fresh, healthy food!' },
+      { icon: '🥄', text: 'Cooking teaches you maths and patience at the same time!' },
+    ],
+    character: 'Chef Tim 🍳',
+    worldMsg: null,
+  },
+  4: {
+    location: 'The Reading Cabin',
+    subtitle: 'Read the clues and find the screen-free hobby! 🔍',
+    color: ['#283593', '#3949AB'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '📚', label: 'Book' },
+      { emoji: '📺', label: 'TV' },
+      { emoji: '🎮', label: 'Console' },
+      { emoji: '💻', label: 'Laptop' },
+    ],
+    clues: [
+      { text: "I have got many <em>pages</em>, but I am not a calendar! 📅", emoji: '📅' },
+      { text: "I am full of <em>stories</em> and adventures — and I have got no battery! 🔋", emoji: '🔋' },
+      { text: "You can read me <em>indoors</em> or <em>outdoors</em>, in bed or up a tree! 🌳", emoji: '🌳' },
+      { text: "Last night Indi <em>read</em> me with a torch inside the tent! 🔦", emoji: '🔦' },
+    ],
+    description: '"I have got many pages. I am full of stories. You can read me indoors or outdoors. Last night Indi read me in the tent. What hobby am I?"',
+    healthy: true,
+    measure: 'This hobby is <strong>Read books!</strong> 📖 You can read <strong>indoors</strong> or <strong>outdoors</strong> — and a book never runs out of battery!',
+    plate: '📵 <strong>Unplug tip:</strong> Before bed, switch off the screen and read a book. Reduce screens, sleep better! 🌙',
+    facts: [
+      { icon: '🔥', text: 'Long ago, people told stories around the fire before there were books!' },
+      { icon: '🧠', text: 'Reading every day makes you clever and calm — a healthy habit!' },
+      { icon: '🔋', text: 'A book never runs out of battery — read it anywhere!' },
+    ],
+    character: 'Indi the Book Scout 📚',
+    worldMsg: '📵 <strong>Scout message:</strong> When you feel bored, don\'t reach for a screen — open a book! Switch off, read, and travel to a thousand worlds. 🌍',
+  },
+  5: {
+    location: 'The Garden Patch',
+    subtitle: 'Read the clues and find the screen-free hobby! 🔍',
+    color: ['#558B2F', '#7CB342'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🌱', label: 'Bean seeds' },
+      { emoji: '🪨', label: 'Stones' },
+      { emoji: '🍬', label: 'Candy' },
+      { emoji: '📱', label: 'Phone' },
+    ],
+    clues: [
+      { text: "I am very <em>small</em>, but I can grow very <em>tall</em>! 🌳", emoji: '🌳' },
+      { text: "You <em>plant</em> me in the soil and give me water and sun! ☀️", emoji: '☀️' },
+      { text: "I am not a stone — I am <em>alive</em>! 🌱", emoji: '🌱' },
+      { text: "Last spring Tim <em>planted</em> me and a green bean plant grew! 🪴", emoji: '🪴' },
+    ],
+    description: '"I am very small but I grow very tall. You plant me in the soil. I am alive. Last spring Tim planted me and a bean plant grew. What hobby am I?"',
+    healthy: true,
+    measure: 'This hobby is <strong>Take care of plants!</strong> 🪴 You can grow plants <strong>indoors</strong> in a pot or <strong>outdoors</strong> in a garden!',
+    plate: '📵 <strong>Unplug tip:</strong> Instead of a screen, water your plant and watch it grow. It is calm, healthy and good for the Earth! 🌍',
+    facts: [
+      { icon: '🥕', text: 'Long ago, every family grew their own vegetables in a garden!' },
+      { icon: '🌍', text: 'Taking care of plants is calm, healthy and good for the planet!' },
+      { icon: '🌿', text: 'A little bean seed can grow taller than YOU!' },
+    ],
+    character: 'Tim the Garden Scout 🌱',
+    worldMsg: '🌍 <strong>Scout message:</strong> Plants give us clean air and food. Reduce waste, reuse pots, and take care of nature — be a green hero! ♻️',
+  },
+};
+
+let station = 1;
+let currentClue = 0;
+let tries = 0;
+let solved = false;
+
+function init() {
+  const params = new URLSearchParams(window.location.search);
+  station = parseInt(params.get('s')) || 1;
+  if (station < 1 || station > 5) station = 1;
+
+  const data = STATIONS[station];
+
+  document.getElementById('riddleHeader').style.background =
+    `linear-gradient(160deg, ${data.color[0]}cc, ${data.color[1]}99)`;
+  document.getElementById('riddleHeader').style.borderColor = `${data.color[1]}88`;
+  document.body.style.background =
+    `linear-gradient(160deg, ${data.color[0]}33 0%, #11241a 40%)`;
+
+  document.getElementById('stationBadge').textContent = `🧭 Station ${station}`;
+  document.getElementById('stationMystery').textContent = '?';
+  document.getElementById('locationTitle').textContent = data.location;
+  document.getElementById('locationSubtitle').textContent = data.subtitle;
+  document.title = `Station ${station} · Non-teachy Hobbies Hunt`;
+
+  // Build clue cards
+  const clueContainer = document.getElementById('clueCards');
+  const progressContainer = document.getElementById('clueProgress');
+  data.clues.forEach((clue, i) => {
+    const card = document.createElement('div');
+    card.className = 'clue-card';
+    card.id = `clue-${i}`;
+    card.innerHTML = `<div class="clue-num">${i + 1}</div><div class="clue-text">${clue.emoji} ${clue.text}</div>`;
+    clueContainer.appendChild(card);
+
+    const dot = document.createElement('div');
+    dot.className = 'clue-dot';
+    dot.id = `dot-${i}`;
+    progressContainer.appendChild(dot);
+  });
+
+  // Build answer choices — shuffle so correct answer isn't always first
+  const grid = document.getElementById('choicesGrid');
+  const shuffled = [...data.choices];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const correctLabel = data.choices[data.correctIndex].label;
+  shuffled.forEach((choice, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.id = `choice-${i}`;
+    btn.innerHTML = `<span class="choice-emoji">${choice.emoji}</span><span>${choice.label}</span>`;
+    const isCorrect = choice.label === correctLabel;
+    btn.addEventListener('click', () => checkChoice(i, isCorrect));
+    grid.appendChild(btn);
+  });
+
+  // Background particles — hobby themed
+  const particles = ['🎸', '⛺', '🍳', '📚', '🌱', '🧭', '🔦', '🏕️', '🌲', '📖', '🪴', '🎶'];
+  const bgAnim = document.getElementById('bgAnim');
+  for (let i = 0; i < 14; i++) {
+    const el = document.createElement('div');
+    el.className = 'bg-particle';
+    el.textContent = particles[Math.floor(Math.random() * particles.length)];
+    el.style.left = `${Math.random() * 100}%`;
+    el.style.animationDuration = `${9 + Math.random() * 12}s`;
+    el.style.animationDelay = `${Math.random() * 10}s`;
+    bgAnim.appendChild(el);
+  }
+
+  showClue(0);
+}
+
+function showClue(index) {
+  const el = document.getElementById(`clue-${index}`);
+  const dot = document.getElementById(`dot-${index}`);
+  if (el) {
+    setTimeout(() => {
+      el.classList.add('visible');
+      if (index === currentClue) el.classList.add('active');
+    }, 50);
+  }
+  if (dot) dot.classList.add('filled');
+}
+
+function showNextClue() {
+  const data = STATIONS[station];
+  const cur = document.getElementById(`clue-${currentClue}`);
+  if (cur) cur.classList.remove('active');
+
+  currentClue++;
+  if (currentClue < data.clues.length) {
+    showClue(currentClue);
+    const next = document.getElementById(`clue-${currentClue}`);
+    if (next) next.classList.add('active');
+  }
+
+  if (currentClue >= data.clues.length - 1) {
+    document.getElementById('nextClueBtn').disabled = true;
+    document.getElementById('nextClueBtn').textContent = 'All clues revealed! 🔍';
+  }
+}
+
+function checkChoice(index, isCorrect) {
+  if (solved) return;
+  const btn = document.getElementById(`choice-${index}`);
+  const data = STATIONS[station];
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    for (let i = 0; i < 4; i++) {
+      const b = document.getElementById(`choice-${i}`);
+      if (b) b.disabled = true;
+    }
+    onSuccess(data);
+  } else {
+    btn.classList.add('wrong');
+    setTimeout(() => btn.classList.remove('wrong'), 700);
+    tries++;
+    onWrong(data);
+  }
+}
+
+function onWrong(data) {
+  const fb = document.getElementById('feedbackMsg');
+  const tries_el = document.getElementById('triesInfo');
+  fb.className = 'feedback error';
+  fb.textContent = '⚠️ Not quite! Try again, scout! 🔍';
+  tries_el.textContent = `Attempt ${tries} — You can do it! Think about the clues!`;
+  if (tries >= 2) {
+    data.clues.forEach((_, i) => showClue(i));
+    currentClue = data.clues.length - 1;
+    document.getElementById('nextClueBtn').disabled = true;
+    document.getElementById('nextClueBtn').textContent = 'All clues revealed! 🔍';
+  }
+}
+
+function onSuccess(data) {
+  solved = true;
+  document.getElementById('answerSection').style.display = 'none';
+  data.clues.forEach((_, i) => showClue(i));
+
+  const panel = document.getElementById('successPanel');
+  panel.classList.add('visible');
+  panel.style.background = `linear-gradient(160deg, ${data.color[0]}33, rgba(255,255,255,0.07))`;
+  panel.style.borderColor = data.color[1];
+
+  document.getElementById('successEmoji').textContent = data.choices[0].emoji;
+  document.getElementById('successSubtitle').textContent = `You found a screen-free hobby for the future! 🎉`;
+  document.getElementById('charName').textContent = `${data.choices[0].emoji} ${data.choices[0].label} — ${data.location}`;
+  document.getElementById('charDesc').textContent = data.description;
+
+  const badge = document.getElementById('healthBadge');
+  if (data.healthy) {
+    badge.className = 'health-badge healthy';
+    badge.innerHTML = '🌿 Non-teachy Hobby · No screens!';
+  } else {
+    badge.className = 'health-badge unhealthy';
+    badge.innerHTML = '📱 Teachy · Needs a screen';
+  }
+
+  document.getElementById('measureTip').innerHTML = '✨ ' + data.measure;
+  document.getElementById('plateTip').innerHTML = data.plate;
+
+  const factsEl = document.getElementById('funFacts');
+  factsEl.innerHTML = '';
+  data.facts.forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'fun-fact';
+    div.innerHTML = `<span class="fact-icon">${f.icon}</span><span>${f.text}</span>`;
+    factsEl.appendChild(div);
+  });
+
+  if (data.worldMsg) {
+    const wm = document.getElementById('worldMsg');
+    wm.innerHTML = data.worldMsg;
+    wm.style.display = 'block';
+  }
+
+  launchConfetti(data.color[0], data.color[1]);
+
+  const saved = JSON.parse(localStorage.getItem('non-teachy-scouts') || '[]');
+  if (!saved.includes(station)) {
+    saved.push(station);
+    localStorage.setItem('non-teachy-scouts', JSON.stringify(saved));
+  }
+}
+
+function claimGift() {
+  document.getElementById('treatSticker').classList.add('visible');
+  const stickers = ['🎸', '⛺', '🍳', '📚', '🌱'];
+  document.getElementById('stickerEmoji').textContent = stickers[(station - 1) % stickers.length];
+
+  document.getElementById('stickerLabel').textContent =
+    `+1 Scout Badge! Station ${station}/5 🏅`;
+
+  launchConfetti(STATIONS[station].color[0], STATIONS[station].color[1]);
+  document.querySelector('.claim-btn').style.display = 'none';
+}
+
+function launchConfetti(color1, color2) {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  const colors = [color1, color2, '#E65100', '#F9A825', '#2E7D32', '#283593', '#FFF8E7'];
+  const pieces = [];
+  for (let i = 0; i < 90; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: -20 - Math.random() * 120,
+      w: 5 + Math.random() * 9,
+      h: 5 + Math.random() * 9,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rot: Math.random() * 360,
+      vx: (Math.random() - 0.5) * 3,
+      vy: 3 + Math.random() * 4,
+      vr: (Math.random() - 0.5) * 9,
+      round: Math.random() > 0.5,
+    });
+  }
+  const start = Date.now();
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    for (const p of pieces) {
+      if (p.y < canvas.height + 20) {
+        alive = true;
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        if (p.round) { ctx.beginPath(); ctx.arc(0,0,p.w/2,0,Math.PI*2); ctx.fill(); }
+        else { ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); }
+        ctx.restore();
+      }
+    }
+    if (alive && Date.now() - start < 4000) { requestAnimationFrame(draw); }
+    else { canvas.remove(); }
+  }
+  requestAnimationFrame(draw);
+}
+
+init();
+twemoji.parse(document.body,{folder:'svg',ext:'.svg'});
+</script>
+</body>
+</html>
