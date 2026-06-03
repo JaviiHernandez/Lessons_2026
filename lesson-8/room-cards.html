@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="../favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#C2185B">
+<title>My Dream Job — Fun Fact Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<style>
+  img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #1a1033;
+    font-family: 'Fredoka', sans-serif;
+    padding: clamp(16px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(28px, 4.5vw, 54px);
+    overflow-x: hidden;
+  }
+
+  .page-heading {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(20px, 3.8vw, 34px);
+    color: #FFB300;
+    text-align: center;
+    padding-top: clamp(8px, 1.5vw, 16px);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  }
+
+  .print-note {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,179,0,0.3);
+    border-radius: 8px;
+    padding: clamp(8px,1.5vw,12px) clamp(16px,3vw,24px);
+    color: rgba(255,248,231,0.65);
+    font-size: clamp(12px,1.8vw,14px);
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .card-pair {
+    display: flex;
+    gap: clamp(20px, 3.5vw, 44px);
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .card-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(12px, 1.8vw, 15px);
+    color: rgba(255,248,231,0.5);
+    text-align: center;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .card {
+    width: 238px;
+    height: 332px;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 2px rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+
+  /* ── FRONT ── */
+  .card-front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    padding: 14px 12px 0;
+    position: relative;
+    gap: 7px;
+  }
+
+  .station-chip {
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ingredient-emoji {
+    font-size: 72px;
+    line-height: 1;
+    filter: drop-shadow(0 4px 14px rgba(0,0,0,0.4));
+    position: relative;
+    z-index: 2;
+    margin: 6px 0 2px;
+  }
+
+  .recipe-tag {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.78);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+    margin-top: auto;          /* push the fact block to bottom */
+  }
+
+  .recipe-card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 14px;
+    padding: 14px 12px 16px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+    position: relative;
+    z-index: 2;
+    border: 2.5px solid rgba(255,255,255,0.6);
+    margin-bottom: 8px;        /* tiny breathing room above the footer strip */
+  }
+
+  .recipe-emoji {
+    font-size: 50px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .recipe-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 19px;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+
+  .recipe-with {
+    font-size: 11px;
+    color: rgba(0,0,0,0.6);
+    font-weight: 500;
+    letter-spacing: 0.4px;
+  }
+  .recipe-with strong { font-weight: 700; }
+
+  .theme-weaver .recipe-name  { color: #AD1457; }
+  .theme-doctor .recipe-name  { color: #00838F; }
+  .theme-potter .recipe-name  { color: #BF360C; }
+  .theme-farmer .recipe-name  { color: #1B5E20; }
+  .theme-pilot  .recipe-name  { color: #1565C0; }
+
+  /* Corner ornaments */
+  .corner-orns { position: absolute; inset: 0; pointer-events: none; }
+  .orn { position: absolute; font-size: 15px; opacity: 0.45; }
+  .orn-tl { top: 8px; left: 9px; }
+  .orn-tr { top: 8px; right: 9px; }
+  .orn-bl { bottom: 28px; left: 9px; }
+  .orn-br { bottom: 28px; right: 9px; }
+
+  .card-footer-strip {
+    width: calc(100% + 24px);
+    margin: 0 -12px 0;
+    padding: 7px 0;
+    background: rgba(0,0,0,0.3);
+    text-align: center;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 9px;
+    color: rgba(255,255,255,0.78);
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
+    border-radius: 0 0 18px 18px;
+  }
+
+  /* ── BACK ── */
+  .card-back {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 11px 11px 9px;
+    gap: 6px;
+    position: relative;
+  }
+
+  .back-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-bottom: 6px;
+    border-bottom: 1.5px solid rgba(255,255,255,0.15);
+  }
+
+  .back-emoji { font-size: 26px; }
+
+  .back-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 13px;
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    line-height: 1.15;
+  }
+
+  .back-station { font-size: 9.5px; color: rgba(255,255,255,0.6); letter-spacing: 0.7px; text-transform: uppercase; }
+
+  .back-section-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+  }
+
+  /* What-they-do list */
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px 6px;
+    background: rgba(0,0,0,0.18);
+    border-radius: 8px;
+    padding: 6px 8px;
+    border-left: 3px solid rgba(255,255,255,0.3);
+  }
+  .ing-item {
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.3;
+  }
+  .ing-item strong {
+    color: #FFE082;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+  }
+
+  /* Facts list */
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 7px;
+    padding: 4px 7px;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.3;
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 15px; height: 15px;
+    border-radius: 50%;
+    background: rgba(255,179,0,0.9);
+    color: #1a1033;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 9px;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+
+  /* Values strip */
+  .health-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.3);
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 9px;
+    color: #FFE082;
+    font-family: 'Fredoka One', sans-serif;
+    letter-spacing: 0.3px;
+    text-align: center;
+    line-height: 1.25;
+    margin-top: auto;
+  }
+
+  /* Themes — dream-job palette */
+  .theme-weaver     { background: linear-gradient(145deg, #6a0f3c, #AD1457, #E91E63); }
+  .theme-doctor     { background: linear-gradient(145deg, #004d52, #00838F, #00ACC1); }
+  .theme-potter     { background: linear-gradient(145deg, #7a2208, #BF360C, #E64A19); }
+  .theme-farmer     { background: linear-gradient(145deg, #003008, #1B5E20, #388E3C); }
+  .theme-pilot      { background: linear-gradient(145deg, #0a3a7a, #1565C0, #1E88E5); }
+
+  .theme-weaver-inv  { background: linear-gradient(145deg, #E91E63, #AD1457, #6a0f3c); }
+  .theme-doctor-inv  { background: linear-gradient(145deg, #00ACC1, #00838F, #004d52); }
+  .theme-potter-inv  { background: linear-gradient(145deg, #E64A19, #BF360C, #7a2208); }
+  .theme-farmer-inv  { background: linear-gradient(145deg, #388E3C, #1B5E20, #003008); }
+  .theme-pilot-inv   { background: linear-gradient(145deg, #1E88E5, #1565C0, #0a3a7a); }
+
+  @media (max-width: 540px) { .card-pair { gap: 14px; } }
+
+  @media print {
+    body { background: white; padding: 8px; gap: 18px; }
+    .page-heading, .print-note { display: none; }
+    .card-pair { page-break-after: always; gap: 28px; }
+    .card { box-shadow: 0 0 0 1px rgba(0,0,0,0.15); }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-heading">🌟 My Dream Job — Fun Fact Cards</div>
+<div class="print-note">Print on cardstock · Cut out each card · Glue front to back · Laminate for best results · Hand out when helpers discover each dream job!</div>
+
+<!-- ══ CARD 1 — AGNA → WEAVER ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-weaver">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🌟</span>
+          <span class="orn orn-tr">🧵</span>
+          <span class="orn orn-bl">🧶</span>
+          <span class="orn orn-br">🌈</span>
+        </div>
+        <div class="station-chip">Child 1 · Agna</div>
+        <div class="ingredient-emoji">👧</div>
+        <div class="recipe-tag">⭐ Dream Job ⭐</div>
+        <div class="recipe-card">
+          <div class="recipe-emoji">🧵</div>
+          <div class="recipe-name">Weaver</div>
+          <div class="recipe-with">Agna says: <strong>I want to be a weaver!</strong></div>
+        </div>
+        <div class="card-footer-strip">🌟 Dream Jobs · 🧵 Weaver</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-weaver-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🧵</div>
+          <div>
+            <div class="back-title">All About Weavers!</div>
+            <div class="back-station">Spot 1 · Agna</div>
+          </div>
+        </div>
+
+        <div class="back-section-title">🧶 What they do</div>
+        <div class="ingredients-grid">
+          <div class="ing-item"><strong>make</strong> cloth 🧵</div>
+          <div class="ing-item"><strong>use</strong> a loom</div>
+          <div class="ing-item">mix <strong>colours</strong> 🌈</div>
+          <div class="ing-item">sew saris 🧣</div>
+          <div class="ing-item">work by hand 🤲</div>
+          <div class="ing-item">need patience ⏳</div>
+        </div>
+
+        <div class="back-section-title">💡 Did you know?</div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span>India is famous for <strong>handloom</strong> weaving.</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>Some saris take <em>weeks</em> to make!</span></div>
+          <div class="step-item"><span class="step-num">3</span><span>Weavers use colours from plants. 🌿</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>Girls <em>and</em> boys can weave!</span></div>
+        </div>
+
+        <div class="health-bar">✊ Everyone is equal — anyone can weave!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CARD 2 — KAITO → DOCTOR ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-doctor">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🌟</span>
+          <span class="orn orn-tr">🩺</span>
+          <span class="orn orn-bl">❤️</span>
+          <span class="orn orn-br">🏥</span>
+        </div>
+        <div class="station-chip">Child 2 · Kaito</div>
+        <div class="ingredient-emoji">👦</div>
+        <div class="recipe-tag">⭐ Dream Job ⭐</div>
+        <div class="recipe-card">
+          <div class="recipe-emoji">🩺</div>
+          <div class="recipe-name">Doctor</div>
+          <div class="recipe-with">Kaito says: <strong>I want to be a doctor!</strong></div>
+        </div>
+        <div class="card-footer-strip">🌟 Dream Jobs · 🩺 Doctor</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-doctor-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🩺</div>
+          <div>
+            <div class="back-title">All About Doctors!</div>
+            <div class="back-station">Spot 2 · Kaito</div>
+          </div>
+        </div>
+
+        <div class="back-section-title">🩺 What they do</div>
+        <div class="ingredients-grid">
+          <div class="ing-item"><strong>help</strong> sick people</div>
+          <div class="ing-item">use a stethoscope 🩺</div>
+          <div class="ing-item">work in hospitals 🏥</div>
+          <div class="ing-item">give medicine 💊</div>
+          <div class="ing-item"><strong>save</strong> lives ❤️</div>
+          <div class="ing-item">care for all 💛</div>
+        </div>
+
+        <div class="back-section-title">💡 Did you know?</div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span>Doctors <strong>save</strong> lives every day.</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>Some travel to far villages. 🚲</span></div>
+          <div class="step-item"><span class="step-num">3</span><span>They study for many years. 📚</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>We must <em>care</em> for everyone.</span></div>
+        </div>
+
+        <div class="health-bar">💛 Care for all — health is a right!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CARD 3 — MARA → POTTER ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-potter">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🌟</span>
+          <span class="orn orn-tr">🏺</span>
+          <span class="orn orn-bl">🪔</span>
+          <span class="orn orn-br">🌀</span>
+        </div>
+        <div class="station-chip">Child 3 · Mara</div>
+        <div class="ingredient-emoji">👧</div>
+        <div class="recipe-tag">⭐ Dream Job ⭐</div>
+        <div class="recipe-card">
+          <div class="recipe-emoji">🏺</div>
+          <div class="recipe-name">Potter</div>
+          <div class="recipe-with">Mara says: <strong>I want to be a potter!</strong></div>
+        </div>
+        <div class="card-footer-strip">🌟 Dream Jobs · 🏺 Potter</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-potter-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🏺</div>
+          <div>
+            <div class="back-title">All About Potters!</div>
+            <div class="back-station">Spot 3 · Mara</div>
+          </div>
+        </div>
+
+        <div class="back-section-title">🏺 What they do</div>
+        <div class="ingredients-grid">
+          <div class="ing-item"><strong>shape</strong> clay 🟤</div>
+          <div class="ing-item">use a <strong>wheel</strong> 🌀</div>
+          <div class="ing-item">make pots &amp; bowls</div>
+          <div class="ing-item">make diyas 🪔</div>
+          <div class="ing-item">dry in the sun ☀️</div>
+          <div class="ing-item">paint designs 🎨</div>
+        </div>
+
+        <div class="back-section-title">💡 Did you know?</div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span>Pottery is a very <strong>old</strong> job.</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>Potters make <em>diyas</em> for Diwali! ✨</span></div>
+          <div class="step-item"><span class="step-num">3</span><span>Clay comes from the earth. 🌍</span></div>
+          <div class="step-item"><span class="step-num">4</span><span><em>Diversity</em> makes India beautiful.</span></div>
+        </div>
+
+        <div class="health-bar">🤝 Diversity — many crafts, one world!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CARD 4 — RILEY → FARMER ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-farmer">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🌟</span>
+          <span class="orn orn-tr">🌾</span>
+          <span class="orn orn-bl">🐄</span>
+          <span class="orn orn-br">☀️</span>
+        </div>
+        <div class="station-chip">Child 4 · Riley</div>
+        <div class="ingredient-emoji">👧</div>
+        <div class="recipe-tag">⭐ Dream Job ⭐</div>
+        <div class="recipe-card">
+          <div class="recipe-emoji">🌾</div>
+          <div class="recipe-name">Farmer</div>
+          <div class="recipe-with">Riley says: <strong>I want to be a farmer!</strong></div>
+        </div>
+        <div class="card-footer-strip">🌟 Dream Jobs · 🌾 Farmer</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-farmer-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🌾</div>
+          <div>
+            <div class="back-title">All About Farmers!</div>
+            <div class="back-station">Spot 4 · Riley</div>
+          </div>
+        </div>
+
+        <div class="back-section-title">🌾 What they do</div>
+        <div class="ingredients-grid">
+          <div class="ing-item"><strong>grow</strong> food 🌱</div>
+          <div class="ing-item">plant rice &amp; wheat</div>
+          <div class="ing-item">care for animals 🐄</div>
+          <div class="ing-item">work outdoors ☀️</div>
+          <div class="ing-item">water the fields 💧</div>
+          <div class="ing-item">feed the village</div>
+        </div>
+
+        <div class="back-section-title">💡 Did you know?</div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span>Farmers feed <strong>everyone</strong>.</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>They wake up very <em>early</em>. 🌅</span></div>
+          <div class="step-item"><span class="step-num">3</span><span>They need sun and rain. 🌧️</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>Girls and boys can farm! ✊</span></div>
+        </div>
+
+        <div class="health-bar">✊ Equality — no job is just for boys or girls!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CARD 5 — KANAN → PILOT ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-pilot">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🌟</span>
+          <span class="orn orn-tr">✈️</span>
+          <span class="orn orn-bl">☁️</span>
+          <span class="orn orn-br">🌍</span>
+        </div>
+        <div class="station-chip">Child 5 · Kanan</div>
+        <div class="ingredient-emoji">👦</div>
+        <div class="recipe-tag">⭐ Dream Job ⭐</div>
+        <div class="recipe-card">
+          <div class="recipe-emoji">✈️</div>
+          <div class="recipe-name">Pilot</div>
+          <div class="recipe-with">Kanan says: <strong>I want to be a pilot!</strong></div>
+        </div>
+        <div class="card-footer-strip">🌟 Dream Jobs · ✈️ Pilot</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-pilot-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">✈️</div>
+          <div>
+            <div class="back-title">All About Pilots!</div>
+            <div class="back-station">Spot 5 · Kanan</div>
+          </div>
+        </div>
+
+        <div class="back-section-title">✈️ What they do</div>
+        <div class="ingredients-grid">
+          <div class="ing-item"><strong>fly</strong> aeroplanes ✈️</div>
+          <div class="ing-item">wear a uniform 🧑‍✈️</div>
+          <div class="ing-item">read maps 🗺️</div>
+          <div class="ing-item">speak English 💬</div>
+          <div class="ing-item">study maths ➗</div>
+          <div class="ing-item">travel the world 🌍</div>
+        </div>
+
+        <div class="back-section-title">💡 Did you know?</div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span>Pilots fly above the <strong>clouds</strong>. ☁️</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>They speak <em>English</em> to airports. 🌐</span></div>
+          <div class="step-item"><span class="step-num">3</span><span>School is the start of big dreams! 📚</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>Any child can <em>dream</em> of the sky!</span></div>
+        </div>
+
+        <div class="health-bar">📚 Education for all — dreams need school!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>twemoji.parse(document.body,{folder:'svg',ext:'.svg'});</script>
+
+
+
+
+
+
+
+
+
+
+<script>/* auto-print/pdf on ?print=1 or ?pdf=1 */(function(){var p=new URLSearchParams(location.search);var pdf=p.get("pdf");var prn=p.get("print");if(pdf!=="1"&&prn!=="1")return;var dlall=p.get("dlall")==="1";function whenReady(cb){if(document.readyState==="complete")setTimeout(cb,900);else window.addEventListener("load",function(){setTimeout(cb,1100);});}function preloadEmojis(){return new Promise(function(resolve){var imgs=document.querySelectorAll("img.emoji");if(!imgs.length){return resolve();}var pending=imgs.length;var safety=setTimeout(resolve,20000);var done=function(){pending--;if(pending<=0){clearTimeout(safety);resolve();}};imgs.forEach(function(img){if(/^data:/.test(img.src)){done();return;}var m=img.src.match(/\/([a-f0-9\-]+)\.(?:svg|png)/i);if(!m){done();return;}var cp=m[1];var urls=["https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/twitter/twemoji@v14.0.2/assets/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/72x72/"+cp+".png"];var i=0;(function tryNext(){if(i>=urls.length){done();return;}fetch(urls[i++]).then(function(r){if(!r.ok)return Promise.reject();return r.blob();}).then(function(blob){var reader=new FileReader();reader.onloadend=function(){if(typeof reader.result==="string"&&reader.result.indexOf("data:image/png")===0){img.src=reader.result;done();}else{tryNext();}};reader.onerror=tryNext;reader.readAsDataURL(blob);}).catch(tryNext);})();});});}function loadScript(src){return new Promise(function(resolve,reject){var s=document.createElement("script");s.src=src;s.crossOrigin="anonymous";s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}function loadLibs(){var p1=(typeof html2canvas==="function")?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");var p2=((window.jspdf&&window.jspdf.jsPDF)||window.jsPDF)?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");return Promise.all([p1,p2]);}if(pdf==="1"){whenReady(function(){var size=(p.get("size")||"A4").toUpperCase();var orientation=(size==="A5")?"landscape":"portrait";var format=size.toLowerCase().replace(/[^a-z0-9]/g,"");if(format==="2xa4"||format==="2a4")format="a4";if(["a3","a4","a5"].indexOf(format)<0)format="a4";var sizeMM={"a3":[297,420],"a4":[210,297],"a5":[148,210]};var paper=sizeMM[format]||[210,297];var pdfW=(orientation==="landscape")?paper[1]:paper[0];var pdfH=(orientation==="landscape")?paper[0]:paper[1];var fn=(document.title||"lesson_print").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"").toLowerCase()+".pdf";function shotElem(elem){return html2canvas(elem,{scale:3,useCORS:true,allowTaint:true,logging:false,backgroundColor:"#ffffff",imageTimeout:9000,onclone:function(doc){var b=doc.body;b.style.padding="0";b.style.margin="0";b.style.minHeight="0";b.style.background="#ffffff";Array.prototype.forEach.call(doc.querySelectorAll(".print-note,.page-heading,.card-label"),function(el){el.style.display="none";});var s=doc.createElement("style");s.textContent=".page,.guide{width:794px!important;min-height:1123px!important;max-width:none!important;box-shadow:none!important;transform:none!important;display:flex!important;flex-direction:column!important;box-sizing:border-box!important;page-break-after:always!important;}.page-footer,.footer-bar{margin-top:auto!important;}";doc.head.appendChild(s);}});}function placeImage(doc,canvas,marginMM,fill){var availW=pdfW-marginMM*2;var availH=pdfH-marginMM*2;if(fill){doc.addImage(canvas.toDataURL("image/png"),"PNG",marginMM,marginMM,availW,availH,undefined,"FAST");}else{var aspect=canvas.width/canvas.height;var imgW=availW,imgH=availW/aspect;if(imgH>availH){imgH=availH;imgW=availH*aspect;}var x=(pdfW-imgW)/2,y=(pdfH-imgH)/2;doc.addImage(canvas.toDataURL("image/png"),"PNG",x,y,imgW,imgH,undefined,"FAST");}}function newDoc(){var Ctor=(window.jspdf&&window.jspdf.jsPDF)||window.jsPDF;return new Ctor({orientation:orientation,unit:"mm",format:format,compress:true});}function deliver(doc){if(dlall&&window.parent&&window.parent!==window){try{var blob=doc.output("blob");window.parent.postMessage({type:"pdf-blob",name:fn,blob:blob},"*");}catch(e){console.error("[PDF] postMessage failed",e);doc.save(fn);}}else{doc.save(fn);}}function renderHero(elem,marginMM,fill){var doc=newDoc();return shotElem(elem).then(function(canvas){placeImage(doc,canvas,marginMM,fill);deliver(doc);});}function renderMulti(elements,marginMM,fill){var doc=newDoc();var first=true;return elements.reduce(function(prev,elem){return prev.then(function(){return shotElem(elem).then(function(canvas){if(!first)doc.addPage(format,orientation);first=false;placeImage(doc,canvas,marginMM,fill);});});},Promise.resolve()).then(function(){deliver(doc);});}function gen(){var board=document.querySelector(".board");var hero=document.querySelector(".poster, .diploma");var pages=document.querySelectorAll(".page, .guide");var cards=document.querySelectorAll(".card-pair, .card-wrap, .medal-wrap, .row, .qr-card");if(cards.length>=2)return renderMulti(Array.prototype.slice.call(cards),10,false);if(pages.length>=2)return renderMulti(Array.prototype.slice.call(pages),0,true);if(hero)return renderHero(hero,0,true);if(board)return renderHero(board,8,false);return renderHero(document.body,0,true);}preloadEmojis().then(loadLibs).then(gen).catch(function(err){console.error("[PDF] failed:",err);if(dlall&&window.parent&&window.parent!==window){try{window.parent.postMessage({type:"pdf-error",error:String(err)},"*");}catch(e){}}else{alert("Could not generate the PDF. Reload and try again. Error: "+(err.message||err));}});});}else{whenReady(function(){window.print();});}})();</script>
+</body>
+</html>

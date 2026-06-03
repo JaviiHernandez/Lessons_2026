@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="../favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#C2185B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>My Dream Job — Riddle</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<style>
+  img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --saffron: #FF8F00;
+    --green: #2E7D32;
+    --gold: #FFB300;
+    --cream: #FFF8E7;
+    --pink: #C2185B;
+    --bg: #1a1033;
+    --white: #FFF8E7;
+  }
+
+  body {
+    font-family: 'Fredoka', sans-serif;
+    min-height: 100dvh;
+    background: var(--bg);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .bg-anim {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .bg-particle {
+    position: absolute;
+    font-size: clamp(14px, 2.8vw, 26px);
+    animation: float-particle linear infinite;
+    opacity: 0.12;
+  }
+
+  @keyframes float-particle {
+    0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.12; }
+    90%  { opacity: 0.12; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    padding: clamp(16px, 3vw, 32px) clamp(16px, 4vw, 32px);
+    gap: clamp(14px, 2.5vw, 22px);
+  }
+
+  /* Header */
+  .riddle-header {
+    text-align: center;
+    padding: clamp(16px, 3vw, 26px) clamp(16px, 4vw, 28px);
+    border-radius: 20px;
+    border: 3px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .station-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(13px, 2.2vw, 16px);
+    color: rgba(255,255,255,0.9);
+    margin-bottom: clamp(8px, 1.5vw, 12px);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .station-mystery-big {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(52px, 11vw, 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(80px, 16vw, 110px);
+    height: clamp(80px, 16vw, 110px);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 3px solid rgba(255,255,255,0.25);
+    margin: 0 auto clamp(4px, 1vw, 8px);
+    box-shadow: 0 0 30px rgba(255,255,255,0.1), inset 0 0 20px rgba(255,255,255,0.05);
+    animation: pulse 2s ease-in-out infinite;
+    color: white;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  }
+
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+  .location-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(24px, 5vw, 44px);
+    line-height: 1.1;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  }
+
+  .location-subtitle {
+    font-size: clamp(13px, 2.3vw, 17px);
+    opacity: 0.75;
+    margin-top: 4px;
+  }
+
+  /* Clues section */
+  .clues-section {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: clamp(16px, 3vw, 26px);
+    backdrop-filter: blur(4px);
+  }
+
+  .clues-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--gold);
+    margin-bottom: clamp(12px, 2.5vw, 18px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .clue-cards { display: flex; flex-direction: column; gap: clamp(8px, 1.5vw, 11px); }
+
+  .clue-card {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: clamp(10px, 2vw, 15px) clamp(14px, 2.5vw, 20px);
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 2vw, 16px);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  .clue-card.visible { opacity: 1; transform: translateX(0); }
+
+  .clue-card.active {
+    border-color: var(--gold);
+    background: rgba(255,179,0,0.12);
+    box-shadow: 0 0 18px rgba(255,179,0,0.2);
+  }
+
+  .clue-num {
+    width: clamp(30px, 4.8vw, 38px);
+    height: clamp(30px, 4.8vw, 38px);
+    border-radius: 50%;
+    background: var(--saffron);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.4vw, 17px);
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(255,143,0,0.4);
+  }
+
+  .clue-text {
+    font-size: clamp(14px, 2.4vw, 17px);
+    line-height: 1.5;
+    color: var(--white);
+  }
+
+  .clue-text em { color: var(--gold); font-style: normal; font-weight: 600; }
+
+  .next-clue-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--green), #1B5E20);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: clamp(12px, 2.5vw, 15px) clamp(24px, 5vw, 36px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 19px);
+    cursor: pointer;
+    margin-top: clamp(12px, 2.5vw, 16px);
+    width: 100%;
+    min-height: 52px;
+    box-shadow: 0 4px 16px rgba(46,125,50,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    touch-action: manipulation;
+  }
+
+  .next-clue-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46,125,50,0.5); }
+  .next-clue-btn:active { transform: translateY(0); }
+  .next-clue-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Answer section — multiple choice */
+  .answer-section {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: clamp(16px, 3vw, 26px);
+    backdrop-filter: blur(4px);
+  }
+
+  .answer-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--gold);
+    margin-bottom: clamp(12px, 2.5vw, 16px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .choices-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(8px, 1.5vw, 12px);
+  }
+
+  .choice-btn {
+    background: rgba(255,255,255,0.08);
+    border: 2.5px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: clamp(14px, 2.5vw, 18px) clamp(10px, 2vw, 16px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.4vw, 17px);
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-height: 80px;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .choice-btn .choice-emoji { font-size: clamp(26px, 5vw, 38px); }
+
+  .choice-btn:hover {
+    background: rgba(255,179,0,0.12);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(255,179,0,0.2);
+  }
+
+  .choice-btn:active { transform: scale(0.97); }
+
+  .choice-btn.correct {
+    background: rgba(46,125,50,0.4);
+    border-color: #66BB6A;
+    box-shadow: 0 0 20px rgba(102,187,106,0.4);
+    animation: correct-flash 0.4s ease;
+  }
+
+  .choice-btn.wrong {
+    background: rgba(194,24,91,0.3);
+    border-color: #ec407a;
+    animation: shake 0.4s ease;
+    opacity: 0.6;
+  }
+
+  @keyframes correct-flash {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+
+  .feedback {
+    margin-top: clamp(10px, 2vw, 14px);
+    padding: clamp(10px, 2vw, 13px) clamp(14px, 2.5vw, 18px);
+    border-radius: 12px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.6vw, 17px);
+    text-align: center;
+    display: none;
+  }
+
+  .feedback.error {
+    display: block;
+    background: rgba(194,24,91,0.2);
+    border: 2px solid #ec407a;
+    color: #f8bbd0;
+  }
+
+  .tries-info {
+    text-align: center;
+    font-size: clamp(11px, 1.8vw, 14px);
+    color: rgba(255,248,231,0.5);
+    margin-top: clamp(6px, 1.2vw, 10px);
+  }
+
+  .clue-progress { display: flex; gap: 6px; justify-content: center; margin-top: clamp(10px, 2vw, 14px); }
+  .clue-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); transition: background 0.3s; }
+  .clue-dot.filled { background: var(--gold); }
+
+  /* Success panel */
+  .success-panel {
+    display: none;
+    background: rgba(255,255,255,0.07);
+    border: 3px solid var(--gold);
+    border-radius: 20px;
+    padding: clamp(20px, 4vw, 34px) clamp(16px, 4vw, 30px);
+    text-align: center;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    backdrop-filter: blur(8px);
+  }
+
+  .success-panel.visible { display: block; }
+
+  @keyframes pop-in {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .success-emoji-big {
+    font-size: clamp(46px, 9vw, 76px);
+    display: block;
+    margin-bottom: clamp(8px, 1.5vw, 12px);
+    animation: bounce 0.6s ease 0.3s both;
+  }
+
+  @keyframes bounce {
+    0% { transform: translateY(20px); opacity: 0; }
+    60% { transform: translateY(-10px); }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  .success-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(26px, 5.5vw, 50px);
+    color: var(--gold);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    margin-bottom: 4px;
+  }
+
+  .success-subtitle {
+    font-size: clamp(13px, 2.4vw, 17px);
+    color: rgba(255,248,231,0.85);
+    margin-bottom: clamp(14px, 3vw, 22px);
+  }
+
+  .character-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: clamp(14px, 2.5vw, 20px);
+    margin-bottom: clamp(14px, 2.5vw, 20px);
+    border: 2px solid rgba(255,255,255,0.12);
+    text-align: left;
+  }
+
+  .char-card-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(17px, 3.3vw, 24px);
+    color: var(--gold);
+    margin-bottom: clamp(6px, 1.2vw, 9px);
+  }
+
+  .char-description {
+    font-size: clamp(12px, 2vw, 15px);
+    line-height: 1.6;
+    color: rgba(255,248,231,0.92);
+    margin-bottom: clamp(10px, 2vw, 13px);
+    font-style: italic;
+  }
+
+  /* Dream-job badge */
+  .health-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(11px, 1.8vw, 14px);
+    margin-bottom: clamp(10px, 2vw, 14px);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .health-badge.healthy   { background: rgba(46,125,50,0.25); color: #A5D6A7; border: 1.5px solid #66BB6A; }
+  .health-badge.unhealthy { background: rgba(194,24,91,0.22); color: #F8BBD0; border: 1.5px solid #ec407a; }
+
+  /* About-the-job tip */
+  .measure-tip {
+    background: rgba(255,143,0,0.15);
+    border: 2px solid rgba(255,143,0,0.5);
+    border-radius: 12px;
+    padding: clamp(8px, 1.6vw, 12px) clamp(11px, 2vw, 15px);
+    font-size: clamp(12px, 2vw, 14px);
+    color: #FFE0B2;
+    margin-bottom: clamp(10px, 2vw, 13px);
+    line-height: 1.5;
+  }
+  .measure-tip strong { color: var(--gold); font-weight: 600; }
+
+  /* Equality / rights message */
+  .plate-tip {
+    background: rgba(46,125,50,0.18);
+    border: 2px solid rgba(46,125,50,0.45);
+    border-radius: 12px;
+    padding: clamp(8px, 1.6vw, 12px) clamp(11px, 2vw, 15px);
+    font-size: clamp(12px, 2vw, 14px);
+    color: #C8E6C9;
+    margin-bottom: clamp(10px, 2vw, 13px);
+    line-height: 1.5;
+  }
+  .plate-tip strong { color: #FFF59D; font-weight: 600; }
+
+  .fun-facts { display: flex; flex-direction: column; gap: clamp(6px, 1.2vw, 9px); }
+
+  .fun-fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: clamp(7px, 1.4vw, 11px) clamp(10px, 2vw, 13px);
+    font-size: clamp(12px, 1.9vw, 14px);
+    color: rgba(255,248,231,0.88);
+    line-height: 1.4;
+  }
+
+  .fact-icon { font-size: clamp(15px, 2.4vw, 19px); flex-shrink: 0; }
+
+  .world-msg {
+    margin-top: clamp(8px, 1.5vw, 12px);
+    padding: clamp(8px, 1.6vw, 12px) clamp(11px, 2vw, 15px);
+    background: rgba(255,179,0,0.12);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    font-size: clamp(11px, 1.8vw, 13px);
+    color: rgba(255,248,231,0.92);
+    line-height: 1.5;
+    text-align: left;
+  }
+  .world-msg strong { color: var(--gold); }
+
+  .claim-btn {
+    background: linear-gradient(135deg, var(--green), var(--gold));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: clamp(14px, 3vw, 19px) clamp(28px, 6vw, 46px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(17px, 3.3vw, 24px);
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(46,125,50,0.5);
+    transition: transform 0.15s, box-shadow 0.15s;
+    min-height: 58px;
+    width: 100%;
+    touch-action: manipulation;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 4px 20px rgba(46,125,50,0.4); }
+    100% { box-shadow: 0 4px 40px rgba(255,179,0,0.7), 0 0 60px rgba(46,125,50,0.3); }
+  }
+
+  .claim-btn:hover { transform: translateY(-2px) scale(1.02); }
+
+  .treat-sticker {
+    display: none;
+    margin: clamp(14px, 3vw, 22px) auto 0;
+    text-align: center;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .treat-sticker.visible { display: block; }
+
+  .sticker-circle {
+    width: clamp(96px, 19vw, 134px);
+    height: clamp(96px, 19vw, 134px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #FFE082, var(--pink));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto clamp(8px, 1.5vw, 12px);
+    box-shadow: 0 0 40px rgba(194,24,91,0.5), 0 0 0 4px var(--gold), 0 0 0 8px rgba(255,179,0,0.3);
+    animation: spin-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes spin-in {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .sticker-emoji { font-size: clamp(34px, 6.5vw, 52px); }
+  .sticker-text {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(7px, 1.3vw, 10px);
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .sticker-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--gold);
+  }
+
+  @media (min-width: 600px) {
+    .choices-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bg-particle, .station-mystery-big { animation: none; }
+    .clue-card { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-anim" id="bgAnim"></div>
+
+<div class="page">
+  <div class="riddle-header" id="riddleHeader">
+    <div class="station-badge" id="stationBadge">🌟 Child 1</div>
+    <div class="station-mystery-big" id="stationMystery">?</div>
+    <div class="location-title" id="locationTitle">Mystery Dream Job</div>
+    <div class="location-subtitle" id="locationSubtitle">Read the clues and discover the dream job! 🌟</div>
+  </div>
+
+  <div class="clues-section">
+    <div class="clues-title">🔍 Clues from the child!</div>
+    <div class="clue-cards" id="clueCards"></div>
+    <div class="clue-progress" id="clueProgress"></div>
+    <button class="next-clue-btn" id="nextClueBtn" onclick="showNextClue()">Next Clue 👉</button>
+  </div>
+
+  <div class="answer-section" id="answerSection">
+    <div class="answer-title">🤔 What is their dream job?</div>
+    <div class="choices-grid" id="choicesGrid"></div>
+    <div class="feedback" id="feedbackMsg"></div>
+    <div class="tries-info" id="triesInfo"></div>
+  </div>
+
+  <div class="success-panel" id="successPanel">
+    <span class="success-emoji-big" id="successEmoji">🧵</span>
+    <div class="success-title">DREAM DISCOVERED!</div>
+    <div class="success-subtitle" id="successSubtitle">Amazing! You're a real Dream Helper! 🎉</div>
+    <div class="character-card">
+      <div class="char-card-name" id="charName"></div>
+      <div class="char-description" id="charDesc"></div>
+      <span class="health-badge" id="healthBadge"></span>
+      <div class="measure-tip" id="measureTip"></div>
+      <div class="plate-tip" id="plateTip"></div>
+      <div class="fun-facts" id="funFacts"></div>
+      <div class="world-msg" id="worldMsg" style="display:none;"></div>
+    </div>
+    <button class="claim-btn" onclick="claimGift()">⭐ Light up the Dream!</button>
+    <div class="treat-sticker" id="treatSticker">
+      <div class="sticker-circle">
+        <span class="sticker-emoji" id="stickerEmoji">🧵</span>
+        <span class="sticker-text">Dream!</span>
+      </div>
+      <div class="sticker-label" id="stickerLabel">+1 Dream discovered! Total: 1/5 ⭐</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const STATIONS = {
+  1: {
+    location: "Agna's Weaving Hut",
+    subtitle: 'Read the clues and discover the dream job! 🔍',
+    color: ['#AD1457', '#E91E63'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🧵', label: 'Weaver' },
+      { emoji: '✂️', label: 'Tailor' },
+      { emoji: '🎨', label: 'Painter' },
+      { emoji: '💃', label: 'Dancer' },
+    ],
+    clues: [
+      { text: "Namaste! I'm <em>Agna</em>. I <em>want to be</em> an artist with my hands! 🤲", emoji: '🤲' },
+      { text: "I work with <em>colourful threads</em> on a big wooden <em>loom</em>. 🧵", emoji: '🧵' },
+      { text: "I <em>make</em> beautiful cloth, scarves and saris. 🧣", emoji: '🧣' },
+      { text: "I <em>don't want to be</em> a dancer — I want to weave! What is my dream job?", emoji: '🌈' },
+    ],
+    description: '"Namaste! I\'m Agna. I want to be an artist with my hands. I work with colourful threads on a loom. I make beautiful cloth. What is my dream job?"',
+    healthy: true,
+    measure: 'A <strong>weaver</strong> makes cloth on a loom. In India, weavers create beautiful, colourful saris by hand! 🧵',
+    plate: '💛 Girls and boys can be weavers! Every child has the <strong>right</strong> to learn a craft and follow their dream.',
+    facts: [
+      { icon: '🧵', text: 'India is famous for handloom weaving — some saris take many weeks to make!' },
+      { icon: '🌈', text: 'Weavers use bright colours: turmeric yellow, indigo blue and rose pink!' },
+      { icon: '🤲', text: 'Weaving needs patience, maths and creativity — a true skill!' },
+    ],
+    character: 'Agna the Weaver 🧵',
+    worldMsg: null,
+  },
+  2: {
+    location: "Kaito's Clinic",
+    subtitle: 'Read the clues and discover the dream job! 🔍',
+    color: ['#00838F', '#00ACC1'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🩺', label: 'Doctor' },
+      { emoji: '👨‍🏫', label: 'Teacher' },
+      { emoji: '🧑‍🚒', label: 'Firefighter' },
+      { emoji: '🧑‍🍳', label: 'Chef' },
+    ],
+    clues: [
+      { text: "Hi! I'm <em>Kaito</em>. I <em>want to be</em> someone who <em>helps</em> people! 💉", emoji: '💉' },
+      { text: "I <em>wear</em> a white coat and I <em>listen</em> to your heart with a <em>stethoscope</em>. 🩺", emoji: '🩺' },
+      { text: "I <em>work</em> in a hospital and I <em>save</em> lives. ❤️", emoji: '❤️' },
+      { text: "I <em>don't want to be</em> a chef — I want to help sick people! What is my dream job?", emoji: '🏥' },
+    ],
+    description: '"Hi! I\'m Kaito. I want to help people. I wear a white coat and use a stethoscope. I work in a hospital and save lives. What is my dream job?"',
+    healthy: true,
+    measure: 'A <strong>doctor</strong> takes care of sick people and <strong>saves</strong> lives. Doctors help everyone — in big cities and small villages! 🩺',
+    plate: '💛 We must <strong>care</strong> for one another. Every village needs doctors, and every child can dream of being one!',
+    facts: [
+      { icon: '🚲', text: 'Some doctors travel to villages by bike or boat to help people far away!' },
+      { icon: '❤️', text: 'Doctors say "prevention is better than cure" — wash your hands and eat well!' },
+      { icon: '🌍', text: 'The world needs more doctors in rural places — maybe YOU will help one day!' },
+    ],
+    character: 'Kaito the Doctor 🩺',
+    worldMsg: '🏥 <strong>Did you know?</strong> In some rural areas, the nearest doctor is very far away. Caring for everyone — equally — keeps a whole community healthy. 💛',
+  },
+  3: {
+    location: "Mara's Pottery",
+    subtitle: 'Read the clues and discover the dream job! 🔍',
+    color: ['#BF360C', '#E64A19'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🏺', label: 'Potter' },
+      { emoji: '🎨', label: 'Painter' },
+      { emoji: '👷', label: 'Builder' },
+      { emoji: '💃', label: 'Dancer' },
+    ],
+    clues: [
+      { text: "Hello! I'm <em>Mara</em>. I <em>want to be</em> an artist with <em>clay</em> and mud! 🟤", emoji: '🟤' },
+      { text: "I <em>use</em> a spinning <em>wheel</em>, and my hands get dirty! 🌀", emoji: '🌀' },
+      { text: "I <em>make</em> pots, cups, bowls and clay lamps called <em>diyas</em>. 🪔", emoji: '🪔' },
+      { text: "I <em>don't want to be</em> a painter — I love clay! What is my dream job?", emoji: '🏺' },
+    ],
+    description: '"Hello! I\'m Mara. I want to be an artist with clay. I use a spinning wheel. I make pots, bowls and diyas. What is my dream job?"',
+    healthy: true,
+    measure: 'A <strong>potter</strong> makes pots and lamps from clay on a spinning wheel. In India, potters make <strong>diyas</strong> for the festival of Diwali! 🪔',
+    plate: '💛 Old crafts and new jobs all matter. <strong>Diversity</strong> makes our world beautiful, like a shelf full of clay pots!',
+    facts: [
+      { icon: '🏺', text: 'Pottery is one of the oldest jobs in the world — thousands of years old!' },
+      { icon: '🪔', text: 'At Diwali, families light clay diyas made by potters. Beautiful! ✨' },
+      { icon: '🌀', text: 'A potter\'s wheel spins fast — it takes lots of practice and care!' },
+    ],
+    character: 'Mara the Potter 🏺',
+    worldMsg: null,
+  },
+  4: {
+    location: "Riley's Farm",
+    subtitle: 'Read the clues and discover the dream job! 🔍',
+    color: ['#1B5E20', '#388E3C'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '👩‍🌾', label: 'Farmer' },
+      { emoji: '🧑‍🍳', label: 'Cook' },
+      { emoji: '🎣', label: 'Fisher' },
+      { emoji: '👨‍🏫', label: 'Teacher' },
+    ],
+    clues: [
+      { text: "Hi! I'm <em>Riley</em>. I <em>want to be</em> someone who <em>grows</em> food! 🌱", emoji: '🌱' },
+      { text: "I <em>work</em> <em>outdoors</em> in the fields with the sun and the rain. ☀️", emoji: '☀️' },
+      { text: "I <em>grow</em> rice, wheat and vegetables, and I <em>care</em> for animals. 🐄", emoji: '🐄' },
+      { text: "I <em>don't want to be</em> a teacher — I love the land! What is my dream job?", emoji: '🌾' },
+    ],
+    description: '"Hi! I\'m Riley. I want to grow food. I work outdoors in the fields. I grow rice and vegetables and care for animals. What is my dream job?"',
+    healthy: true,
+    measure: 'A <strong>farmer</strong> grows the food we eat and <strong>cares</strong> for animals. Farmers feed whole villages and cities! 🌾',
+    plate: '💛 Farmers feed us all. Girls and boys can be farmers — no job is only for boys or only for girls. <strong>Equality</strong> for everyone!',
+    facts: [
+      { icon: '🌾', text: 'India grows huge amounts of rice and wheat — farmers work very hard!' },
+      { icon: '🐄', text: 'Farmers wake up very early to care for their animals and plants!' },
+      { icon: '🌧️', text: 'Farmers watch the sky — they need sun AND rain to grow good food!' },
+    ],
+    character: 'Riley the Farmer 👩‍🌾',
+    worldMsg: '🌍 <strong>Did you know?</strong> Many children in farming villages help their families. With school too, they can learn, dream and choose any job. Education for all! 📚',
+  },
+  5: {
+    location: "Kanan's Airfield",
+    subtitle: 'Read the clues and discover the dream job! 🔍',
+    color: ['#1565C0', '#1E88E5'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '✈️', label: 'Pilot' },
+      { emoji: '🚀', label: 'Astronaut' },
+      { emoji: '🚌', label: 'Bus Driver' },
+      { emoji: '👮', label: 'Police' },
+    ],
+    clues: [
+      { text: "Namaste! I'm <em>Kanan</em>. I <em>want to be</em> someone who <em>flies</em>! 🌤️", emoji: '🌤️' },
+      { text: "I <em>wear</em> a special uniform and a cap, and I <em>sit</em> in a cockpit. 🧑‍✈️", emoji: '🧑‍✈️' },
+      { text: "I <em>fly</em> a big <em>aeroplane</em> high above the clouds. ☁️", emoji: '☁️' },
+      { text: "I <em>don't want to be</em> an astronaut — I want to fly planes! What is my dream job?", emoji: '✈️' },
+    ],
+    description: '"Namaste! I\'m Kanan. I want to fly. I wear a uniform and cap. I fly a big aeroplane above the clouds. What is my dream job?"',
+    healthy: true,
+    measure: 'A <strong>pilot</strong> flies aeroplanes and takes people all around the world. Pilots study hard and learn maths and English! ✈️',
+    plate: '💛 Big dreams need <strong>school</strong>! With education, a child from any village can become a pilot. Dream big — reach the sky!',
+    facts: [
+      { icon: '✈️', text: 'Pilots speak English to talk to airports all over the world!' },
+      { icon: '🌍', text: 'A pilot can have breakfast in India and dinner in London!' },
+      { icon: '📚', text: 'To be a pilot you study maths, science and English — school is the start!' },
+    ],
+    character: 'Kanan the Pilot ✈️',
+    worldMsg: '🌟 <strong>Dream big!</strong> Every child — girl or boy, from a city or a village — has the <strong>right</strong> to education. School turns dreams into jobs! 📚',
+  },
+};
+
+let station = 1;
+let currentClue = 0;
+let tries = 0;
+let solved = false;
+
+function init() {
+  const params = new URLSearchParams(window.location.search);
+  station = parseInt(params.get('s')) || 1;
+  if (station < 1 || station > 5) station = 1;
+
+  const data = STATIONS[station];
+
+  document.getElementById('riddleHeader').style.background =
+    `linear-gradient(160deg, ${data.color[0]}cc, ${data.color[1]}99)`;
+  document.getElementById('riddleHeader').style.borderColor = `${data.color[1]}88`;
+  document.body.style.background =
+    `linear-gradient(160deg, ${data.color[0]}33 0%, #1a1033 40%)`;
+
+  document.getElementById('stationBadge').textContent = `🌟 Child ${station}`;
+  document.getElementById('stationMystery').textContent = '?';
+  document.getElementById('locationTitle').textContent = data.location;
+  document.getElementById('locationSubtitle').textContent = data.subtitle;
+  document.title = `Child ${station} · My Dream Job`;
+
+  // Build clue cards
+  const clueContainer = document.getElementById('clueCards');
+  const progressContainer = document.getElementById('clueProgress');
+  data.clues.forEach((clue, i) => {
+    const card = document.createElement('div');
+    card.className = 'clue-card';
+    card.id = `clue-${i}`;
+    card.innerHTML = `<div class="clue-num">${i + 1}</div><div class="clue-text">${clue.emoji} ${clue.text}</div>`;
+    clueContainer.appendChild(card);
+
+    const dot = document.createElement('div');
+    dot.className = 'clue-dot';
+    dot.id = `dot-${i}`;
+    progressContainer.appendChild(dot);
+  });
+
+  // Build answer choices — shuffle so correct answer isn't always first
+  const grid = document.getElementById('choicesGrid');
+  const shuffled = [...data.choices];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const correctLabel = data.choices[data.correctIndex].label;
+  shuffled.forEach((choice, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.id = `choice-${i}`;
+    btn.innerHTML = `<span class="choice-emoji">${choice.emoji}</span><span>${choice.label}</span>`;
+    const isCorrect = choice.label === correctLabel;
+    btn.addEventListener('click', () => checkChoice(i, isCorrect));
+    grid.appendChild(btn);
+  });
+
+  // Background particles — job/dream themed
+  const particles = ['🧵', '🩺', '🏺', '🌾', '✈️', '⭐', '📚', '🎒', '🪔', '🪁', '🌈', '💛'];
+  const bgAnim = document.getElementById('bgAnim');
+  for (let i = 0; i < 14; i++) {
+    const el = document.createElement('div');
+    el.className = 'bg-particle';
+    el.textContent = particles[Math.floor(Math.random() * particles.length)];
+    el.style.left = `${Math.random() * 100}%`;
+    el.style.animationDuration = `${9 + Math.random() * 12}s`;
+    el.style.animationDelay = `${Math.random() * 10}s`;
+    bgAnim.appendChild(el);
+  }
+
+  showClue(0);
+}
+
+function showClue(index) {
+  const el = document.getElementById(`clue-${index}`);
+  const dot = document.getElementById(`dot-${index}`);
+  if (el) {
+    setTimeout(() => {
+      el.classList.add('visible');
+      if (index === currentClue) el.classList.add('active');
+    }, 50);
+  }
+  if (dot) dot.classList.add('filled');
+}
+
+function showNextClue() {
+  const data = STATIONS[station];
+  const cur = document.getElementById(`clue-${currentClue}`);
+  if (cur) cur.classList.remove('active');
+
+  currentClue++;
+  if (currentClue < data.clues.length) {
+    showClue(currentClue);
+    const next = document.getElementById(`clue-${currentClue}`);
+    if (next) next.classList.add('active');
+  }
+
+  if (currentClue >= data.clues.length - 1) {
+    document.getElementById('nextClueBtn').disabled = true;
+    document.getElementById('nextClueBtn').textContent = 'All clues revealed! 🔍';
+  }
+}
+
+function checkChoice(index, isCorrect) {
+  if (solved) return;
+  const btn = document.getElementById(`choice-${index}`);
+  const data = STATIONS[station];
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    for (let i = 0; i < 4; i++) {
+      const b = document.getElementById(`choice-${i}`);
+      if (b) b.disabled = true;
+    }
+    onSuccess(data);
+  } else {
+    btn.classList.add('wrong');
+    setTimeout(() => btn.classList.remove('wrong'), 700);
+    tries++;
+    onWrong(data);
+  }
+}
+
+function onWrong(data) {
+  const fb = document.getElementById('feedbackMsg');
+  const tries_el = document.getElementById('triesInfo');
+  fb.className = 'feedback error';
+  fb.textContent = '⚠️ Not quite! Try again, helper! 🔍';
+  tries_el.textContent = `Attempt ${tries} — You can do it! Think about the clues!`;
+  if (tries >= 2) {
+    data.clues.forEach((_, i) => showClue(i));
+    currentClue = data.clues.length - 1;
+    document.getElementById('nextClueBtn').disabled = true;
+    document.getElementById('nextClueBtn').textContent = 'All clues revealed! 🔍';
+  }
+}
+
+function onSuccess(data) {
+  solved = true;
+  document.getElementById('answerSection').style.display = 'none';
+  data.clues.forEach((_, i) => showClue(i));
+
+  const panel = document.getElementById('successPanel');
+  panel.classList.add('visible');
+  panel.style.background = `linear-gradient(160deg, ${data.color[0]}33, rgba(255,255,255,0.07))`;
+  panel.style.borderColor = data.color[1];
+
+  document.getElementById('successEmoji').textContent = data.choices[0].emoji;
+  document.getElementById('successSubtitle').textContent = `You discovered a child's dream job! 🎉`;
+  document.getElementById('charName').textContent = `${data.choices[0].emoji} ${data.choices[0].label} — ${data.location}`;
+  document.getElementById('charDesc').textContent = data.description;
+
+  const badge = document.getElementById('healthBadge');
+  if (data.healthy) {
+    badge.className = 'health-badge healthy';
+    badge.innerHTML = '⭐ A Wonderful Dream Job!';
+  } else {
+    badge.className = 'health-badge unhealthy';
+    badge.innerHTML = '💭 Keep dreaming!';
+  }
+
+  document.getElementById('measureTip').innerHTML = '💼 ' + data.measure;
+  document.getElementById('plateTip').innerHTML = data.plate;
+
+  const factsEl = document.getElementById('funFacts');
+  factsEl.innerHTML = '';
+  data.facts.forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'fun-fact';
+    div.innerHTML = `<span class="fact-icon">${f.icon}</span><span>${f.text}</span>`;
+    factsEl.appendChild(div);
+  });
+
+  if (data.worldMsg) {
+    const wm = document.getElementById('worldMsg');
+    wm.innerHTML = data.worldMsg;
+    wm.style.display = 'block';
+  }
+
+  launchConfetti(data.color[0], data.color[1]);
+
+  const saved = JSON.parse(localStorage.getItem('dream-jobs-india') || '[]');
+  if (!saved.includes(station)) {
+    saved.push(station);
+    localStorage.setItem('dream-jobs-india', JSON.stringify(saved));
+  }
+}
+
+function claimGift() {
+  document.getElementById('treatSticker').classList.add('visible');
+  const stickers = ['🧵', '🩺', '🏺', '🌾', '✈️'];
+  document.getElementById('stickerEmoji').textContent = stickers[(station - 1) % stickers.length];
+
+  document.getElementById('stickerLabel').textContent =
+    `+1 Dream discovered! Child ${station}/5 ⭐`;
+
+  launchConfetti(STATIONS[station].color[0], STATIONS[station].color[1]);
+  document.querySelector('.claim-btn').style.display = 'none';
+}
+
+function launchConfetti(color1, color2) {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  const colors = [color1, color2, '#C2185B', '#FF8F00', '#2E7D32', '#1565C0', '#FFF8E7'];
+  const pieces = [];
+  for (let i = 0; i < 90; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: -20 - Math.random() * 120,
+      w: 5 + Math.random() * 9,
+      h: 5 + Math.random() * 9,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rot: Math.random() * 360,
+      vx: (Math.random() - 0.5) * 3,
+      vy: 3 + Math.random() * 4,
+      vr: (Math.random() - 0.5) * 9,
+      round: Math.random() > 0.5,
+    });
+  }
+  const start = Date.now();
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    for (const p of pieces) {
+      if (p.y < canvas.height + 20) {
+        alive = true;
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        if (p.round) { ctx.beginPath(); ctx.arc(0,0,p.w/2,0,Math.PI*2); ctx.fill(); }
+        else { ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); }
+        ctx.restore();
+      }
+    }
+    if (alive && Date.now() - start < 4000) { requestAnimationFrame(draw); }
+    else { canvas.remove(); }
+  }
+  requestAnimationFrame(draw);
+}
+
+init();
+twemoji.parse(document.body,{folder:'svg',ext:'.svg'});
+</script>
+</body>
+</html>
