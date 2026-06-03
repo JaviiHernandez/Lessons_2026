@@ -610,6 +610,7 @@
 </div>
 
 <script>
+const SPAT = '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" style="height:1em;width:1em;vertical-align:-0.15em;display:inline-block"><rect x="23" y="3" width="18" height="27" rx="3.5" fill="#DBE0E3"/><rect x="24.6" y="6.5" width="1.6" height="17" rx="0.8" fill="#fff"/><rect x="28.1" y="6.5" width="1.6" height="17" rx="0.8" fill="#fff"/><rect x="31.6" y="6.5" width="1.6" height="17" rx="0.8" fill="#fff"/><rect x="35.1" y="6.5" width="1.6" height="17" rx="0.8" fill="#fff"/><rect x="38.6" y="6.5" width="1.6" height="17" rx="0.8" fill="#fff"/><rect x="30" y="28" width="4" height="11" fill="#E7EBEE"/><path d="M26 41a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v12a6 6 0 0 1-12 0z" fill="#5C9AD4"/><circle cx="32" cy="43.5" r="1.8" fill="none" stroke="#EAF3FB" stroke-width="1.1"/></svg>';
 const STATIONS = {
   1: {
     location: 'The Music Camp',
@@ -675,13 +676,13 @@ const STATIONS = {
     color: ['#C62828', '#E53935'],
     correctIndex: 0,
     choices: [
-      { emoji: '🥄', label: 'Spatula' },
+      { emoji: SPAT, label: 'Spatula' },
       { emoji: '🔨', label: 'Hammer' },
       { emoji: '📱', label: 'Phone' },
       { emoji: '✏️', label: 'Pencil' },
     ],
     clues: [
-      { text: "I am a <em>kitchen tool</em>. I am flat and I have got a long handle. 🥄", emoji: '🥄' },
+      { text: "I am a <em>kitchen tool</em>. I am flat and I have got a long handle. 🥞", emoji: '🥞' },
       { text: "You use me to <em>flip</em> pancakes and eggs! 🥞", emoji: '🥞' },
       { text: "I help you <em>cook</em> tasty, healthy food — no apps needed! 🍅", emoji: '🍅' },
       { text: "Last weekend Tim <em>cooked</em> a healthy soup with me! 🍲", emoji: '🍲' },
@@ -693,9 +694,9 @@ const STATIONS = {
     facts: [
       { icon: '🍲', text: 'Long ago, families cooked together and shared stories — no screens at the table!' },
       { icon: '🥕', text: 'Cooking is a healthy habit — you choose fresh, healthy food!' },
-      { icon: '🥄', text: 'Cooking teaches you maths and patience at the same time!' },
+      { icon: '🥞', text: 'Cooking teaches you maths and patience at the same time!' },
     ],
-    character: 'Chef Tim 🥄',
+    character: 'Chef Tim 🥞',
     worldMsg: null,
   },
   4: {
@@ -817,7 +818,7 @@ function init() {
   });
 
   // Background particles — hobby themed
-  const particles = ['🎸', '⛺', '🥄', '📚', '🌱', '🧭', '🔦', '🏕️', '🌲', '📖', '🪴', '🎶'];
+  const particles = ['🎸', '⛺', '🥞', '📚', '🌱', '🧭', '🔦', '🏕️', '🌲', '📖', '🪴', '🎶'];
   const bgAnim = document.getElementById('bgAnim');
   for (let i = 0; i < 14; i++) {
     const el = document.createElement('div');
@@ -906,7 +907,7 @@ function onSuccess(data) {
   panel.style.background = `linear-gradient(160deg, ${data.color[0]}33, rgba(255,255,255,0.07))`;
   panel.style.borderColor = data.color[1];
 
-  document.getElementById('successEmoji').textContent = data.choices[0].emoji;
+  document.getElementById('successEmoji').innerHTML = data.choices[0].emoji;
   document.getElementById('successSubtitle').textContent = `You found a screen-free hobby for the future! 🎉`;
   document.getElementById('charName').textContent = `${data.choices[0].emoji} ${data.choices[0].label} — ${data.location}`;
   document.getElementById('charDesc').textContent = data.description;
@@ -949,8 +950,8 @@ function onSuccess(data) {
 
 function claimGift() {
   document.getElementById('treatSticker').classList.add('visible');
-  const stickers = ['🎸', '⛺', '🥄', '📚', '🌱'];
-  document.getElementById('stickerEmoji').textContent = stickers[(station - 1) % stickers.length];
+  const stickers = ['🎸', '⛺', SPAT, '📚', '🌱'];
+  document.getElementById('stickerEmoji').innerHTML = stickers[(station - 1) % stickers.length];
 
   document.getElementById('stickerLabel').textContent =
     `+1 Scout Badge! Station ${station}/5 🏅`;
