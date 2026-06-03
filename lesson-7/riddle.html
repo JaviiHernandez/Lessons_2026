@@ -675,7 +675,7 @@ const STATIONS = {
     color: ['#C62828', '#E53935'],
     correctIndex: 0,
     choices: [
-      { emoji: '🍳', label: 'Spatula' },
+      { emoji: '🥄', label: 'Spatula' },
       { emoji: '🔨', label: 'Hammer' },
       { emoji: '📱', label: 'Phone' },
       { emoji: '✏️', label: 'Pencil' },
@@ -695,7 +695,7 @@ const STATIONS = {
       { icon: '🥕', text: 'Cooking is a healthy habit — you choose fresh, healthy food!' },
       { icon: '🥄', text: 'Cooking teaches you maths and patience at the same time!' },
     ],
-    character: 'Chef Tim 🍳',
+    character: 'Chef Tim 🥄',
     worldMsg: null,
   },
   4: {
@@ -817,7 +817,7 @@ function init() {
   });
 
   // Background particles — hobby themed
-  const particles = ['🎸', '⛺', '🍳', '📚', '🌱', '🧭', '🔦', '🏕️', '🌲', '📖', '🪴', '🎶'];
+  const particles = ['🎸', '⛺', '🥄', '📚', '🌱', '🧭', '🔦', '🏕️', '🌲', '📖', '🪴', '🎶'];
   const bgAnim = document.getElementById('bgAnim');
   for (let i = 0; i < 14; i++) {
     const el = document.createElement('div');
@@ -949,7 +949,7 @@ function onSuccess(data) {
 
 function claimGift() {
   document.getElementById('treatSticker').classList.add('visible');
-  const stickers = ['🎸', '⛺', '🍳', '📚', '🌱'];
+  const stickers = ['🎸', '⛺', '🥄', '📚', '🌱'];
   document.getElementById('stickerEmoji').textContent = stickers[(station - 1) % stickers.length];
 
   document.getElementById('stickerLabel').textContent =
