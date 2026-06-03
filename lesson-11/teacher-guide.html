@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="../favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2E7D32">
+<title>Routines Around the World — Teacher Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<style>
+  img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0f241f;
+    font-family: 'Fredoka', sans-serif;
+    padding: clamp(12px, 2vw, 32px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(22px, 3vw, 38px);
+    overflow-x: hidden;
+  }
+
+  .page {
+    width: 794px;
+    height: 1123px;
+    max-width: 100%;
+    background: white;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .page-content { flex: 1; min-height: 0; }
+  .page-footer { margin-top: auto; }
+
+  .page-band {
+    background: linear-gradient(135deg, #0f241f, #2E7D32);
+    padding: clamp(16px, 2.8vw, 26px) clamp(28px, 5vw, 48px);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 4px solid #FBC02D;
+  }
+
+  .band-icon { font-size: clamp(30px, 4.8vw, 42px); }
+  .band-text { flex: 1; }
+
+  .band-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(18px, 3.2vw, 28px);
+    color: white;
+    line-height: 1.1;
+  }
+
+  .band-sub {
+    font-size: clamp(11px, 1.7vw, 14px);
+    color: rgba(255,255,255,0.78);
+    margin-top: 2px;
+  }
+
+  .band-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+  .tag {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: clamp(9px, 1.4vw, 11px);
+    color: rgba(255,255,255,0.85);
+    white-space: nowrap;
+  }
+
+  .page-content {
+    padding: clamp(18px, 3.2vw, 34px) clamp(22px, 4vw, 46px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 2.8vw, 26px);
+  }
+
+  .sec-heading {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.3vw, 19px);
+    color: #2E7D32;
+    border-left: 4px solid #FBC02D;
+    padding-left: 12px;
+    margin-bottom: clamp(9px, 1.7vw, 14px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .story-box {
+    background: #e8f5e9;
+    border: 2px solid #2E7D32;
+    border-radius: 12px;
+    padding: clamp(12px, 2.3vw, 18px);
+  }
+
+  .story-script {
+    font-size: clamp(12px, 1.9vw, 14px);
+    line-height: 1.75;
+    color: #333;
+    font-style: italic;
+  }
+
+  .story-script strong { color: #1B5E20; font-style: normal; font-weight: 600; }
+  .story-script em { color: #00897B; font-style: normal; font-weight: 600; }
+
+  .teacher-note {
+    margin-top: 10px;
+    font-size: clamp(10px, 1.5vw, 12px);
+    color: #555;
+    background: rgba(255,255,255,0.7);
+    border-radius: 8px;
+    padding: 7px 11px;
+    border-left: 3px solid #FBC02D;
+  }
+
+  .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 90px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #F4511E, #FBC02D, #3949AB);
+  }
+
+  .timeline-item { display: flex; gap: 12px; align-items: flex-start; padding-bottom: clamp(6px, 1.2vw, 9px); }
+
+  .timeline-time {
+    width: 72px;
+    flex-shrink: 0;
+    text-align: right;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(9px, 1.3vw, 11px);
+    color: #2E7D32;
+    padding-top: 6px;
+    white-space: nowrap;
+  }
+
+  .timeline-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #2E7D32;
+    flex-shrink: 0;
+    margin-top: 5px;
+    position: relative; z-index: 1;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px #2E7D32;
+    margin-left: -1px;
+  }
+
+  .timeline-text {
+    flex: 1;
+    background: #fafafa;
+    border-radius: 10px;
+    padding: clamp(5px, 1.1vw, 8px) clamp(8px, 1.5vw, 11px);
+    border: 1px solid #eee;
+    font-size: clamp(10px, 1.5vw, 12px);
+    color: #333;
+    line-height: 1.4;
+  }
+
+  .timeline-text strong { color: #2E7D32; font-weight: 600; }
+
+  /* PAGE 2 */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: clamp(5px, 1vw, 9px);
+  }
+
+  .vocab-chip {
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    border: 1.5px solid #2E7D32;
+    border-radius: 8px;
+    padding: clamp(5px, 1vw, 9px) clamp(7px, 1.3vw, 11px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(10px, 1.5vw, 13px);
+    color: #1B5E20;
+    text-align: center;
+  }
+
+  .vocab-chip.utensil { background: linear-gradient(135deg, #fff3e0, #fff8e1); border-color: #FB8C00; color: #E65100; }
+  .vocab-chip.measure { background: linear-gradient(135deg, #e0f2f1, #e8f5e9); border-color: #00897B; color: #00695C; }
+
+  .ingredient-chips { display: flex; flex-wrap: wrap; gap: clamp(5px, 1vw, 9px); margin-top: 9px; }
+
+  .ingredient-chip {
+    border-radius: 8px;
+    padding: clamp(5px, 1vw, 9px) clamp(11px, 1.8vw, 16px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(11px, 1.7vw, 14px);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .grammar-box {
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    border: 2px solid #2E7D32;
+    border-radius: 12px;
+    padding: clamp(12px, 2.3vw, 18px);
+  }
+
+  .grammar-rule {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(13px, 2vw, 17px);
+    color: #1B5E20;
+    margin-bottom: 10px;
+    text-align: center;
+    background: rgba(255,255,255,0.6);
+    border-radius: 8px;
+    padding: 7px;
+  }
+
+  .grammar-examples { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .grammar-ex {
+    background: white;
+    border-radius: 8px;
+    padding: clamp(7px, 1.3vw, 11px);
+    font-size: clamp(11px, 1.7vw, 13px);
+    line-height: 1.5;
+    border-left: 3px solid;
+  }
+
+  .grammar-ex.pos { border-color: #2E7D32; }
+  .grammar-ex.neg { border-color: #1E88E5; }
+  .grammar-ex.cont { border-color: #F4511E; }
+  .grammar-ex.like { border-color: #00897B; }
+
+  .ex-label { font-family: 'Fredoka One', sans-serif; font-size: clamp(8px, 1.2vw, 10px); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+  .ex-label.pos { color: #2E7D32; }
+  .ex-label.neg { color: #1565C0; }
+  .ex-label.cont { color: #F4511E; }
+  .ex-label.like { color: #00897B; }
+
+  .ex-text { color: #333; }
+  .ex-text em { font-style: normal; font-weight: 600; color: #1B5E20; }
+
+  .cultural-box {
+    background: linear-gradient(135deg, #fff8e1, #fff3e0);
+    border: 2px solid #FBC02D;
+    border-radius: 12px;
+    padding: clamp(12px, 2.3vw, 18px);
+    font-size: clamp(11px, 1.7vw, 13px);
+    color: #333;
+    line-height: 1.7;
+  }
+
+  .cultural-box strong { color: #00897B; font-weight: 600; }
+
+  .clock-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+  .clock-chip {
+    background: white;
+    border: 1.5px solid #B2DFDB;
+    border-radius: 20px;
+    padding: 3px 11px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(10px, 1.5vw, 12px);
+    color: #00695C;
+  }
+  .clock-chip small { color: #888; font-family: 'Fredoka', sans-serif; font-weight: 500; }
+
+  .rubric-table { width: 100%; border-collapse: collapse; font-size: clamp(10px, 1.5vw, 12px); }
+
+  .rubric-table th {
+    background: linear-gradient(135deg, #2E7D32, #1B5E20);
+    color: white;
+    padding: clamp(6px, 1.2vw, 10px) clamp(8px, 1.5vw, 12px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(10px, 1.4vw, 12px);
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+
+  .rubric-table td {
+    padding: clamp(6px, 1.2vw, 10px) clamp(8px, 1.5vw, 12px);
+    border: 1px solid #e0e0e0;
+    color: #333;
+    font-size: clamp(9px, 1.3vw, 11px);
+    line-height: 1.4;
+    vertical-align: top;
+  }
+
+  .rubric-table tr:nth-child(even) td { background: #f9f9f9; }
+  .rubric-table td:first-child { font-family: 'Fredoka One', sans-serif; color: #2E7D32; font-size: clamp(10px,1.5vw,12px); }
+  .level-1 { background: #ffebee !important; }
+  .level-2 { background: #fff8e1 !important; }
+  .level-3 { background: #e8f5e9 !important; }
+  .level-4 { background: #e3f2fd !important; }
+
+  .diff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(7px, 1.3vw, 12px); }
+
+  .diff-card { border-radius: 10px; padding: clamp(9px, 1.7vw, 14px); border: 2px solid transparent; }
+  .diff-card.support { background: #e3f2fd; border-color: #1976D2; }
+  .diff-card.extension { background: #fff3e0; border-color: #FB8C00; }
+  .diff-card.eal { background: #f3e5f5; border-color: #8e24aa; }
+  .diff-card.early { background: #e8f5e9; border-color: #2E7D32; }
+
+  .diff-title { font-family: 'Fredoka One', sans-serif; font-size: clamp(11px, 1.7vw, 14px); margin-bottom: 5px; }
+  .diff-card.support .diff-title { color: #1565C0; }
+  .diff-card.extension .diff-title { color: #e65100; }
+  .diff-card.eal .diff-title { color: #6a1b9a; }
+  .diff-card.early .diff-title { color: #1B5E20; }
+
+  .diff-text { font-size: clamp(10px, 1.4vw, 12px); color: #444; line-height: 1.5; }
+
+  .lang-grid { display: flex; flex-direction: column; gap: clamp(5px, 1vw, 8px); }
+
+  .lang-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #fafafa;
+    border-radius: 8px;
+    padding: clamp(7px, 1.3vw, 11px) clamp(11px, 1.8vw, 14px);
+    border-left: 3px solid #2E7D32;
+    font-size: clamp(11px, 1.7vw, 13px);
+  }
+
+  .lang-phrase { color: #2E7D32; font-weight: 600; font-family: 'Fredoka One', sans-serif; min-width: 180px; font-size: clamp(11px, 1.7vw, 13px); }
+  .lang-context { color: #666; font-size: clamp(9px, 1.3vw, 11px); }
+
+  .comp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(7px, 1.3vw, 11px);
+  }
+
+  .comp-card {
+    background: linear-gradient(135deg, #e0f2f1, #e8f5e9);
+    border: 2px solid #00897B;
+    border-radius: 10px;
+    padding: clamp(8px, 1.5vw, 12px);
+  }
+
+  .comp-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(10px, 1.5vw, 12px);
+    color: #00695C;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .comp-text { font-size: clamp(10px, 1.4vw, 12px); color: #444; line-height: 1.45; }
+
+  .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(5px, 1vw, 9px); }
+
+  .check-item { display: flex; align-items: flex-start; gap: 8px; font-size: clamp(10px, 1.5vw, 12px); color: #333; line-height: 1.4; }
+
+  .check-box { width: 15px; height: 15px; border: 2px solid #2E7D32; border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
+
+  .page-footer {
+    background: linear-gradient(90deg, #F4511E, #FF8F00, #1E88E5, #00897B, #3949AB);
+    padding: clamp(7px, 1.4vw, 12px) clamp(22px, 4vw, 46px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .footer-brand { font-family: 'Fredoka One', sans-serif; font-size: clamp(10px, 1.6vw, 13px); color: white; }
+  .footer-page  { font-family: 'Fredoka One', sans-serif; font-size: clamp(10px, 1.6vw, 13px); color: rgba(255,255,255,0.85); }
+
+  @media (max-width: 820px) {
+    .page { transform: scale(calc(100vw / 820)); transform-origin: top center; }
+  }
+
+  @media (max-width: 480px) {
+    .grammar-examples { grid-template-columns: 1fr; }
+    .diff-grid { grid-template-columns: 1fr; }
+    .checklist { grid-template-columns: 1fr; }
+    .comp-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: white; padding: 0; gap: 0; }
+    .page { box-shadow: none; transform: none !important; width: 794px; page-break-after: always; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ PAGE 1 ═══════════ -->
+<div class="page">
+  <div class="page-band">
+    <div class="band-icon">👩‍🏫</div>
+    <div class="band-text">
+      <div class="band-title">Teacher Guide — Routines Around the World</div>
+      <div class="band-sub">Lesson 11: Habits for a Greener Future (Routines + Time) · Year 3 (Age 8–9)</div>
+      <div class="band-tags">
+        <span class="tag">⏱ 50 min</span>
+        <span class="tag">🕐 5 Times of day</span>
+        <span class="tag">👥 Teams of 4–5</span>
+        <span class="tag">📚 Grammar + Vocab</span>
+        <span class="tag">💚 Green Habits</span>
+        <span class="tag">A1</span>
+        <span class="tag">⏰🥣🏫🚿🛌</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- The Story -->
+    <div>
+      <div class="sec-heading">📖 The Story — The Children of the Future Forgot the Clock</div>
+      <div class="story-box">
+        <div class="story-script">
+          "Listen carefully, heroes! ⏰ In the future, children have <em>forgotten the hours of the clock</em>!
+          They are <em>always late</em>, their heads are in a muddle, and they don't know what a
+          <strong>routine</strong> is!
+          <br><br>
+          They need the <strong>Year 3 students</strong> of today to help them. As <strong>Routine Heroes</strong>,
+          your mission: travel to <strong>5 times of the day</strong>, read each clock, solve the riddles, and
+          discover the perfect <em>daily routine</em>.
+          <br><br>
+          And don't forget to teach them <strong>green habits</strong> — turn off the lights, save water and unplug —
+          for a <em>healthier, greener Planet!</em>
+          <br><br>
+          Find all 5 routines → become a <strong>Routine Hero!</strong> ⏰🏆 Are you ready? <strong>Let's begin!</strong> 🌍"
+        </div>
+        <div class="teacher-note">
+          💡 Bring a toy clock or draw clock faces on the board. Pause at "always late" and "muddle". Mime being
+          confused, then look at a clock with relief. Ask: "What time do you wake up?" Class answers: "At 7 o'clock!"
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div>
+      <div class="sec-heading">⏱ Suggested Timeline (50 min)</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-time">0–5 min</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-text"><strong>Warm-up:</strong> Clock &amp; routine brainstorm. Show clock faces and ask "What time is it?" Mind-map daily routines on the board (wake up, breakfast, school…). Model "I wake up at 7 o'clock."</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">5–10 min</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-text"><strong>Story introduction:</strong> Read the "future children" story aloud. Display the poster. Assign teams and roles (Reader, Writer, Scanner, Speaker, Timekeeper). Hand out team boards.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">10–40 min</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-text"><strong>The Hunt:</strong> Teams rotate through the 5 times. Scanner scans QR → Reader reads the time and clues → team discusses in English → Speaker picks the routine → Writer records it. Tick the team board. Fun fact cards awarded on completion.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">40–45 min</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-text"><strong>Sharing time:</strong> Build the perfect day on the board in order: "At 7 o'clock I wake up. At half past seven I have breakfast…" Add green habits: turn off the lights, save water, unplug!</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">45–50 min</div>
+          <div class="timeline-dot" style="background:#FBC02D;box-shadow:0 0 0 2px #FBC02D;"></div>
+          <div class="timeline-text"><strong>Awards ceremony:</strong> Announce the Routine Hero team 🏆. Hand out role medals. Award diplomas. Optional: mime a routine — class guesses the time and the action: "It's 9 o'clock at night — you go to bed!"</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-brand">⏰ Routines Around the World · Lesson 11 · Teacher Guide</div>
+    <div class="footer-page">Page 1 of 2</div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 2 ═══════════ -->
+<div class="page">
+  <div class="page-band">
+    <div class="band-icon">📚</div>
+    <div class="band-text">
+      <div class="band-title">Teacher Guide — Page 2</div>
+      <div class="band-sub">Vocabulary · Grammar · Time Zones · Rubric · LOMLOE · Differentiation · Materials</div>
+    </div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- Key Vocabulary -->
+    <div>
+      <div class="sec-heading">📝 Key Vocabulary to Pre-teach</div>
+      <div style="font-family:'Fredoka One',sans-serif;font-size:clamp(11px,1.7vw,13px);color:#555;margin-bottom:7px;">⏰ Daily Routines</div>
+      <div class="vocab-grid">
+        <div class="vocab-chip">wake up</div>
+        <div class="vocab-chip">have breakfast</div>
+        <div class="vocab-chip">go to school</div>
+        <div class="vocab-chip">take a shower</div>
+        <div class="vocab-chip">go to bed</div>
+        <div class="vocab-chip">brush teeth</div>
+        <div class="vocab-chip">get dressed</div>
+        <div class="vocab-chip">have dinner</div>
+      </div>
+      <div style="font-family:'Fredoka One',sans-serif;font-size:clamp(11px,1.7vw,13px);color:#555;margin-top:10px;margin-bottom:7px;">🕐 Time</div>
+      <div class="vocab-grid">
+        <div class="vocab-chip measure">o'clock</div>
+        <div class="vocab-chip measure">half past</div>
+        <div class="vocab-chip measure">quarter past</div>
+        <div class="vocab-chip measure">quarter to</div>
+        <div class="vocab-chip measure">morning</div>
+        <div class="vocab-chip measure">evening</div>
+        <div class="vocab-chip measure">night</div>
+      </div>
+      <div style="font-family:'Fredoka One',sans-serif;font-size:clamp(11px,1.7vw,13px);color:#555;margin-top:10px;margin-bottom:7px;">💚 Green Habits</div>
+      <div class="vocab-grid">
+        <div class="vocab-chip utensil">turn off</div>
+        <div class="vocab-chip utensil">reduce</div>
+        <div class="vocab-chip utensil">reuse</div>
+        <div class="vocab-chip utensil">unplug</div>
+        <div class="vocab-chip utensil">save</div>
+        <div class="vocab-chip utensil">waste</div>
+        <div class="vocab-chip utensil">tap</div>
+        <div class="vocab-chip utensil">lights</div>
+      </div>
+      <div style="font-family:'Fredoka One',sans-serif;font-size:clamp(11px,1.7vw,13px);color:#555;margin-top:10px;margin-bottom:7px;">🗺️ The 5 Times &amp; Routines</div>
+      <div class="ingredient-chips">
+        <div class="ingredient-chip" style="background:#F4511E;">⏰ 7:00 · Wake up</div>
+        <div class="ingredient-chip" style="background:#FF8F00;">🥣 7:30 · Breakfast</div>
+        <div class="ingredient-chip" style="background:#1E88E5;">🏫 8:30 · School</div>
+        <div class="ingredient-chip" style="background:#00897B;">🚿 7:45 · Shower</div>
+        <div class="ingredient-chip" style="background:#3949AB;">🛌 9:00 · Bed</div>
+      </div>
+    </div>
+
+    <!-- Grammar Spotlight -->
+    <div>
+      <div class="sec-heading">⚡ Grammar Spotlight — Present Simple + At / On / In</div>
+      <div class="grammar-box">
+        <div class="grammar-rule">Present Simple · at (time) · on (day) · in (part of day)</div>
+        <div class="grammar-examples">
+          <div class="grammar-ex pos">
+            <div class="ex-label pos">✅ Present Simple</div>
+            <div class="ex-text">"I <em>wake up</em> early."<br>"She <em>goes</em> to school."</div>
+          </div>
+          <div class="grammar-ex cont">
+            <div class="ex-label cont">🕐 at + time</div>
+            <div class="ex-text">"<em>at</em> 7 o'clock"<br>"<em>at</em> half past seven · <em>at</em> night"</div>
+          </div>
+          <div class="grammar-ex like">
+            <div class="ex-label like">🌅 in + part of day</div>
+            <div class="ex-text">"<em>in</em> the morning"<br>"<em>in</em> the afternoon / evening"</div>
+          </div>
+          <div class="grammar-ex neg">
+            <div class="ex-label neg">📅 on + day</div>
+            <div class="ex-text">"<em>on</em> Monday"<br>"<em>on</em> Saturday morning"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Time Zones & Green Note -->
+    <div>
+      <div class="sec-heading">🌍 Time Zones Around the World &amp; Green Habits</div>
+      <div class="cultural-box">
+        The Earth turns, so the same routine happens at a different time around the world. When children wake up in
+        Spain, others are sleeping or already at school. Use a globe to explore these <strong>time zones</strong>:
+        <div class="clock-chips">
+          <span class="clock-chip">🇬🇧 UK <small>same / 1h behind</small></span>
+          <span class="clock-chip">🇺🇸 USA <small>night</small></span>
+          <span class="clock-chip">🇨🇦 Canada <small>night</small></span>
+          <span class="clock-chip">🇦🇺 Australia <small>evening</small></span>
+          <span class="clock-chip">🇳🇿 New Zealand <small>evening</small></span>
+        </div>
+        Weave in <strong>green habits</strong> all day: <strong>turn off</strong> the lights, <strong>save</strong>
+        water, take short showers, <strong>unplug</strong> devices and <strong>reduce</strong> waste — small daily
+        actions for a greener Planet! 🌱
+      </div>
+    </div>
+
+    <!-- LOMLOE -->
+    <div>
+      <div class="sec-heading">🎓 LOMLOE Curriculum Competencies (Year 3)</div>
+      <div class="comp-grid">
+        <div class="comp-card">
+          <div class="comp-name">CCL — Linguistic</div>
+          <div class="comp-text">Pupils read the time and clues, speak in present simple, and write the routine on the team board.</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">CP — Plurilingual</div>
+          <div class="comp-text">Pupils explore time zones and routines in the UK, USA, Canada, Australia and New Zealand.</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">STEM</div>
+          <div class="comp-text">Pupils read analogue and digital clocks (o'clock, half past, quarter to) and sequence the day.</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">CD — Digital</div>
+          <div class="comp-text">Pupils use tablets/phones safely to scan QR codes and interact with the digital riddle.</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">CPSAA — Personal &amp; Social</div>
+          <div class="comp-text">Pupils reflect on healthy daily routines, sleep, hygiene and time management.</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">CC — Citizenship</div>
+          <div class="comp-text">Pupils learn sustainable habits — save water and energy, reduce, reuse — for a greener future.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evaluation Rubric -->
+    <div>
+      <div class="sec-heading">📊 Evaluation Rubric (1–4)</div>
+      <table class="rubric-table">
+        <thead>
+          <tr>
+            <th>Skill</th>
+            <th>1 — Beginning</th>
+            <th>2 — Developing</th>
+            <th>3 — Achieving</th>
+            <th>4 — Excelling</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Speaking</td>
+            <td class="level-1">Single words only</td>
+            <td class="level-2">Short phrases with support</td>
+            <td class="level-3">Full sentences with minor errors</td>
+            <td class="level-4">Fluent, correct structures</td>
+          </tr>
+          <tr>
+            <td>Telling the Time</td>
+            <td class="level-1">Cannot read the clock</td>
+            <td class="level-2">Reads o'clock times</td>
+            <td class="level-3">Reads half past / quarter</td>
+            <td class="level-4">Uses at / on / in correctly</td>
+          </tr>
+          <tr>
+            <td>Teamwork</td>
+            <td class="level-1">Rarely collaborates</td>
+            <td class="level-2">Participates when prompted</td>
+            <td class="level-3">Active team member</td>
+            <td class="level-4">Leads and supports peers</td>
+          </tr>
+          <tr>
+            <td>Green Habits</td>
+            <td class="level-1">No awareness</td>
+            <td class="level-2">Names 1–2 green habits</td>
+            <td class="level-3">Links routines to saving energy/water</td>
+            <td class="level-4">Explains why green habits matter</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Differentiation -->
+    <div>
+      <div class="sec-heading">🎯 Differentiation Tips</div>
+      <div class="diff-grid">
+        <div class="diff-card support">
+          <div class="diff-title">💙 Support (SEN / Lower)</div>
+          <div class="diff-text">Provide clock flashcards and routine pictures. Pre-teach key verbs. Allow pupils to point to the routine and the clock rather than say it. Pair with a stronger reader.</div>
+        </div>
+        <div class="diff-card extension">
+          <div class="diff-title">🔥 Extension (Higher)</div>
+          <div class="diff-text">Challenge: "Write your own daily routine with 5 times: At 7 o'clock I…, In the morning I…, At night I…" Add one green habit to each.</div>
+        </div>
+        <div class="diff-card eal">
+          <div class="diff-title">🌐 EAL Learners</div>
+          <div class="diff-text">Use clock visuals and routine images alongside text. Allow home-language discussion before responding in English. Focus on comprehension, not production accuracy.</div>
+        </div>
+        <div class="diff-card early">
+          <div class="diff-title">⚡ Early Finishers</div>
+          <div class="diff-text">Challenge: "Design a poster: My Green Day! Draw 5 routines with the time and a green habit for each." Or compare the time in two countries.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Materials Checklist -->
+    <div>
+      <div class="sec-heading">✅ Materials Checklist</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><span>poster.html printed A3 (1×) — display on board or wall</span></div>
+        <div class="check-item"><div class="check-box"></div><span>team-board.html printed A4 (1× per team) — ideally laminated</span></div>
+        <div class="check-item"><div class="check-box"></div><span>qr-cards.html printed A4 landscape (1 set) — cut, place at each time</span></div>
+        <div class="check-item"><div class="check-box"></div><span>room-cards.html (Fun Fact Cards) on cardstock (5 cards, front &amp; back)</span></div>
+        <div class="check-item"><div class="check-box"></div><span>medal.html printed on cardstock (1 set per team) — laminate &amp; add ribbon</span></div>
+        <div class="check-item"><div class="check-box"></div><span>diploma.html printed A4 (1× per pupil) — colour print</span></div>
+        <div class="check-item"><div class="check-box"></div><span>1 device (tablet/phone) per team with riddle.html deployed</span></div>
+        <div class="check-item"><div class="check-box"></div><span>QR codes generated pointing to riddle.html?s=1 through ?s=5</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Scissors &amp; markers for team boards</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Optional: a toy clock and a world map / globe</span></div>
+      </div>
+    </div>
+
+    <!-- Follow-up activities -->
+    <div>
+      <div class="sec-heading">🌱 Follow-up Activities</div>
+      <div class="lang-grid">
+        <div class="lang-item">
+          <div>
+            <span class="lang-phrase">My Daily Routine</span>
+            <span class="lang-context"> — Pupils draw a clock for each routine and write "At … I …".</span>
+          </div>
+        </div>
+        <div class="lang-item">
+          <div>
+            <span class="lang-phrase">Green habits diary</span>
+            <span class="lang-context"> — One week: "Today I turned off the lights / saved water / unplugged the TV."</span>
+          </div>
+        </div>
+        <div class="lang-item">
+          <div>
+            <span class="lang-phrase">What time is it?</span>
+            <span class="lang-context"> — Clock game in pairs: one shows a time, the other says the routine.</span>
+          </div>
+        </div>
+        <div class="lang-item">
+          <div>
+            <span class="lang-phrase">Around the world</span>
+            <span class="lang-context"> — Find a country on the map and guess: morning, evening or night?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-brand">⏰ Routines Around the World · Lesson 11 · Teacher Guide</div>
+    <div class="footer-page">Page 2 of 2</div>
+  </div>
+</div>
+
+<script>twemoji.parse(document.body,{folder:'svg',ext:'.svg'});</script>
+
+
+
+
+
+
+
+
+
+
+<script>/* auto-print/pdf on ?print=1 or ?pdf=1 */(function(){var p=new URLSearchParams(location.search);var pdf=p.get("pdf");var prn=p.get("print");if(pdf!=="1"&&prn!=="1")return;var dlall=p.get("dlall")==="1";function whenReady(cb){if(document.readyState==="complete")setTimeout(cb,900);else window.addEventListener("load",function(){setTimeout(cb,1100);});}function preloadEmojis(){return new Promise(function(resolve){var imgs=document.querySelectorAll("img.emoji");if(!imgs.length){return resolve();}var pending=imgs.length;var safety=setTimeout(resolve,20000);var done=function(){pending--;if(pending<=0){clearTimeout(safety);resolve();}};imgs.forEach(function(img){if(/^data:/.test(img.src)){done();return;}var m=img.src.match(/\/([a-f0-9\-]+)\.(?:svg|png)/i);if(!m){done();return;}var cp=m[1];var urls=["https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/twitter/twemoji@v14.0.2/assets/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/72x72/"+cp+".png"];var i=0;(function tryNext(){if(i>=urls.length){done();return;}fetch(urls[i++]).then(function(r){if(!r.ok)return Promise.reject();return r.blob();}).then(function(blob){var reader=new FileReader();reader.onloadend=function(){if(typeof reader.result==="string"&&reader.result.indexOf("data:image/png")===0){img.src=reader.result;done();}else{tryNext();}};reader.onerror=tryNext;reader.readAsDataURL(blob);}).catch(tryNext);})();});});}function loadScript(src){return new Promise(function(resolve,reject){var s=document.createElement("script");s.src=src;s.crossOrigin="anonymous";s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}function loadLibs(){var p1=(typeof html2canvas==="function")?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");var p2=((window.jspdf&&window.jspdf.jsPDF)||window.jsPDF)?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");return Promise.all([p1,p2]);}if(pdf==="1"){whenReady(function(){var size=(p.get("size")||"A4").toUpperCase();var orientation=(size==="A5")?"landscape":"portrait";var format=size.toLowerCase().replace(/[^a-z0-9]/g,"");if(format==="2xa4"||format==="2a4")format="a4";if(["a3","a4","a5"].indexOf(format)<0)format="a4";var sizeMM={"a3":[297,420],"a4":[210,297],"a5":[148,210]};var paper=sizeMM[format]||[210,297];var pdfW=(orientation==="landscape")?paper[1]:paper[0];var pdfH=(orientation==="landscape")?paper[0]:paper[1];var fn=(document.title||"lesson_print").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"").toLowerCase()+".pdf";function shotElem(elem){return html2canvas(elem,{scale:3,useCORS:true,allowTaint:true,logging:false,backgroundColor:"#ffffff",imageTimeout:9000,onclone:function(doc){var b=doc.body;b.style.padding="0";b.style.margin="0";b.style.minHeight="0";b.style.background="#ffffff";Array.prototype.forEach.call(doc.querySelectorAll(".print-note,.page-heading,.card-label"),function(el){el.style.display="none";});var s=doc.createElement("style");s.textContent=".page,.guide{width:794px!important;min-height:1123px!important;max-width:none!important;box-shadow:none!important;transform:none!important;display:flex!important;flex-direction:column!important;box-sizing:border-box!important;page-break-after:always!important;}.page-footer,.footer-bar{margin-top:auto!important;}";doc.head.appendChild(s);}});}function placeImage(doc,canvas,marginMM,fill){var availW=pdfW-marginMM*2;var availH=pdfH-marginMM*2;if(fill){doc.addImage(canvas.toDataURL("image/png"),"PNG",marginMM,marginMM,availW,availH,undefined,"FAST");}else{var aspect=canvas.width/canvas.height;var imgW=availW,imgH=availW/aspect;if(imgH>availH){imgH=availH;imgW=availH*aspect;}var x=(pdfW-imgW)/2,y=(pdfH-imgH)/2;doc.addImage(canvas.toDataURL("image/png"),"PNG",x,y,imgW,imgH,undefined,"FAST");}}function newDoc(){var Ctor=(window.jspdf&&window.jspdf.jsPDF)||window.jsPDF;return new Ctor({orientation:orientation,unit:"mm",format:format,compress:true});}function deliver(doc){if(dlall&&window.parent&&window.parent!==window){try{var blob=doc.output("blob");window.parent.postMessage({type:"pdf-blob",name:fn,blob:blob},"*");}catch(e){console.error("[PDF] postMessage failed",e);doc.save(fn);}}else{doc.save(fn);}}function renderHero(elem,marginMM,fill){var doc=newDoc();return shotElem(elem).then(function(canvas){placeImage(doc,canvas,marginMM,fill);deliver(doc);});}function renderMulti(elements,marginMM,fill){var doc=newDoc();var first=true;return elements.reduce(function(prev,elem){return prev.then(function(){return shotElem(elem).then(function(canvas){if(!first)doc.addPage(format,orientation);first=false;placeImage(doc,canvas,marginMM,fill);});});},Promise.resolve()).then(function(){deliver(doc);});}function gen(){var board=document.querySelector(".board");var hero=document.querySelector(".poster, .diploma");var pages=document.querySelectorAll(".page, .guide");var cards=document.querySelectorAll(".card-pair, .card-wrap, .medal-wrap, .row, .qr-card");if(cards.length>=2)return renderMulti(Array.prototype.slice.call(cards),10,false);if(pages.length>=2)return renderMulti(Array.prototype.slice.call(pages),0,true);if(hero)return renderHero(hero,0,true);if(board)return renderHero(board,8,false);return renderHero(document.body,0,true);}preloadEmojis().then(loadLibs).then(gen).catch(function(err){console.error("[PDF] failed:",err);if(dlall&&window.parent&&window.parent!==window){try{window.parent.postMessage({type:"pdf-error",error:String(err)},"*");}catch(e){}}else{alert("Could not generate the PDF. Reload and try again. Error: "+(err.message||err));}});});}else{whenReady(function(){window.print();});}})();</script>
+</body>
+</html>

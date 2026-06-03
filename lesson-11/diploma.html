@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="../favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2E7D32">
+<title>Routines Around the World — Diploma</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<style>
+  img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0f241f;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100dvh;
+    padding: clamp(8px, 2vw, 24px);
+    font-family: 'Fredoka', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .printable-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: clamp(8px, 2vw, 32px);
+  }
+
+  .diploma {
+    width: 794px;
+    min-height: 1123px;
+    max-width: 100%;
+    background: #FFF8E7;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .diploma::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 64px;
+    border: 3px solid #2E7D32;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .diploma::after {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    right: 18px;
+    bottom: 70px;
+    border: 1px solid rgba(46,125,50,0.3);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .corner-deco {
+    position: absolute;
+    font-size: clamp(26px, 3.8vw, 40px);
+    z-index: 11;
+    line-height: 1;
+  }
+  .c-tl { top: 24px; left: 24px; }
+  .c-tr { top: 24px; right: 24px; }
+  .c-bl { bottom: 76px; left: 24px; }
+  .c-br { bottom: 76px; right: 24px; }
+
+  .bg-texture {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(46,125,50,0.04) 0%, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(251,192,45,0.05) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  .diploma-sky {
+    width: 100%;
+    background: linear-gradient(180deg, #0f241f 0%, #283593 50%, #FB8C00 100%);
+    padding: 32px 60px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sky-star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+
+  .sky-star-big {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    filter: drop-shadow(0 0 10px #FBC02D);
+    line-height: 1;
+  }
+
+  .sky-veg {
+    position: absolute;
+    top: 14px;
+    font-size: 20px;
+    opacity: 0.7;
+  }
+
+  .market-skyline {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0;
+    margin-top: 16px;
+    height: 56px;
+  }
+
+  .veg-row {
+    display: flex;
+    justify-content: space-around;
+    font-size: 16px;
+    margin-top: 6px;
+    opacity: 0.65;
+    color: white;
+  }
+
+  .diploma-body {
+    flex: 1;
+    width: 100%;
+    padding: 28px 60px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(14px, 2.2vw, 22px);
+    position: relative;
+    z-index: 2;
+  }
+
+  .diploma-eyebrow {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(11px, 1.7vw, 14px);
+    color: #FB8C00;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+  }
+
+  .diploma-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(32px, 6vw, 56px);
+    color: #00897B;
+    text-align: center;
+    line-height: 1.05;
+    text-shadow: 3px 3px 0 rgba(0,137,123,0.12);
+  }
+
+  .diploma-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(13px, 2vw, 17px);
+    color: #FB8C00;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+
+  .gold-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 80%;
+  }
+
+  .gold-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #FBC02D, transparent);
+  }
+
+  .gold-icon { font-size: 20px; }
+
+  .awarded-text {
+    font-size: clamp(14px, 2vw, 17px);
+    color: #555;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .awarded-name-box {
+    width: min(480px, 100%);
+    height: clamp(44px, 6vw, 54px);
+    border-bottom: 3px solid #2E7D32;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 6px;
+    position: relative;
+  }
+
+  .awarded-name-label {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(10px, 1.5vw, 12px);
+    color: #aaa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: -19px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .awarded-body {
+    font-size: clamp(13px, 1.9vw, 15px);
+    color: #444;
+    text-align: center;
+    line-height: 1.85;
+    max-width: 580px;
+    padding-top: 22px;
+  }
+
+  .awarded-body strong { color: #2E7D32; font-weight: 600; }
+  .awarded-body em { color: #00897B; font-style: normal; font-weight: 600; }
+
+  .badges-row {
+    display: flex;
+    gap: clamp(8px, 1.8vw, 16px);
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: clamp(10px, 1.8vw, 16px) 0;
+  }
+
+  .mini-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: white;
+    border-radius: 12px;
+    padding: 9px 12px;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    min-width: 76px;
+  }
+
+  .badge-emoji { font-size: 22px; }
+  .badge-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .mb1 { border-color: #F4511E; } .mb1 .badge-name { color: #F4511E; }
+  .mb2 { border-color: #FF8F00; } .mb2 .badge-name { color: #E65100; }
+  .mb3 { border-color: #1E88E5; } .mb3 .badge-name { color: #1565C0; }
+  .mb4 { border-color: #00897B; } .mb4 .badge-name { color: #00897B; }
+  .mb5 { border-color: #3949AB; } .mb5 .badge-name { color: #3949AB; }
+
+  .signatures {
+    display: flex;
+    gap: clamp(24px, 5vw, 60px);
+    justify-content: center;
+    width: 100%;
+    padding: clamp(10px, 1.8vw, 18px) 0 0;
+  }
+
+  .sig-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 160px;
+  }
+
+  .sig-line { width: 160px; height: 1px; background: #ccc; margin-bottom: 6px; }
+
+  .sig-label { font-size: clamp(11px, 1.5vw, 13px); color: #888; text-align: center; font-style: italic; }
+
+  .diploma-footer {
+    width: 100%;
+    background: linear-gradient(90deg, #F4511E, #FF8F00, #1E88E5, #00897B, #3949AB);
+    padding: clamp(10px, 1.8vw, 15px);
+    text-align: center;
+    margin-top: auto;
+  }
+
+  .diploma-footer-text {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(12px, 2vw, 16px);
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.25);
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 820px) {
+    .diploma { transform: scale(calc(100vw / 820)); transform-origin: top center; }
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .printable-wrap { padding: 0; }
+    .diploma { box-shadow: none; transform: none !important; width: 794px; min-height: 1123px; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="printable-wrap">
+<div class="diploma">
+  <div class="bg-texture"></div>
+
+  <div class="corner-deco c-tl">⏰</div>
+  <div class="corner-deco c-tr">🌍</div>
+  <div class="corner-deco c-bl">♻️</div>
+  <div class="corner-deco c-br">💚</div>
+
+  <!-- Sunrise Sky Header -->
+  <div class="diploma-sky">
+    <div class="sky-star" style="width:2px;height:2px;top:18%;left:10%"></div>
+    <div class="sky-star" style="width:3px;height:3px;top:30%;left:22%"></div>
+    <div class="sky-star" style="width:2px;height:2px;top:12%;left:40%"></div>
+    <div class="sky-star" style="width:2px;height:2px;top:25%;left:70%"></div>
+    <div class="sky-star" style="width:3px;height:3px;top:15%;left:82%"></div>
+    <div class="sky-star" style="width:2px;height:2px;top:35%;left:90%"></div>
+
+    <div class="sky-star-big">🌅</div>
+
+    <div class="sky-veg" style="left:6%">⏰</div>
+    <div class="sky-veg" style="left:14%;font-size:15px;top:20px;">💧</div>
+    <div class="sky-veg" style="right:8%">🌍</div>
+    <div class="sky-veg" style="right:16%;font-size:15px;top:22px;">♻️</div>
+
+    <!-- Green town + clock silhouette -->
+    <div class="market-skyline">
+      <svg viewBox="0 0 560 58" xmlns="http://www.w3.org/2000/svg" style="width:min(520px,82%);height:52px;">
+        <rect x="0" y="52" width="560" height="6" fill="#0a1a14"/>
+        <ellipse cx="280" cy="52" rx="300" ry="5" fill="#FBC02D" opacity="0.3"/>
+
+        <!-- Left tree + wind turbine -->
+        <rect x="26" y="40" width="3" height="12" fill="#0a1a14"/>
+        <circle cx="27.5" cy="37" r="8" fill="#0a1a14"/>
+        <rect x="58" y="28" width="3" height="24" fill="#0a1a14"/>
+        <g fill="#0a1a14"><path d="M59.5 28 l0 -11 3 1 z"/><path d="M59.5 28 l10 6 -1 3 z"/><path d="M59.5 28 l-9 7 -1 -3 z"/></g>
+
+        <!-- Houses with solar -->
+        <rect x="92" y="38" width="34" height="14" fill="#0a1a14"/>
+        <polygon points="88,38 109,24 130,38" fill="#0a1a14"/>
+        <rect x="92" y="30" width="16" height="6" fill="#FBC02D" opacity="0.5" transform="skewX(-12)"/>
+        <rect x="98" y="44" width="9" height="8" fill="#FB8C00" opacity="0.6"/>
+
+        <!-- Central CLOCK tower -->
+        <rect x="246" y="20" width="68" height="32" fill="#0a1a14"/>
+        <polygon points="246,20 280,6 314,20" fill="#0a1a14"/>
+        <circle cx="280" cy="34" r="14" fill="#FFF8E7" opacity="0.95"/>
+        <circle cx="280" cy="34" r="14" fill="none" stroke="#2E7D32" stroke-width="2"/>
+        <line x1="280" y1="34" x2="280" y2="26" stroke="#0a1a14" stroke-width="2" stroke-linecap="round"/>
+        <line x1="280" y1="34" x2="286" y2="37" stroke="#0a1a14" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="280" cy="34" r="1.6" fill="#F4511E"/>
+
+        <!-- Houses -->
+        <rect x="340" y="40" width="32" height="12" fill="#0a1a14"/>
+        <polygon points="336,40 356,26 376,40" fill="#0a1a14"/>
+        <rect x="346" y="44" width="9" height="8" fill="#42A5F5" opacity="0.6"/>
+
+        <!-- Tall building -->
+        <rect x="396" y="30" width="26" height="22" fill="#0a1a14"/>
+        <rect x="401" y="36" width="6" height="6" fill="#FFE082" opacity="0.6"/>
+        <rect x="412" y="36" width="6" height="6" fill="#80CBC4" opacity="0.6"/>
+
+        <!-- Right trees + recycle bin -->
+        <rect x="446" y="44" width="12" height="8" fill="#2E7D32" opacity="0.6"/>
+        <rect x="486" y="42" width="3" height="10" fill="#0a1a14"/>
+        <circle cx="487.5" cy="38" r="8" fill="#0a1a14"/>
+        <rect x="520" y="38" width="4" height="14" fill="#0a1a14"/>
+        <circle cx="522" cy="34" r="10" fill="#0a1a14"/>
+
+        <rect x="0" y="50" width="560" height="3" fill="#FBC02D" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <div class="veg-row">
+      <span>⏰</span><span>🥣</span><span>🏫</span><span>🚿</span><span>🛌</span>
+    </div>
+  </div>
+
+  <!-- Diploma body -->
+  <div class="diploma-body">
+
+    <div class="diploma-eyebrow">⏰ Certificate of Achievement 🌍</div>
+
+    <div class="diploma-title">Routine Hero</div>
+
+    <div class="diploma-subtitle">Habits for a Greener Future</div>
+
+    <div class="gold-divider">
+      <div class="gold-line"></div>
+      <div class="gold-icon">⏰</div>
+      <div class="gold-line"></div>
+    </div>
+
+    <div class="awarded-text">This diploma is proudly awarded to</div>
+
+    <div class="awarded-name-box">
+      <span class="awarded-name-label">Hero's Name</span>
+    </div>
+
+    <div class="awarded-body">
+      For completing <strong>The Routines Mission</strong>, teaching the children of the future a perfect
+      <em>daily routine</em> — Wake Up, Have Breakfast, Go to School, Take a Shower and Go to Bed —<br>
+      and learning to <strong>save water and energy for a greener Planet!</strong> ⏰🌍💚<br><br>
+      <span style="color:#2E7D32;font-size:clamp(11px,1.7vw,13px);">
+        "I wake up at 7 o'clock. I go to school in the morning. I turn off the lights — <em>Present Simple Champion!</em>"
+      </span>
+    </div>
+
+    <!-- Mini badges -->
+    <div class="badges-row">
+      <div class="mini-badge mb1">
+        <span class="badge-emoji">⏰</span>
+        <span class="badge-name">Wake Up<br>7:00</span>
+      </div>
+      <div class="mini-badge mb2">
+        <span class="badge-emoji">🥣</span>
+        <span class="badge-name">Breakfast<br>7:30</span>
+      </div>
+      <div class="mini-badge mb3">
+        <span class="badge-emoji">🏫</span>
+        <span class="badge-name">School<br>8:30</span>
+      </div>
+      <div class="mini-badge mb4">
+        <span class="badge-emoji">🚿</span>
+        <span class="badge-name">Shower<br>7:45</span>
+      </div>
+      <div class="mini-badge mb5">
+        <span class="badge-emoji">🛌</span>
+        <span class="badge-name">Bed<br>9:00</span>
+      </div>
+    </div>
+
+    <div class="gold-divider">
+      <div class="gold-line"></div>
+      <div class="gold-icon">🏆</div>
+      <div class="gold-line"></div>
+    </div>
+
+    <!-- Signatures -->
+    <div class="signatures">
+      <div class="sig-block">
+        <div class="sig-line"></div>
+        <div class="sig-label">Teacher's signature</div>
+      </div>
+      <div class="sig-block">
+        <div class="sig-line"></div>
+        <div class="sig-label">Date</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="diploma-footer">
+    <div class="diploma-footer-text">⏰ Routine Hero · A healthy routine for a greener Planet! 🌍💚</div>
+  </div>
+
+</div>
+</div>
+<script>twemoji.parse(document.body,{folder:'svg',ext:'.svg'});</script>
+
+
+
+
+
+
+
+
+
+
+<script>/* auto-print/pdf on ?print=1 or ?pdf=1 */(function(){var p=new URLSearchParams(location.search);var pdf=p.get("pdf");var prn=p.get("print");if(pdf!=="1"&&prn!=="1")return;var dlall=p.get("dlall")==="1";function whenReady(cb){if(document.readyState==="complete")setTimeout(cb,900);else window.addEventListener("load",function(){setTimeout(cb,1100);});}function preloadEmojis(){return new Promise(function(resolve){var imgs=document.querySelectorAll("img.emoji");if(!imgs.length){return resolve();}var pending=imgs.length;var safety=setTimeout(resolve,20000);var done=function(){pending--;if(pending<=0){clearTimeout(safety);resolve();}};imgs.forEach(function(img){if(/^data:/.test(img.src)){done();return;}var m=img.src.match(/\/([a-f0-9\-]+)\.(?:svg|png)/i);if(!m){done();return;}var cp=m[1];var urls=["https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/twitter/twemoji@v14.0.2/assets/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/72x72/"+cp+".png"];var i=0;(function tryNext(){if(i>=urls.length){done();return;}fetch(urls[i++]).then(function(r){if(!r.ok)return Promise.reject();return r.blob();}).then(function(blob){var reader=new FileReader();reader.onloadend=function(){if(typeof reader.result==="string"&&reader.result.indexOf("data:image/png")===0){img.src=reader.result;done();}else{tryNext();}};reader.onerror=tryNext;reader.readAsDataURL(blob);}).catch(tryNext);})();});});}function loadScript(src){return new Promise(function(resolve,reject){var s=document.createElement("script");s.src=src;s.crossOrigin="anonymous";s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}function loadLibs(){var p1=(typeof html2canvas==="function")?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");var p2=((window.jspdf&&window.jspdf.jsPDF)||window.jsPDF)?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");return Promise.all([p1,p2]);}if(pdf==="1"){whenReady(function(){var size=(p.get("size")||"A4").toUpperCase();var orientation=(size==="A5")?"landscape":"portrait";var format=size.toLowerCase().replace(/[^a-z0-9]/g,"");if(format==="2xa4"||format==="2a4")format="a4";if(["a3","a4","a5"].indexOf(format)<0)format="a4";var sizeMM={"a3":[297,420],"a4":[210,297],"a5":[148,210]};var paper=sizeMM[format]||[210,297];var pdfW=(orientation==="landscape")?paper[1]:paper[0];var pdfH=(orientation==="landscape")?paper[0]:paper[1];var fn=(document.title||"lesson_print").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"").toLowerCase()+".pdf";function shotElem(elem){return html2canvas(elem,{scale:3,useCORS:true,allowTaint:true,logging:false,backgroundColor:"#ffffff",imageTimeout:9000,onclone:function(doc){var b=doc.body;b.style.padding="0";b.style.margin="0";b.style.minHeight="0";b.style.background="#ffffff";Array.prototype.forEach.call(doc.querySelectorAll(".print-note,.page-heading,.card-label"),function(el){el.style.display="none";});var s=doc.createElement("style");s.textContent=".page,.guide{width:794px!important;min-height:1123px!important;max-width:none!important;box-shadow:none!important;transform:none!important;display:flex!important;flex-direction:column!important;box-sizing:border-box!important;page-break-after:always!important;}.page-footer,.footer-bar{margin-top:auto!important;}";doc.head.appendChild(s);}});}function placeImage(doc,canvas,marginMM,fill){var availW=pdfW-marginMM*2;var availH=pdfH-marginMM*2;if(fill){doc.addImage(canvas.toDataURL("image/png"),"PNG",marginMM,marginMM,availW,availH,undefined,"FAST");}else{var aspect=canvas.width/canvas.height;var imgW=availW,imgH=availW/aspect;if(imgH>availH){imgH=availH;imgW=availH*aspect;}var x=(pdfW-imgW)/2,y=(pdfH-imgH)/2;doc.addImage(canvas.toDataURL("image/png"),"PNG",x,y,imgW,imgH,undefined,"FAST");}}function newDoc(){var Ctor=(window.jspdf&&window.jspdf.jsPDF)||window.jsPDF;return new Ctor({orientation:orientation,unit:"mm",format:format,compress:true});}function deliver(doc){if(dlall&&window.parent&&window.parent!==window){try{var blob=doc.output("blob");window.parent.postMessage({type:"pdf-blob",name:fn,blob:blob},"*");}catch(e){console.error("[PDF] postMessage failed",e);doc.save(fn);}}else{doc.save(fn);}}function renderHero(elem,marginMM,fill){var doc=newDoc();return shotElem(elem).then(function(canvas){placeImage(doc,canvas,marginMM,fill);deliver(doc);});}function renderMulti(elements,marginMM,fill){var doc=newDoc();var first=true;return elements.reduce(function(prev,elem){return prev.then(function(){return shotElem(elem).then(function(canvas){if(!first)doc.addPage(format,orientation);first=false;placeImage(doc,canvas,marginMM,fill);});});},Promise.resolve()).then(function(){deliver(doc);});}function gen(){var board=document.querySelector(".board");var hero=document.querySelector(".poster, .diploma");var pages=document.querySelectorAll(".page, .guide");var cards=document.querySelectorAll(".card-pair, .card-wrap, .medal-wrap, .row, .qr-card");if(cards.length>=2)return renderMulti(Array.prototype.slice.call(cards),10,false);if(pages.length>=2)return renderMulti(Array.prototype.slice.call(pages),0,true);if(hero)return renderHero(hero,0,true);if(board)return renderHero(board,8,false);return renderHero(document.body,0,true);}preloadEmojis().then(loadLibs).then(gen).catch(function(err){console.error("[PDF] failed:",err);if(dlall&&window.parent&&window.parent!==window){try{window.parent.postMessage({type:"pdf-error",error:String(err)},"*");}catch(e){}}else{alert("Could not generate the PDF. Reload and try again. Error: "+(err.message||err));}});});}else{whenReady(function(){window.print();});}})();</script>
+</body>
+</html>
