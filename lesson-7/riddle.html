@@ -909,7 +909,7 @@ function onSuccess(data) {
 
   document.getElementById('successEmoji').innerHTML = data.choices[0].emoji;
   document.getElementById('successSubtitle').textContent = `You found a screen-free hobby for the future! 🎉`;
-  document.getElementById('charName').textContent = `${data.choices[0].emoji} ${data.choices[0].label} — ${data.location}`;
+  document.getElementById('charName').innerHTML = `${data.choices[0].emoji} ${data.choices[0].label} — ${data.location}`;
   document.getElementById('charDesc').textContent = data.description;
 
   const badge = document.getElementById('healthBadge');
