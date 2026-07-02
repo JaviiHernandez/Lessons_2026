@@ -66,7 +66,7 @@
     position: absolute;
     bottom: 0; left: 0; right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #F4511E, #FBC02D, #00897B, #3949AB);
+    background: linear-gradient(90deg, #607D8B, #E53935, #F9A825, #43A047, #EC407A);
   }
 
   .board-title {
@@ -139,11 +139,11 @@
     position: relative;
   }
 
-  .treat-slot.ts1 { background: linear-gradient(135deg, #ffece6, #ffccbc); border-color: #F4511E; }
-  .treat-slot.ts2 { background: linear-gradient(135deg, #fff8e1, #ffe082); border-color: #FF8F00; }
-  .treat-slot.ts3 { background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-color: #1E88E5; }
-  .treat-slot.ts4 { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); border-color: #00897B; }
-  .treat-slot.ts5 { background: linear-gradient(135deg, #e8eaf6, #c5cae9); border-color: #3949AB; }
+  .treat-slot.ts1 { background: linear-gradient(135deg, #eceff1, #cfd8dc); border-color: #607D8B; }
+  .treat-slot.ts2 { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-color: #E53935; }
+  .treat-slot.ts3 { background: linear-gradient(135deg, #fff8e1, #ffe082); border-color: #F9A825; }
+  .treat-slot.ts4 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-color: #43A047; }
+  .treat-slot.ts5 { background: linear-gradient(135deg, #fce4ec, #f8bbd0); border-color: #EC407A; }
 
   .treat-emoji {
     font-family: 'Fredoka One', sans-serif;
@@ -159,6 +159,7 @@
     margin: 0 auto clamp(4px,0.8vw,6px);
     box-shadow: 0 2px 10px rgba(0,0,0,0.12);
     color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.35);
   }
 
   .treat-name {
@@ -179,11 +180,11 @@
     display: flex; align-items: center; justify-content: center;
   }
 
-  .ts1 .treat-check { color: #F4511E; }
-  .ts2 .treat-check { color: #FF8F00; }
-  .ts3 .treat-check { color: #1E88E5; }
-  .ts4 .treat-check { color: #00897B; }
-  .ts5 .treat-check { color: #3949AB; }
+  .ts1 .treat-check { color: #607D8B; }
+  .ts2 .treat-check { color: #E53935; }
+  .ts3 .treat-check { color: #F9A825; }
+  .ts4 .treat-check { color: #43A047; }
+  .ts5 .treat-check { color: #EC407A; }
 
   /* Progress bar */
   .progress-bar {
@@ -210,6 +211,7 @@
     flex-shrink: 0;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     border: 2px solid rgba(255,255,255,0.85);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.35);
   }
 
   .prog-arrow { color: rgba(251,192,45,0.5); font-size: clamp(9px, 1.4vw, 12px); flex-shrink: 0; }
@@ -357,7 +359,7 @@
 
   /* Footer */
   .board-footer {
-    background: linear-gradient(90deg, #F4511E, #FF8F00, #1E88E5, #00897B, #3949AB);
+    background: linear-gradient(90deg, #607D8B, #E53935, #F9A825, #43A047, #EC407A);
     padding: clamp(10px, 2vw, 14px) clamp(20px, 4vw, 40px);
     text-align: center;
   }
@@ -407,43 +409,43 @@
     <div class="section-title">🌈 Mission Tracker — Find the 5 feelings &amp; give the future hope!</div>
     <div class="treat-tracker">
       <div class="treat-slot ts1">
-        <span class="treat-emoji" style="background:linear-gradient(135deg,#F4511E,#FF7043);">?</span>
+        <span class="treat-emoji" style="background:linear-gradient(135deg,#607D8B,#90A4AE);">?</span>
         <span class="treat-name">Feeling 1<br>The Grey City</span>
         <div class="treat-check"></div>
       </div>
       <div class="treat-slot ts2">
-        <span class="treat-emoji" style="background:linear-gradient(135deg,#FF8F00,#FFB300);">?</span>
-        <span class="treat-name">Feeling 2<br>The Empty Forest</span>
+        <span class="treat-emoji" style="background:linear-gradient(135deg,#E53935,#EF5350);">?</span>
+        <span class="treat-name">Feeling 2<br>The Plastic Sea</span>
         <div class="treat-check"></div>
       </div>
       <div class="treat-slot ts3">
-        <span class="treat-emoji" style="background:linear-gradient(135deg,#1E88E5,#42A5F5);">?</span>
-        <span class="treat-name">Feeling 3<br>The Plastic Sea</span>
+        <span class="treat-emoji" style="background:linear-gradient(135deg,#F9A825,#FDD835);">?</span>
+        <span class="treat-name">Feeling 3<br>The Big Change</span>
         <div class="treat-check"></div>
       </div>
       <div class="treat-slot ts4">
-        <span class="treat-emoji" style="background:linear-gradient(135deg,#00897B,#26A69A);">?</span>
-        <span class="treat-name">Feeling 4<br>The Big Change</span>
+        <span class="treat-emoji" style="background:linear-gradient(135deg,#43A047,#66BB6A);">?</span>
+        <span class="treat-name">Feeling 4<br>The Green Town</span>
         <div class="treat-check"></div>
       </div>
       <div class="treat-slot ts5">
-        <span class="treat-emoji" style="background:linear-gradient(135deg,#3949AB,#5C6BC0);">?</span>
-        <span class="treat-name">Feeling 5<br>The Green Town</span>
+        <span class="treat-emoji" style="background:linear-gradient(135deg,#EC407A,#F06292);">?</span>
+        <span class="treat-name">Feeling 5<br>A Green Tomorrow</span>
         <div class="treat-check"></div>
       </div>
     </div>
 
     <!-- Progress bar -->
     <div class="progress-bar">
-      <div class="prog-dot" style="background:#F4511E">1</div>
+      <div class="prog-dot" style="background:#607D8B">1</div>
       <div class="prog-arrow">▶</div>
-      <div class="prog-dot" style="background:#FF8F00">2</div>
+      <div class="prog-dot" style="background:#E53935">2</div>
       <div class="prog-arrow">▶</div>
-      <div class="prog-dot" style="background:#1E88E5">3</div>
+      <div class="prog-dot" style="background:#F9A825">3</div>
       <div class="prog-arrow">▶</div>
-      <div class="prog-dot" style="background:#00897B">4</div>
+      <div class="prog-dot" style="background:#43A047">4</div>
       <div class="prog-arrow">▶</div>
-      <div class="prog-dot" style="background:#3949AB">5</div>
+      <div class="prog-dot" style="background:#EC407A">5</div>
       <div class="prog-arrow">▶</div>
       <div class="prog-trophy">🏆</div>
     </div>
@@ -500,7 +502,7 @@
         </div>
         <div class="tip-item">
           <div class="tip-icon">🙂</div>
-          <div class="tip-text"><strong>Look at the face</strong><br>Happy, sad, angry or worried?</div>
+          <div class="tip-text"><strong>Look at the face</strong><br>Worried, angry, surprised or happy?</div>
         </div>
         <div class="tip-item">
           <div class="tip-icon">👂</div>
@@ -519,7 +521,7 @@
       <div class="bubbles-grid">
         <div class="bubble">
           <span class="bubble-tag">Feelings</span>
-          "I am happy. He is sad."
+          "I am happy. He is worried."
         </div>
         <div class="bubble">
           <span class="bubble-tag">can</span>

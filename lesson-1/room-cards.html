@@ -104,14 +104,14 @@
     z-index: 2;
   }
 
-  .ingredient-emoji {
-    font-size: 72px;
-    line-height: 1;
-    filter: drop-shadow(0 4px 14px rgba(0,0,0,0.4));
+  /* Colour-tinted feeling eyes (hero image) */
+  .feeling-eyes-wrap {
+    margin: 10px 0 2px;
     position: relative;
     z-index: 2;
-    margin: 6px 0 2px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
   }
+  .feeling-eyes { display: block; }
 
   .recipe-tag {
     font-family: 'Fredoka One', sans-serif;
@@ -158,11 +158,11 @@
   }
   .recipe-with strong { font-weight: 700; }
 
-  .theme-worried   .recipe-name  { color: #D84315; }
-  .theme-sad       .recipe-name  { color: #E65100; }
-  .theme-angry     .recipe-name  { color: #1565C0; }
-  .theme-surprised .recipe-name  { color: #00695C; }
-  .theme-happy     .recipe-name  { color: #283593; }
+  .theme-worried   .recipe-name  { color: #37474F; }
+  .theme-angry     .recipe-name  { color: #B71C1C; }
+  .theme-surprised .recipe-name  { color: #F57F17; }
+  .theme-happy     .recipe-name  { color: #1B5E20; }
+  .theme-hopeful   .recipe-name  { color: #AD1457; }
 
   /* Corner ornaments */
   .corner-orns { position: absolute; inset: 0; pointer-events: none; }
@@ -291,18 +291,19 @@
     margin-top: auto;
   }
 
-  /* Themes — feelings palette */
-  .theme-worried    { background: linear-gradient(145deg, #7a2410, #F4511E, #FF7043); }
-  .theme-sad        { background: linear-gradient(145deg, #7a4500, #FF8F00, #FFB300); }
-  .theme-angry      { background: linear-gradient(145deg, #0a3a7a, #1E88E5, #42A5F5); }
-  .theme-surprised  { background: linear-gradient(145deg, #004d40, #00897B, #26A69A); }
-  .theme-happy      { background: linear-gradient(145deg, #1a2570, #3949AB, #5C6BC0); }
+  /* Themes — feelings palette (front: deep → main → light) */
+  .theme-worried    { background: linear-gradient(145deg, #263238, #607D8B, #90A4AE); }
+  .theme-angry      { background: linear-gradient(145deg, #7f0000, #E53935, #EF5350); }
+  .theme-surprised  { background: linear-gradient(145deg, #7a4500, #F9A825, #FDD835); }
+  .theme-happy      { background: linear-gradient(145deg, #0a3a14, #43A047, #66BB6A); }
+  .theme-hopeful    { background: linear-gradient(145deg, #5a0a2e, #EC407A, #F06292); }
 
-  .theme-worried-inv    { background: linear-gradient(145deg, #FF7043, #F4511E, #7a2410); }
-  .theme-sad-inv        { background: linear-gradient(145deg, #FFB300, #FF8F00, #7a4500); }
-  .theme-angry-inv      { background: linear-gradient(145deg, #42A5F5, #1E88E5, #0a3a7a); }
-  .theme-surprised-inv  { background: linear-gradient(145deg, #26A69A, #00897B, #004d40); }
-  .theme-happy-inv      { background: linear-gradient(145deg, #5C6BC0, #3949AB, #1a2570); }
+  /* Backs (main → dark → deep, for readable white text) */
+  .theme-worried-inv    { background: linear-gradient(145deg, #607D8B, #37474F, #263238); }
+  .theme-angry-inv      { background: linear-gradient(145deg, #E53935, #B71C1C, #7f0000); }
+  .theme-surprised-inv  { background: linear-gradient(145deg, #F9A825, #F57F17, #7a4500); }
+  .theme-happy-inv      { background: linear-gradient(145deg, #43A047, #1B5E20, #0a3a14); }
+  .theme-hopeful-inv    { background: linear-gradient(145deg, #EC407A, #AD1457, #5a0a2e); }
 
   @media (max-width: 540px) { .card-pair { gap: 14px; } }
 
@@ -320,7 +321,86 @@
 <div class="page-heading">🌈 Feelings for the Future — Fun Fact Cards</div>
 <div class="print-note">Print on cardstock · Cut out each card · Glue front to back · Laminate for best results · Hand out when heroes discover each feeling!</div>
 
-<!-- ══ CARD 1 — WORRIED ══ -->
+<!-- Reusable colour-tinted eyes (worried / angry / surprised / happy / hopeful) -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="eyes-worried" viewBox="0 0 130 84">
+    <ellipse cx="40" cy="50" rx="22" ry="25" fill="#fff"/>
+    <ellipse cx="90" cy="50" rx="22" ry="25" fill="#fff"/>
+    <circle cx="42" cy="52" r="12" fill="#78909C"/>
+    <circle cx="88" cy="52" r="12" fill="#78909C"/>
+    <circle cx="42" cy="52" r="5.5" fill="#1a1a1a"/>
+    <circle cx="88" cy="52" r="5.5" fill="#1a1a1a"/>
+    <circle cx="38" cy="47" r="3" fill="#fff"/>
+    <circle cx="84" cy="47" r="3" fill="#fff"/>
+    <g stroke="#3a2f28" stroke-width="5.5" stroke-linecap="round" fill="none">
+      <line x1="20" y1="21" x2="56" y2="12"/>
+      <line x1="110" y1="21" x2="74" y2="12"/>
+    </g>
+  </symbol>
+  <symbol id="eyes-angry" viewBox="0 0 130 84">
+    <ellipse cx="40" cy="50" rx="22" ry="25" fill="#fff"/>
+    <ellipse cx="90" cy="50" rx="22" ry="25" fill="#fff"/>
+    <circle cx="42" cy="53" r="12" fill="#E53935"/>
+    <circle cx="88" cy="53" r="12" fill="#E53935"/>
+    <circle cx="42" cy="53" r="5.5" fill="#1a1a1a"/>
+    <circle cx="88" cy="53" r="5.5" fill="#1a1a1a"/>
+    <circle cx="38" cy="48" r="3" fill="#fff"/>
+    <circle cx="84" cy="48" r="3" fill="#fff"/>
+    <g stroke="#3a2f28" stroke-width="6" stroke-linecap="round" fill="none">
+      <line x1="20" y1="12" x2="56" y2="24"/>
+      <line x1="110" y1="12" x2="74" y2="24"/>
+    </g>
+  </symbol>
+  <symbol id="eyes-surprised" viewBox="0 0 130 84">
+    <ellipse cx="40" cy="50" rx="24" ry="27" fill="#fff"/>
+    <ellipse cx="90" cy="50" rx="24" ry="27" fill="#fff"/>
+    <circle cx="41" cy="51" r="13" fill="#F9A825" stroke="#F57F17" stroke-width="1.5"/>
+    <circle cx="89" cy="51" r="13" fill="#F9A825" stroke="#F57F17" stroke-width="1.5"/>
+    <circle cx="41" cy="51" r="6" fill="#1a1a1a"/>
+    <circle cx="89" cy="51" r="6" fill="#1a1a1a"/>
+    <circle cx="37" cy="46" r="3.2" fill="#fff"/>
+    <circle cx="85" cy="46" r="3.2" fill="#fff"/>
+    <g stroke="#3a2f28" stroke-width="5.5" stroke-linecap="round" fill="none">
+      <line x1="20" y1="11" x2="56" y2="9"/>
+      <line x1="110" y1="11" x2="74" y2="9"/>
+    </g>
+  </symbol>
+  <symbol id="eyes-happy" viewBox="0 0 130 84">
+    <ellipse cx="40" cy="50" rx="22" ry="25" fill="#fff"/>
+    <ellipse cx="90" cy="50" rx="22" ry="25" fill="#fff"/>
+    <circle cx="42" cy="50" r="12" fill="#43A047"/>
+    <circle cx="88" cy="50" r="12" fill="#43A047"/>
+    <circle cx="42" cy="50" r="5.5" fill="#1a1a1a"/>
+    <circle cx="88" cy="50" r="5.5" fill="#1a1a1a"/>
+    <circle cx="38" cy="45" r="3" fill="#fff"/>
+    <circle cx="84" cy="45" r="3" fill="#fff"/>
+    <g stroke="#3a2f28" stroke-width="5.5" stroke-linecap="round" fill="none">
+      <path d="M20 16 Q38 8 56 15"/>
+      <path d="M110 16 Q92 8 74 15"/>
+    </g>
+    <g stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.85">
+      <path d="M28 66 Q40 74 54 66"/>
+      <path d="M76 66 Q88 74 100 66"/>
+    </g>
+  </symbol>
+  <symbol id="eyes-hopeful" viewBox="0 0 130 84">
+    <ellipse cx="40" cy="50" rx="22" ry="25" fill="#fff"/>
+    <ellipse cx="90" cy="50" rx="22" ry="25" fill="#fff"/>
+    <circle cx="42" cy="47" r="12" fill="#EC407A"/>
+    <circle cx="88" cy="47" r="12" fill="#EC407A"/>
+    <circle cx="42" cy="47" r="5.5" fill="#1a1a1a"/>
+    <circle cx="88" cy="47" r="5.5" fill="#1a1a1a"/>
+    <circle cx="38" cy="42" r="3.2" fill="#fff"/>
+    <circle cx="84" cy="42" r="3.2" fill="#fff"/>
+    <g stroke="#3a2f28" stroke-width="5" stroke-linecap="round" fill="none">
+      <line x1="21" y1="19" x2="56" y2="13"/>
+      <line x1="109" y1="19" x2="74" y2="13"/>
+    </g>
+    <path d="M65 8 l2.2 5 5 2.2 -5 2.2 -2.2 5 -2.2 -5 -5 -2.2 5 -2.2 z" fill="#FFF59D"/>
+  </symbol>
+</svg>
+
+<!-- ══ CARD 1 — WORRIED (grey) ══ -->
 <div class="card-pair">
   <div>
     <div class="card-label">Front</div>
@@ -333,7 +413,7 @@
           <span class="orn orn-br">💨</span>
         </div>
         <div class="station-chip">Feeling 1 · The Grey City</div>
-        <div class="ingredient-emoji">😟</div>
+        <div class="feeling-eyes-wrap"><svg class="feeling-eyes" width="104" height="67" viewBox="0 0 130 84"><use href="#eyes-worried"/></svg></div>
         <div class="recipe-tag">🌈 A Big Feeling 🌈</div>
         <div class="recipe-card">
           <div class="recipe-emoji">😟</div>
@@ -358,7 +438,7 @@
 
         <div class="back-section-title">😟 We feel worried when…</div>
         <div class="ingredients-grid">
-          <div class="ing-item">big eyes 👀</div>
+          <div class="ing-item">grey eyes</div>
           <div class="ing-item">no smile 🙁</div>
           <div class="ing-item">dirty air 💨</div>
           <div class="ing-item">too many cars 🚗</div>
@@ -380,67 +460,7 @@
   </div>
 </div>
 
-<!-- ══ CARD 2 — SAD ══ -->
-<div class="card-pair">
-  <div>
-    <div class="card-label">Front</div>
-    <div class="card theme-sad">
-      <div class="card-front">
-        <div class="corner-orns">
-          <span class="orn orn-tl">🌈</span>
-          <span class="orn orn-tr">🌲</span>
-          <span class="orn orn-bl">🐦</span>
-          <span class="orn orn-br">💧</span>
-        </div>
-        <div class="station-chip">Feeling 2 · The Empty Forest</div>
-        <div class="ingredient-emoji">😢</div>
-        <div class="recipe-tag">🌈 A Big Feeling 🌈</div>
-        <div class="recipe-card">
-          <div class="recipe-emoji">😢</div>
-          <div class="recipe-name">Sad</div>
-          <div class="recipe-with"><strong>The Empty Forest</strong> · no trees</div>
-        </div>
-        <div class="card-footer-strip">🌈 Hope Heroes · Sad</div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div class="card-label">Back</div>
-    <div class="card theme-sad-inv">
-      <div class="card-back">
-        <div class="back-header">
-          <div class="back-emoji">😢</div>
-          <div>
-            <div class="back-title">Sad — The Empty Forest</div>
-            <div class="back-station">How Tim feels</div>
-          </div>
-        </div>
-
-        <div class="back-section-title">😢 We feel sad when…</div>
-        <div class="ingredients-grid">
-          <div class="ing-item">a tear 💧</div>
-          <div class="ing-item">no trees 🌲</div>
-          <div class="ing-item">no home 🏚️</div>
-          <div class="ing-item">a lost bird 🐦</div>
-          <div class="ing-item">I want to cry</div>
-          <div class="ing-item"><strong>I am sad</strong></div>
-        </div>
-
-        <div class="back-section-title">✨ We CAN help!</div>
-        <div class="steps-list">
-          <div class="step-item"><span class="step-num">1</span><span>We <strong>can</strong> plant trees. 🌱</span></div>
-          <div class="step-item"><span class="step-num">2</span><span>We <strong>can</strong> take care of them. 💚</span></div>
-          <div class="step-item"><span class="step-num">3</span><span>We <strong>can't</strong> cut down all the forests. 🪓</span></div>
-          <div class="step-item"><span class="step-num">4</span><span>Trees are homes for animals! 🐿️</span></div>
-        </div>
-
-        <div class="health-bar">💚 We can grow new forests for the future!</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ CARD 3 — ANGRY ══ -->
+<!-- ══ CARD 2 — ANGRY (red) ══ -->
 <div class="card-pair">
   <div>
     <div class="card-label">Front</div>
@@ -452,8 +472,8 @@
           <span class="orn orn-bl">🐢</span>
           <span class="orn orn-br">🛍️</span>
         </div>
-        <div class="station-chip">Feeling 3 · The Plastic Sea</div>
-        <div class="ingredient-emoji">😠</div>
+        <div class="station-chip">Feeling 2 · The Plastic Sea</div>
+        <div class="feeling-eyes-wrap"><svg class="feeling-eyes" width="104" height="67" viewBox="0 0 130 84"><use href="#eyes-angry"/></svg></div>
         <div class="recipe-tag">🌈 A Big Feeling 🌈</div>
         <div class="recipe-card">
           <div class="recipe-emoji">😠</div>
@@ -478,10 +498,10 @@
 
         <div class="back-section-title">😠 We feel angry when…</div>
         <div class="ingredients-grid">
+          <div class="ing-item">red eyes</div>
           <div class="ing-item">red face 😤</div>
           <div class="ing-item">tight hands ✊</div>
           <div class="ing-item">plastic 🛍️</div>
-          <div class="ing-item">a sad turtle 🐢</div>
           <div class="ing-item">it's not fair!</div>
           <div class="ing-item"><strong>I am angry</strong></div>
         </div>
@@ -500,7 +520,7 @@
   </div>
 </div>
 
-<!-- ══ CARD 4 — SURPRISED ══ -->
+<!-- ══ CARD 3 — SURPRISED (yellow) ══ -->
 <div class="card-pair">
   <div>
     <div class="card-label">Front</div>
@@ -512,8 +532,8 @@
           <span class="orn orn-bl">💡</span>
           <span class="orn orn-br">💧</span>
         </div>
-        <div class="station-chip">Feeling 4 · The Big Change</div>
-        <div class="ingredient-emoji">😲</div>
+        <div class="station-chip">Feeling 3 · The Big Change</div>
+        <div class="feeling-eyes-wrap"><svg class="feeling-eyes" width="104" height="67" viewBox="0 0 130 84"><use href="#eyes-surprised"/></svg></div>
         <div class="recipe-tag">🌈 A Big Feeling 🌈</div>
         <div class="recipe-card">
           <div class="recipe-emoji">😲</div>
@@ -538,10 +558,10 @@
 
         <div class="back-section-title">😲 We feel surprised when…</div>
         <div class="ingredients-grid">
-          <div class="ing-item">big eyes 👀</div>
+          <div class="ing-item">yellow eyes</div>
+          <div class="ing-item">big round eyes 👀</div>
           <div class="ing-item">a big 'O' 😮</div>
-          <div class="ing-item">'Wow!' 🗨️</div>
-          <div class="ing-item">small actions ✨</div>
+          <div class="ing-item">'Wow!'</div>
           <div class="ing-item">a big change!</div>
           <div class="ing-item"><strong>I am surprised</strong></div>
         </div>
@@ -560,20 +580,20 @@
   </div>
 </div>
 
-<!-- ══ CARD 5 — HAPPY ══ -->
+<!-- ══ CARD 4 — HAPPY (green) ══ -->
 <div class="card-pair">
   <div>
     <div class="card-label">Front</div>
     <div class="card theme-happy">
       <div class="card-front">
         <div class="corner-orns">
-          <span class="orn orn-tl">🌈</span>
-          <span class="orn orn-tr">🌳</span>
-          <span class="orn orn-bl">🌸</span>
-          <span class="orn orn-br">🐦</span>
+          <span class="orn orn-tl">🌳</span>
+          <span class="orn orn-tr">🌸</span>
+          <span class="orn orn-bl">🐦</span>
+          <span class="orn orn-br">💚</span>
         </div>
-        <div class="station-chip">Feeling 5 · The Green Town</div>
-        <div class="ingredient-emoji">😄</div>
+        <div class="station-chip">Feeling 4 · The Green Town</div>
+        <div class="feeling-eyes-wrap"><svg class="feeling-eyes" width="104" height="67" viewBox="0 0 130 84"><use href="#eyes-happy"/></svg></div>
         <div class="recipe-tag">🌈 A Big Feeling 🌈</div>
         <div class="recipe-card">
           <div class="recipe-emoji">😄</div>
@@ -598,9 +618,9 @@
 
         <div class="back-section-title">😄 We feel happy when…</div>
         <div class="ingredients-grid">
+          <div class="ing-item">green eyes</div>
           <div class="ing-item">a big smile 😁</div>
           <div class="ing-item">clap hands 👏</div>
-          <div class="ing-item">trees &amp; flowers 🌸</div>
           <div class="ing-item">birds sing 🐦</div>
           <div class="ing-item">clean air 🌍</div>
           <div class="ing-item"><strong>I am happy</strong></div>
@@ -611,10 +631,70 @@
           <div class="step-item"><span class="step-num">1</span><span>We <strong>can</strong> plant trees &amp; flowers. 🌸</span></div>
           <div class="step-item"><span class="step-num">2</span><span>We <strong>can</strong> recycle and save water. ♻️</span></div>
           <div class="step-item"><span class="step-num">3</span><span>We <strong>can</strong> share and care. 💚</span></div>
-          <div class="step-item"><span class="step-num">4</span><span>A green town = HOPE! 🌈</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>A green town = a happy home! 🌳</span></div>
         </div>
 
-        <div class="health-bar">💚 We can build a green, happy future!</div>
+        <div class="health-bar">💚 We can build a green, happy town!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CARD 5 — HOPEFUL (pink) — the key feeling! ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-hopeful">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🌈</span>
+          <span class="orn orn-tr">🌟</span>
+          <span class="orn orn-bl">🤝</span>
+          <span class="orn orn-br">🌍</span>
+        </div>
+        <div class="station-chip">Feeling 5 · A Green Tomorrow</div>
+        <div class="feeling-eyes-wrap"><svg class="feeling-eyes" width="104" height="67" viewBox="0 0 130 84"><use href="#eyes-hopeful"/></svg></div>
+        <div class="recipe-tag">🌈 The Key Feeling 🌈</div>
+        <div class="recipe-card">
+          <div class="recipe-emoji">🌈</div>
+          <div class="recipe-name">Hopeful</div>
+          <div class="recipe-with"><strong>A Green Tomorrow</strong> · hope!</div>
+        </div>
+        <div class="card-footer-strip">🌈 Hope Heroes · Hopeful</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-hopeful-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🌈</div>
+          <div>
+            <div class="back-title">Hopeful — A Green Tomorrow</div>
+            <div class="back-station">How Tim feels</div>
+          </div>
+        </div>
+
+        <div class="back-section-title">🌈 We feel hopeful when…</div>
+        <div class="ingredients-grid">
+          <div class="ing-item">pink eyes</div>
+          <div class="ing-item">a soft smile 🙂</div>
+          <div class="ing-item">we look up 🌤️</div>
+          <div class="ing-item">a rainbow 🌈</div>
+          <div class="ing-item">a green tomorrow 🌍</div>
+          <div class="ing-item"><strong>I am hopeful</strong></div>
+        </div>
+
+        <div class="back-section-title">✨ We CAN help!</div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span>We <strong>can</strong> plant trees. 🌱</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>We <strong>can</strong> recycle and save water. ♻️</span></div>
+          <div class="step-item"><span class="step-num">3</span><span>Together we <strong>can</strong> do it! 🤝</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>A green future = HOPE! 🌈</span></div>
+        </div>
+
+        <div class="health-bar">🌈 Together we can give the future HOPE!</div>
       </div>
     </div>
   </div>

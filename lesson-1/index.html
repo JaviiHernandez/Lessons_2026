@@ -102,11 +102,11 @@
 
   .riddle-link:hover { color: white; }
 
-  .rl1:hover { background: rgba(244,81,30,0.35);  border-color: #FFAB91; }
-  .rl2:hover { background: rgba(255,143,0,0.35);  border-color: #FFE082; }
-  .rl3:hover { background: rgba(30,136,229,0.35); border-color: #90CAF9; }
-  .rl4:hover { background: rgba(0,137,123,0.35);  border-color: #80CBC4; }
-  .rl5:hover { background: rgba(57,73,171,0.35);  border-color: #9FA8DA; }
+  .rl1:hover { background: rgba(96,125,139,0.35); border-color: #B0BEC5; }
+  .rl2:hover { background: rgba(229,57,53,0.35);  border-color: #EF9A9A; }
+  .rl3:hover { background: rgba(249,168,37,0.35); border-color: #FFE082; }
+  .rl4:hover { background: rgba(67,160,71,0.35);  border-color: #A5D6A7; }
+  .rl5:hover { background: rgba(236,64,122,0.35); border-color: #F8BBD0; }
 
   .bar-spacer { flex: 1; }
 
@@ -245,10 +245,10 @@ function downloadAllPrintables(){
   <div class="riddle-bar">
     <div class="riddle-bar-label">Open riddle:</div>
     <a class="riddle-link rl1" href="riddle.html?s=1" target="_blank">😟 Worried</a>
-    <a class="riddle-link rl2" href="riddle.html?s=2" target="_blank">😢 Sad</a>
-    <a class="riddle-link rl3" href="riddle.html?s=3" target="_blank">😠 Angry</a>
-    <a class="riddle-link rl4" href="riddle.html?s=4" target="_blank">😲 Surprised</a>
-    <a class="riddle-link rl5" href="riddle.html?s=5" target="_blank">😄 Happy</a>
+    <a class="riddle-link rl2" href="riddle.html?s=2" target="_blank">😠 Angry</a>
+    <a class="riddle-link rl3" href="riddle.html?s=3" target="_blank">😲 Surprised</a>
+    <a class="riddle-link rl4" href="riddle.html?s=4" target="_blank">😄 Happy</a>
+    <a class="riddle-link rl5" href="riddle.html?s=5" target="_blank">🌈 Hopeful</a>
   </div>
   <a class="dl-all-btn" href="#" onclick="event.preventDefault();downloadAllPrintables();return false;" title="Open one tab per printable; each downloads its own PDF">📦 Download all PDFs</a><div class="bar-spacer"></div>
   <div class="bar-hint">Scroll · Pan · Pinch to zoom</div>
@@ -311,19 +311,19 @@ function App() {
           <PageFrame src="riddle.html?s=1" width={375} height={680} />
         </DCArtboard>
 
-        <DCArtboard id="r2" label="Feeling 2 — The Empty Forest 😢" width={375} height={680}>
+        <DCArtboard id="r2" label="Feeling 2 — The Plastic Sea 😠" width={375} height={680}>
           <PageFrame src="riddle.html?s=2" width={375} height={680} />
         </DCArtboard>
 
-        <DCArtboard id="r3" label="Feeling 3 — The Plastic Sea 😠" width={375} height={680}>
+        <DCArtboard id="r3" label="Feeling 3 — The Big Change 😲" width={375} height={680}>
           <PageFrame src="riddle.html?s=3" width={375} height={680} />
         </DCArtboard>
 
-        <DCArtboard id="r4" label="Feeling 4 — The Big Change 😲" width={375} height={680}>
+        <DCArtboard id="r4" label="Feeling 4 — The Green Town 😄" width={375} height={680}>
           <PageFrame src="riddle.html?s=4" width={375} height={680} />
         </DCArtboard>
 
-        <DCArtboard id="r5" label="Feeling 5 — The Green Town 😄" width={375} height={680}>
+        <DCArtboard id="r5" label="Feeling 5 — A Green Tomorrow 🌈" width={375} height={680}>
           <PageFrame src="riddle.html?s=5" width={375} height={680} />
         </DCArtboard>
       </DCSection>

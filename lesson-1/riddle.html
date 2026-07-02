@@ -615,21 +615,21 @@ const STATIONS = {
   1: {
     location: 'The Grey City',
     subtitle: 'The air is dirty · Read the clues — how does Tim feel? 🌈',
-    color: ['#F4511E', '#FF7043'],
+    color: ['#607D8B', '#90A4AE'],
     correctIndex: 0,
     choices: [
       { emoji: '😟', label: 'Worried' },
       { emoji: '😄', label: 'Happy' },
       { emoji: '😠', label: 'Angry' },
-      { emoji: '😲', label: 'Surprised' },
+      { emoji: '🌈', label: 'Hopeful' },
     ],
     clues: [
       { text: "Tim looks at the city of the future. The sky is grey and the air is dirty. 🏙️", emoji: '🏙️' },
       { text: "There are too many cars. People <em>can't</em> breathe clean air. 🚗", emoji: '🚗' },
-      { text: "Tim's eyes are big and his mouth is small. He <em>can't</em> smile. 😬", emoji: '😬' },
+      { text: "Tim's eyes are grey and his mouth is small. He <em>can't</em> smile. 😬", emoji: '😬' },
       { text: "He thinks: '<em>Oh no! Can we save the Planet?</em>' He is not calm.", emoji: '💭' },
     ],
-    description: '"Tim looks at the dirty, grey city. His eyes are big and he can\'t smile. He thinks: Can we save the Planet? — How does Tim feel?"',
+    description: '"Tim looks at the dirty, grey city. His eyes are grey and he can\'t smile. He thinks: Can we save the Planet? — How does Tim feel?"',
     positive: false,
     feelingBadge: '😟 A big feeling: WORRIED',
     measure: '🗣️ We say: "<strong>I am worried.</strong>" and "<strong>We can</strong> ride a bike. We <strong>can\'t</strong> stop all the cars." Use <strong>can</strong> for things we are able to do!',
@@ -643,45 +643,15 @@ const STATIONS = {
     worldMsg: null,
   },
   2: {
-    location: 'The Empty Forest',
-    subtitle: 'There are no trees · Read the clues — how does Tim feel? 🌈',
-    color: ['#FF8F00', '#FFB300'],
-    correctIndex: 0,
-    choices: [
-      { emoji: '😢', label: 'Sad' },
-      { emoji: '😄', label: 'Happy' },
-      { emoji: '😲', label: 'Surprised' },
-      { emoji: '🌈', label: 'Hopeful' },
-    ],
-    clues: [
-      { text: "Tim walks in the forest. But there are no trees! 🌲", emoji: '🌲' },
-      { text: "The animals have no home. A little bird <em>can't</em> find its tree. 🐦", emoji: '🐦' },
-      { text: "Tim looks down. A big tear is on his face. 💧", emoji: '💧' },
-      { text: "He says: '<em>The poor animals!</em>' He wants to cry.", emoji: '😢' },
-    ],
-    description: '"There are no trees in the forest. The animals can\'t find a home and a big tear is on Tim\'s face. He wants to cry. How does he feel?"',
-    positive: false,
-    feelingBadge: '😢 A big feeling: SAD',
-    measure: '🗣️ We say: "<strong>He is sad.</strong>" "<strong>We can</strong> plant trees. We <strong>can\'t</strong> cut down all the forests." Remember: <strong>can\'t</strong> = cannot!',
-    plate: '🌱 Green power: We <strong>can</strong> plant new trees and take care of them. Trees give the animals a home! 🌳',
-    facts: [
-      { icon: '🌳', text: 'One big tree can be a home for many birds and insects!' },
-      { icon: '🌲', text: 'We can plant a tree on a school trip — it grows with you!' },
-      { icon: '🐿️', text: 'Forests are homes for animals. We can protect them!' },
-    ],
-    character: 'Sad 😢',
-    worldMsg: null,
-  },
-  3: {
     location: 'The Plastic Sea',
     subtitle: 'The sea is full of rubbish · Read the clues — how does Tim feel? 🌈',
-    color: ['#1E88E5', '#42A5F5'],
+    color: ['#E53935', '#EF5350'],
     correctIndex: 0,
     choices: [
       { emoji: '😠', label: 'Angry' },
       { emoji: '😄', label: 'Happy' },
-      { emoji: '😢', label: 'Sad' },
       { emoji: '😲', label: 'Surprised' },
+      { emoji: '🌈', label: 'Hopeful' },
     ],
     clues: [
       { text: "Tim goes to the beach. But the sea is full of plastic and rubbish! 🌊", emoji: '🌊' },
@@ -702,16 +672,16 @@ const STATIONS = {
     character: 'Angry 😠',
     worldMsg: '🌍 <strong>Around the world:</strong> Children in many countries have "beach clean-up days". Together we <strong>can</strong> pick up tonnes of plastic! ♻️',
   },
-  4: {
+  3: {
     location: 'The Big Change',
     subtitle: 'The heroes start to help · Read the clues — how do they feel? 🌈',
-    color: ['#00897B', '#26A69A'],
+    color: ['#F9A825', '#FDD835'],
     correctIndex: 0,
     choices: [
       { emoji: '😲', label: 'Surprised' },
-      { emoji: '😢', label: 'Sad' },
       { emoji: '😠', label: 'Angry' },
       { emoji: '😟', label: 'Worried' },
+      { emoji: '😄', label: 'Happy' },
     ],
     clues: [
       { text: "The Year 3 heroes start to help! They turn off the lights and save water. 💡", emoji: '💡' },
@@ -732,16 +702,16 @@ const STATIONS = {
     character: 'Surprised 😲',
     worldMsg: null,
   },
-  5: {
+  4: {
     location: 'The Green Town',
     subtitle: 'Clean and green again · Read the clues — how does Tim feel? 🌈',
-    color: ['#3949AB', '#5C6BC0'],
+    color: ['#43A047', '#66BB6A'],
     correctIndex: 0,
     choices: [
       { emoji: '😄', label: 'Happy' },
-      { emoji: '😢', label: 'Sad' },
       { emoji: '😠', label: 'Angry' },
       { emoji: '😟', label: 'Worried' },
+      { emoji: '😲', label: 'Surprised' },
     ],
     clues: [
       { text: "Now look at the town! There are trees, flowers and clean air. 🌳", emoji: '🌳' },
@@ -757,10 +727,40 @@ const STATIONS = {
     facts: [
       { icon: '🌳', text: 'Green towns have more trees, parks and clean air for everyone!' },
       { icon: '🐦', text: 'When the Planet is healthy, animals and people are happy!' },
-      { icon: '🌈', text: 'You made the future HAPPY — now they feel HOPE for tomorrow!' },
+      { icon: '🌸', text: 'Flowers and trees make a town beautiful and full of life!' },
     ],
     character: 'Happy 😄',
-    worldMsg: '🌈 <strong>Around the world:</strong> When we all take care of the Planet, the whole world can be a greener, happier and safer home. That is <strong>HOPE!</strong> 💚',
+    worldMsg: null,
+  },
+  5: {
+    location: 'A Green Tomorrow',
+    subtitle: 'The future looks bright · Read the clues — how does Tim feel? 🌈',
+    color: ['#EC407A', '#F06292'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🌈', label: 'Hopeful' },
+      { emoji: '😠', label: 'Angry' },
+      { emoji: '😟', label: 'Worried' },
+      { emoji: '😲', label: 'Surprised' },
+    ],
+    clues: [
+      { text: "The Planet is green and clean again. Tim looks at tomorrow. 🌍", emoji: '🌍' },
+      { text: "He smiles softly and his eyes look up to the bright sky. 🌤️", emoji: '🌤️' },
+      { text: "He sees a big rainbow — a sign of good things to come! 🌈", emoji: '🌈' },
+      { text: "He says: '<em>Together we can do it! The future is safe!</em>'", emoji: '🤝' },
+    ],
+    description: '"The Planet is green again. Tim smiles and looks up at a big rainbow. He says: Together we can do it — the future is safe! How does he feel?"',
+    positive: true,
+    feelingBadge: '🌈 A big feeling: HOPEFUL',
+    measure: '🗣️ We say: "<strong>I am hopeful.</strong>" "<strong>We can</strong> save the Planet together!" When we help, we feel <strong>hope</strong> for tomorrow!',
+    plate: '🌈 Green power: Together we <strong>can</strong> plant trees, recycle and save water. We <strong>can</strong> build a green, safe future — that is HOPE! 💚',
+    facts: [
+      { icon: '🌈', text: 'Hope means we believe tomorrow can be better — and we can make it happen!' },
+      { icon: '🤝', text: 'When everybody helps a little, together we can do big things!' },
+      { icon: '🌍', text: 'A green Planet is a happy, safe home for people and animals.' },
+    ],
+    character: 'Hopeful 🌈',
+    worldMsg: '🌈 <strong>Around the world:</strong> Children everywhere are helping the Planet — planting trees, recycling and saving water. Together, we can give the future HOPE! 💚',
   },
 };
 
@@ -823,7 +823,7 @@ function init() {
   });
 
   // Background particles — feelings / green themed
-  const particles = ['😟', '😢', '😠', '😲', '😄', '🌈', '🌳', '♻️', '💧', '💡', '🌍', '💚'];
+  const particles = ['😟', '😠', '😲', '😄', '🌈', '🌳', '♻️', '💧', '💡', '🌍', '💚', '🌤️'];
   const bgAnim = document.getElementById('bgAnim');
   for (let i = 0; i < 14; i++) {
     const el = document.createElement('div');
@@ -950,7 +950,7 @@ function onSuccess(data) {
 
 function claimGift() {
   document.getElementById('treatSticker').classList.add('visible');
-  const stickers = ['😟', '😢', '😠', '😲', '😄'];
+  const stickers = ['😟', '😠', '😲', '😄', '🌈'];
   document.getElementById('stickerEmoji').innerHTML = stickers[(station - 1) % stickers.length];
 
   document.getElementById('stickerLabel').textContent =
@@ -967,7 +967,7 @@ function launchConfetti(color1, color2) {
   canvas.height = window.innerHeight;
   document.body.appendChild(canvas);
   const ctx = canvas.getContext('2d');
-  const colors = [color1, color2, '#F4511E', '#FBC02D', '#2E7D32', '#3949AB', '#FFF8E7'];
+  const colors = [color1, color2, '#E53935', '#FBC02D', '#43A047', '#EC407A', '#FFF8E7'];
   const pieces = [];
   for (let i = 0; i < 90; i++) {
     pieces.push({
