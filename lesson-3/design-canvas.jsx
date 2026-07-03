@@ -17,8 +17,11 @@
 //     </DCSection>
 //   </DesignCanvas>
 //
-// Legacy props that no longer apply (minScale, maxScale, gap, style) are simply
-// ignored. No assets, no deps beyond React.
+// The `width`/`height` on an artboard are only the *layout width* + an initial
+// guess; the real content height is measured from each iframe (on load + via a
+// ResizeObserver so late web-font / twemoji reflow is caught) so previews show
+// the whole page with no cropped-off content and no inner scrollbar.
+// Legacy props that no longer apply (minScale, maxScale, gap) are ignored.
 
 const DC = {
   ink:      '#1f3d2b',            // deep green — headings
@@ -73,7 +76,7 @@ if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
   .dc-sec-rule{margin-top:16px;height:3px;width:100%;border-radius:3px;
     background:linear-gradient(90deg,${DC.gold},${DC.green} 42%,rgba(46,125,50,0) 96%)}
 
-  .dc-grid{display:flex;flex-wrap:wrap;gap:28px}
+  .dc-grid{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
 
   .dc-card{width:${CARD_W}px;background:#fff;border-radius:16px;overflow:hidden;
     border:1px solid rgba(20,50,30,.07);
@@ -82,17 +85,17 @@ if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
   .dc-card:hover{transform:translateY(-4px);
     box-shadow:0 8px 16px rgba(0,0,0,.10),0 20px 46px rgba(20,45,25,.17)}
 
-  .dc-thumb{position:relative;overflow:hidden;cursor:pointer;background:#f4f6f2}
-  .dc-thumb-inner{transform-origin:top left;pointer-events:none}
+  .dc-thumb{position:relative;overflow:hidden;cursor:pointer;background:#fff}
+  .dc-thumb iframe{border:0;display:block;background:#fff}
   .dc-thumb-hint{position:absolute;left:50%;top:50%;
     transform:translate(-50%,-50%) scale(.94);
     background:rgba(15,36,31,.82);color:#fff;font-weight:600;font-size:13px;
     padding:8px 15px;border-radius:999px;white-space:nowrap;pointer-events:none;
-    opacity:0;transition:opacity .16s,transform .16s;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+    opacity:0;transition:opacity .16s,transform .16s;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:3}
   .dc-card:hover .dc-thumb-hint{opacity:1;transform:translate(-50%,-50%) scale(1)}
-  .dc-fade{position:absolute;left:0;right:0;bottom:0;height:70px;pointer-events:none;
+  .dc-fade{position:absolute;left:0;right:0;bottom:0;height:70px;pointer-events:none;z-index:2;
     background:linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,.92))}
-  .dc-newtab{position:absolute;top:9px;right:9px;width:30px;height:30px;border-radius:9px;
+  .dc-newtab{position:absolute;top:9px;right:9px;width:30px;height:30px;border-radius:9px;z-index:3;
     background:rgba(15,36,31,.5);color:#fff;display:flex;align-items:center;justify-content:center;
     text-decoration:none;opacity:0;transition:opacity .16s,background .16s;backdrop-filter:blur(2px)}
   .dc-card:hover .dc-newtab{opacity:1}
@@ -113,8 +116,8 @@ if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
 
 const DCCtx = React.createContext(null);
 
-// Walk a React children tree to find the first iframe src, so the "open in new
-// tab" button and focus overlay know what to point at.
+// Walk a React children tree to find the first iframe src, so the preview,
+// "open in new tab" button and focus overlay know what to point at.
 function findFrameSrc(node) {
   if (!node) return null;
   if (Array.isArray(node)) { for (const c of node) { const r = findFrameSrc(c); if (r) return r; } return null; }
@@ -124,6 +127,59 @@ function findFrameSrc(node) {
     if (node.props.children) return findFrameSrc(node.props.children);
   }
   return null;
+}
+
+// ─────────────────────────────────────────────────────────────
+// DCFrame — a controlled iframe at a fixed layout width whose height auto-grows
+// to its real rendered content. Measured on load and via a ResizeObserver so
+// late reflow (web fonts, twemoji SVG swap, images) is captured; the height is
+// written straight to the element (so there's never an inner scrollbar) and
+// reported up through onHeight so the parent can scale/clip it.
+// ─────────────────────────────────────────────────────────────
+function DCFrame({ src, width, initialHeight, interactive, onHeight }) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    const iframe = ref.current;
+    if (!iframe) return;
+    let ro, last = 0, cancelled = false;
+    const measure = () => {
+      if (cancelled) return;
+      try {
+        const d = iframe.contentDocument;
+        if (!d || !d.documentElement) return;
+        const h = Math.max(
+          d.documentElement.scrollHeight,
+          d.body ? d.body.scrollHeight : 0,
+          d.body ? d.body.offsetHeight : 0,
+        );
+        if (h > 0 && Math.abs(h - last) > 1) {
+          last = h;
+          iframe.style.height = h + 'px';
+          if (onHeight) onHeight(h);
+        }
+      } catch (e) { /* cross-origin — leave the initial height */ }
+    };
+    const onLoad = () => {
+      measure();
+      try {
+        const d = iframe.contentDocument;
+        if (d && window.ResizeObserver) { ro = new ResizeObserver(measure); ro.observe(d.documentElement); }
+      } catch (e) {}
+      setTimeout(measure, 400);
+      setTimeout(measure, 1400);
+    };
+    iframe.addEventListener('load', onLoad);
+    try { if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') onLoad(); } catch (e) {}
+    return () => { cancelled = true; iframe.removeEventListener('load', onLoad); if (ro) ro.disconnect(); };
+  }, [src]);
+
+  // Not lazy-loaded: we measure each frame's real height to lay the grid out,
+  // so we want them to load (and settle) promptly rather than on scroll.
+  return (
+    <iframe ref={ref} src={src} title={src} scrolling="no"
+      style={{ width, height: initialHeight, border: 0, display: 'block', background: '#fff',
+        pointerEvents: interactive ? 'auto' : 'none' }} />
+  );
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -211,22 +267,25 @@ function DCArtboard() { return null; }
 // ─────────────────────────────────────────────────────────────
 function DCCard({ artboard, onOpen }) {
   const { label, width = CARD_W, height = 480, download, downloadFormat, children, style = {} } = artboard.props;
-  const scale = CARD_W / width;                 // downscale to a uniform width
-  const fullH = height * scale;
-  const clipped = fullH > CARD_MAX_H;
-  const thumbH = clipped ? CARD_MAX_H : fullH;
   const frameSrc = findFrameSrc(children);
+  const [natH, setNatH] = React.useState(height); // real content height (measured)
+
+  const scale = CARD_W / width;                    // downscale to a uniform width
+  const dispH = natH * scale;
+  const clipped = dispH > CARD_MAX_H;
+  const thumbH = clipped ? CARD_MAX_H : dispH;
+
   const dlHref = download
     ? `${download}${download.includes('?') ? '&' : '?'}pdf=1${downloadFormat ? '&size=' + encodeURIComponent(downloadFormat) : ''}`
     : null;
 
   return (
     <div className="dc-card">
-      <div className="dc-thumb" style={{ width: CARD_W, height: thumbH }} onClick={onOpen}
-        title="Click to enlarge">
-        <div className="dc-thumb-inner"
-          style={{ width, height, transform: `scale(${scale})`, background: '#fff', ...style }}>
-          {children}
+      <div className="dc-thumb" style={{ width: CARD_W, height: thumbH }} onClick={onOpen} title="Click to enlarge">
+        <div style={{ width, height: natH, transform: `scale(${scale})`, transformOrigin: 'top left', ...style }}>
+          {frameSrc
+            ? <DCFrame src={frameSrc} width={width} initialHeight={height} interactive={false} onHeight={setNatH} />
+            : children}
         </div>
         {clipped && <div className="dc-fade" />}
         <div className="dc-thumb-hint">🔍 Click to enlarge</div>
@@ -260,7 +319,8 @@ function DCCard({ artboard, onOpen }) {
 
 // ─────────────────────────────────────────────────────────────
 // Focus mode — overlay one artboard full-size; ←/→ within a section, ↑/↓
-// across sections, Esc or backdrop click to exit.
+// across sections, Esc or backdrop click to exit. Content taller than the
+// viewport scrolls inside the overlay.
 // ─────────────────────────────────────────────────────────────
 function DCFocusOverlay({ entry, sectionMeta, sectionOrder, setFocus }) {
   const { sectionId, artboard } = entry;
@@ -289,11 +349,20 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder, setFocus }) {
   });
 
   const { width = 260, height = 480, children } = artboard.props;
+  const frameSrc = findFrameSrc(children);
+  const [natH, setNatH] = React.useState(height);
   const [vp, setVp] = React.useState({ w: window.innerWidth, h: window.innerHeight });
   React.useEffect(() => { const r = () => setVp({ w: window.innerWidth, h: window.innerHeight }); window.addEventListener('resize', r); return () => window.removeEventListener('resize', r); }, []);
-  const scale = Math.max(0.1, Math.min((vp.w - 200) / width, (vp.h - 260) / height, 2));
+  // Reset the measured height whenever we navigate to a different artboard.
+  React.useEffect(() => { setNatH(height); }, [aid]);
 
-  const frameSrc = findFrameSrc(children);
+  const availW = vp.w - 160;
+  const availH = vp.h - 150;
+  const scale = Math.max(0.1, Math.min(availW / width, 1.6));
+  const dispW = width * scale;
+  const dispH = natH * scale;
+  const needScroll = dispH > availH;
+
   const [ddOpen, setDd] = React.useState(false);
 
   const Arrow = ({ dir, onClick }) => (
@@ -316,7 +385,7 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder, setFocus }) {
 
       {/* top bar: section dropdown (left) · open-in-tab + close (right) */}
       <div onClick={(e) => e.stopPropagation()}
-        style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 72, display: 'flex', alignItems: 'flex-start', padding: '16px 20px 0', gap: 12 }}>
+        style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 72, display: 'flex', alignItems: 'flex-start', padding: '16px 20px 0', gap: 12, zIndex: 3 }}>
         <div style={{ position: 'relative' }}>
           <button onClick={() => setDd((o) => !o)}
             style={{ border: 'none', background: 'transparent', color: '#fff', cursor: 'pointer', padding: '6px 8px', borderRadius: 6, textAlign: 'left', fontFamily: 'inherit' }}>
@@ -357,14 +426,19 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder, setFocus }) {
           style={{ border: 'none', background: 'transparent', color: 'rgba(255,255,255,.8)', width: 32, height: 32, borderRadius: 16, fontSize: 20, cursor: 'pointer', lineHeight: 1, transition: 'background .12s' }}>×</button>
       </div>
 
-      {/* card centered, label + index below */}
-      <div style={{ position: 'absolute', top: 64, bottom: 56, left: 100, right: 100, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
-        <div onClick={(e) => e.stopPropagation()} style={{ width: width * scale, height: height * scale, position: 'relative' }}>
-          <div style={{ width, height, transform: `scale(${scale})`, transformOrigin: 'top left', background: '#fff', borderRadius: 4, overflow: 'hidden', boxShadow: '0 20px 80px rgba(0,0,0,.45)' }}>
-            {children || <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#bbb' }}>{aid}</div>}
+      {/* card centered, label + index below (scrolls vertically if very tall) */}
+      <div style={{ position: 'absolute', top: 64, bottom: 56, left: 100, right: 100, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: needScroll ? 'flex-start' : 'center', gap: 16 }}>
+        <div onClick={(e) => e.stopPropagation()}
+          style={{ maxHeight: '100%', overflowY: needScroll ? 'auto' : 'visible', borderRadius: 4, boxShadow: '0 20px 80px rgba(0,0,0,.45)' }}>
+          <div style={{ width: dispW, height: dispH, background: '#fff', overflow: 'hidden' }}>
+            <div style={{ width, height: natH, transform: `scale(${scale})`, transformOrigin: 'top left' }}>
+              {frameSrc
+                ? <DCFrame src={frameSrc} width={width} initialHeight={height} interactive={true} onHeight={setNatH} />
+                : (children || <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#bbb' }}>{aid}</div>)}
+            </div>
           </div>
         </div>
-        <div onClick={(e) => e.stopPropagation()} style={{ fontSize: 14, fontWeight: 500, opacity: .9, textAlign: 'center' }}>
+        <div onClick={(e) => e.stopPropagation()} style={{ fontSize: 14, fontWeight: 500, opacity: .9, textAlign: 'center', flexShrink: 0 }}>
           {artboard.props.label}
           <span style={{ opacity: .5, marginLeft: 10, fontVariantNumeric: 'tabular-nums' }}>{idx + 1} / {peers.length}</span>
         </div>
