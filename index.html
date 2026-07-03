@@ -6,156 +6,186 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carmen Becerril Martín — Lessons</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   html, body { min-height:100%; }
-  html { overflow-y:scroll; }              /* always-visible vertical scrollbar */
+  html { overflow-y:scroll; }                       /* always-visible scrollbar */
   body {
-    background:#1a1a1a;
-    color:#f5f5f5;
+    background:
+      radial-gradient(920px 440px at 50% -14%, rgba(46,125,50,0.40), transparent 62%),
+      radial-gradient(760px 400px at 102% -6%, rgba(251,192,45,0.10), transparent 55%),
+      linear-gradient(180deg, #12211c 0%, #0d1712 100%);
+    background-attachment: fixed;
+    color:#EAF1EA;
     font-family:'Fredoka', sans-serif;
     min-height:100vh;
     display:flex;
     flex-direction:column;
     align-items:center;
-    padding:60px 24px;
+    padding:64px 24px 44px;
   }
-  /* Custom scrollbar styling (Chromium / WebKit) */
+  img.emoji { height:1em; width:1em; vertical-align:-0.12em; margin:0 0.04em; display:inline-block; }
+
+  /* Custom scrollbar (Chromium / WebKit) */
   html::-webkit-scrollbar { width:14px; }
-  html::-webkit-scrollbar-track { background:#222; }
-  html::-webkit-scrollbar-thumb { background:#3a3a3a; border:3px solid #222; border-radius:7px; }
-  html::-webkit-scrollbar-thumb:hover { background:#7ed957; }
-  header { text-align:center; margin-bottom:48px; max-width:720px; }
+  html::-webkit-scrollbar-track { background:#0e1712; }
+  html::-webkit-scrollbar-thumb { background:#2c4438; border:3px solid #0e1712; border-radius:7px; }
+  html::-webkit-scrollbar-thumb:hover { background:#43A047; }
+
+  header { text-align:center; margin-bottom:44px; max-width:760px; }
+  .eyebrow {
+    font-size:0.78rem; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+    color:#97C459; margin-bottom:13px;
+  }
   h1 {
     font-family:'Fredoka One', cursive;
-    font-size:clamp(2rem, 5vw, 3.25rem);
-    color:#7ed957;
+    font-size:clamp(2.1rem, 5vw, 3.3rem);
+    color:#FBC02D;
     letter-spacing:0.5px;
-    margin-bottom:12px;
+    line-height:1.08;
+    text-shadow:0 2px 0 rgba(0,0,0,0.28);
   }
-  header p { color:#bdbdbd; font-size:1.05rem; line-height:1.5; }
+  header p { color:#A6B8AC; font-size:1.05rem; line-height:1.55; margin-top:14px; }
+  .rule { height:3px; width:120px; border-radius:3px; margin:20px auto 0;
+    background:linear-gradient(90deg, #FBC02D, #43A047); }
+
   .grid {
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
-    gap:20px;
+    grid-template-columns:repeat(auto-fill, minmax(255px, 1fr));
+    gap:18px;
     width:100%;
-    max-width:960px;
+    max-width:1040px;
   }
+
   .card {
-    display:block;
-    background:#262626;
-    border:1px solid #333;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    background:var(--tint);
+    border:1px solid var(--edge);
     border-radius:18px;
-    padding:28px 24px;
+    padding:22px 20px 20px;
     text-decoration:none;
     color:inherit;
-    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+    transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease;
   }
   .card:hover {
-    transform:translateY(-3px);
-    border-color:#7ed957;
-    background:#2d2d2d;
+    transform:translateY(-4px);
+    border-color:var(--accent);
+    box-shadow:0 16px 36px rgba(0,0,0,0.45), inset 0 0 0 1px var(--accent);
   }
-  .card.disabled {
-    opacity:0.5;
-    cursor:not-allowed;
-    pointer-events:none;
+  .chip {
+    width:46px; height:46px; border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px; background:var(--chip); margin-bottom:4px;
   }
   .badge {
-    display:inline-block;
-    font-size:0.72rem;
-    font-weight:600;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    color:#7ed957;
-    background:rgba(126,217,87,0.12);
-    padding:4px 10px;
-    border-radius:999px;
-    margin-bottom:12px;
+    align-self:flex-start;
+    font-size:0.7rem; font-weight:600; letter-spacing:1px; text-transform:uppercase;
+    color:var(--accent); background:var(--chip);
+    padding:4px 11px; border-radius:999px;
   }
-  .card.disabled .badge { color:#888; background:rgba(255,255,255,0.06); }
-  .card h2 {
-    font-family:'Fredoka One', cursive;
-    font-size:1.5rem;
-    margin-bottom:8px;
-  }
-  .card p { color:#aaa; font-size:0.95rem; line-height:1.45; }
-  footer {
-    margin-top:auto;
-    padding-top:48px;
-    color:#666;
-    font-size:0.85rem;
-  }
+  .card h2 { font-family:'Fredoka One', cursive; font-size:1.28rem; color:#FFF8E7; line-height:1.15; }
+  .card p { color:#A3B2A7; font-size:0.9rem; line-height:1.5; }
+  .open { margin-top:6px; font-weight:600; font-size:0.9rem; color:var(--accent); }
+
+  footer { margin-top:48px; color:#607468; font-size:0.85rem; text-align:center; }
 </style>
 </head>
 <body>
   <header>
-    <h1>Carmen Becerril Martín · Lessons</h1>
-    <p>Materials and activities by lesson. Pick one to open its content.</p>
+    <div class="eyebrow">🌈 English lessons · Year 3</div>
+    <h1>Carmen Becerril Martín</h1>
+    <p>Scavenger-hunt lessons — pick one to open its printables and activities.</p>
+    <div class="rule"></div>
   </header>
 
   <main class="grid">
-    <a class="card" href="lesson-1/">
+    <a class="card" href="lesson-1/" style="--accent:#97C459;--tint:#16251c;--edge:rgba(151,196,89,0.28);--chip:rgba(151,196,89,0.15)">
+      <span class="chip">🌈</span>
       <span class="badge">Lesson 1</span>
       <h2>Feelings for the Future</h2>
-      <p>Emotions &amp; Can/Can't — help Tim bring hope for a greener future: posters, riddles, cards, medals and a teacher's guide.</p>
+      <p>Emotions &amp; Can/Can't — help Tim bring hope for a greener future.</p>
+      <span class="open">Open →</span>
     </a>
 
-    <a class="card" href="lesson-2/">
+    <a class="card" href="lesson-2/" style="--accent:#5DCAA5;--tint:#13251f;--edge:rgba(93,202,165,0.28);--chip:rgba(93,202,165,0.15)">
+      <span class="chip">🏠</span>
       <span class="badge">Lesson 2</span>
       <h2>Eco House Hunt</h2>
       <p>Parts of the house: posters, room cards, riddles and teacher materials.</p>
+      <span class="open">Open →</span>
     </a>
 
-    <a class="card" href="lesson-3/">
+    <a class="card" href="lesson-3/" style="--accent:#F0997B;--tint:#241a14;--edge:rgba(240,153,123,0.28);--chip:rgba(240,153,123,0.15)">
+      <span class="chip">🎃</span>
       <span class="badge">Lesson 3</span>
       <h2>The Midnight Hunt</h2>
       <p>Halloween creatures: posters, riddles, cards, medals and a teacher's guide.</p>
+      <span class="open">Open →</span>
     </a>
 
-    <a class="card" href="lesson-4/">
+    <a class="card" href="lesson-4/" style="--accent:#F09595;--tint:#241618;--edge:rgba(240,149,149,0.28);--chip:rgba(240,149,149,0.15)">
+      <span class="chip">🎄</span>
       <span class="badge">Lesson 5</span>
       <h2>The Christmas Sports Hunt</h2>
-      <p>Sports & Christmas theme: posters, riddles, cards, medals and a teacher's guide.</p>
+      <p>Sports &amp; Christmas theme: posters, riddles, cards, medals and a teacher's guide.</p>
+      <span class="open">Open →</span>
     </a>
 
-    <a class="card" href="lesson-6/">
+    <a class="card" href="lesson-6/" style="--accent:#FAC775;--tint:#241f13;--edge:rgba(250,199,117,0.28);--chip:rgba(250,199,117,0.15)">
+      <span class="chip">🍎</span>
       <span class="badge">Lesson 6</span>
       <h2>Delicious Food Detectives</h2>
-      <p>Year 2026 — The Lost Ingredients: posters, riddles, cards, medals and a teacher's guide.</p>
+      <p>The Lost Ingredients: posters, riddles, cards, medals and a teacher's guide.</p>
+      <span class="open">Open →</span>
     </a>
 
-    <a class="card" href="lesson-7/">
+    <a class="card" href="lesson-7/" style="--accent:#AFA9EC;--tint:#1b1a29;--edge:rgba(175,169,236,0.28);--chip:rgba(175,169,236,0.15)">
+      <span class="chip">🎨</span>
       <span class="badge">Lesson 7</span>
       <h2>Non-teachy Hobbies Hunt</h2>
       <p>Hobbies &amp; healthy habits: posters, riddles, fun fact cards, medals and a teacher's guide.</p>
+      <span class="open">Open →</span>
     </a>
 
-    <a class="card" href="lesson-8/">
+    <a class="card" href="lesson-8/" style="--accent:#85B7EB;--tint:#131e2b;--edge:rgba(133,183,235,0.28);--chip:rgba(133,183,235,0.15)">
+      <span class="chip">💼</span>
       <span class="badge">Lesson 8</span>
       <h2>My Dream Job</h2>
-      <p>Occupations &amp; equality — Helping Rural Schools in India: posters, riddles, fun fact cards, medals and a teacher's guide.</p>
+      <p>Occupations &amp; equality — helping rural schools: posters, riddles, cards and more.</p>
+      <span class="open">Open →</span>
     </a>
 
-    <a class="card" href="lesson-9/">
+    <a class="card" href="lesson-9/" style="--accent:#97C459;--tint:#16251c;--edge:rgba(151,196,89,0.28);--chip:rgba(151,196,89,0.15)">
+      <span class="chip">🍀</span>
       <span class="badge">Lesson 9</span>
       <h2>St. Patrick's Animal Hunt</h2>
       <p>Posters, cards, interactive riddles, medals and a teacher's guide.</p>
+      <span class="open">Open →</span>
     </a>
 
-    <a class="card" href="lesson-11/">
+    <a class="card" href="lesson-11/" style="--accent:#85B7EB;--tint:#131e2b;--edge:rgba(133,183,235,0.28);--chip:rgba(133,183,235,0.15)">
+      <span class="chip">🌍</span>
       <span class="badge">Lesson 11</span>
       <h2>Routines Around the World</h2>
-      <p>Routines, time &amp; green habits: posters, riddles, fun fact cards, medals and a teacher's guide.</p>
+      <p>Routines, time &amp; green habits: posters, riddles, fun fact cards and more.</p>
+      <span class="open">Open →</span>
     </a>
 
-    <a class="card" href="lesson-12/">
+    <a class="card" href="lesson-12/" style="--accent:#5DCAA5;--tint:#13251f;--edge:rgba(93,202,165,0.28);--chip:rgba(93,202,165,0.15)">
+      <span class="chip">🏖️</span>
       <span class="badge">Lesson 12</span>
       <h2>Beach Guardians</h2>
-      <p>Recycling &amp; ocean pollution — beach vocabulary, the 3 Rs &amp; present simple: posters, riddles, cards, medals and a teacher's guide.</p>
+      <p>Recycling &amp; ocean pollution — beach vocabulary, the 3 Rs &amp; present simple.</p>
+      <span class="open">Open →</span>
     </a>
   </main>
 
-  <footer>Made with love · Carmen Lessons</footer>
+  <footer>Made with 💚 for Year 3 · Carmen Becerril Martín</footer>
+
+  <script>document.addEventListener('DOMContentLoaded', function(){ if(window.twemoji) twemoji.parse(document.body, {folder:'svg', ext:'.svg'}); });</script>
 </body>
 </html>
