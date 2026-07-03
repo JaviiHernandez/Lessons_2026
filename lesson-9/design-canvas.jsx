@@ -76,9 +76,9 @@ if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
   .dc-sec-rule{margin-top:16px;height:3px;width:100%;border-radius:3px;
     background:linear-gradient(90deg,${DC.gold},${DC.green} 42%,rgba(46,125,50,0) 96%)}
 
-  .dc-grid{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+  .dc-grid{display:flex;flex-wrap:wrap;gap:clamp(16px,3vw,28px);align-items:flex-start;justify-content:center}
 
-  .dc-card{width:${CARD_W}px;background:#fff;border-radius:16px;overflow:hidden;
+  .dc-card{background:#fff;border-radius:16px;overflow:hidden;
     border:1px solid rgba(20,50,30,.07);
     box-shadow:0 1px 2px rgba(0,0,0,.05),0 6px 20px rgba(20,45,25,.08);
     transition:transform .18s cubic-bezier(.2,.7,.3,1),box-shadow .18s}
@@ -189,6 +189,15 @@ function DCFrame({ src, width, initialHeight, interactive, onHeight }) {
 // ─────────────────────────────────────────────────────────────
 function DesignCanvas({ children, title }) {
   const [focus, setFocus] = React.useState(null); // slotId "sectionId/artboardId" | null
+  const [vw, setVw] = React.useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  React.useEffect(() => {
+    const r = () => setVw(window.innerWidth);
+    window.addEventListener('resize', r);
+    return () => window.removeEventListener('resize', r);
+  }, []);
+  // Responsive card width: fills the screen (minus page padding) on phones,
+  // capped at CARD_W on wider screens where cards flex-wrap into columns.
+  const cardW = Math.max(232, Math.min(CARD_W, vw - 36));
 
   const registry = {};     // slotId -> { sectionId, artboard }
   const sectionMeta = {};  // sectionId -> { title, subtitle, slotIds[] }
@@ -242,7 +251,7 @@ function DesignCanvas({ children, title }) {
               </div>
               <div className="dc-grid">
                 {s.artboards.map(({ aid, ab }) => (
-                  <DCCard key={aid} artboard={ab} onOpen={() => setFocus(`${s.sid}/${aid}`)} />
+                  <DCCard key={aid} artboard={ab} cardW={cardW} onOpen={() => setFocus(`${s.sid}/${aid}`)} />
                 ))}
               </div>
             </section>
@@ -265,12 +274,12 @@ function DCArtboard() { return null; }
 // DCCard — one preview card: scaled thumbnail (click to focus) + footer with
 // the label and an optional "Download PDF" button.
 // ─────────────────────────────────────────────────────────────
-function DCCard({ artboard, onOpen }) {
+function DCCard({ artboard, onOpen, cardW = CARD_W }) {
   const { label, width = CARD_W, height = 480, download, downloadFormat, children, style = {} } = artboard.props;
   const frameSrc = findFrameSrc(children);
   const [natH, setNatH] = React.useState(height); // real content height (measured)
 
-  const scale = CARD_W / width;                    // downscale to a uniform width
+  const scale = cardW / width;                     // downscale to the (responsive) card width
   const dispH = natH * scale;
   const clipped = dispH > CARD_MAX_H;
   const thumbH = clipped ? CARD_MAX_H : dispH;
@@ -280,8 +289,8 @@ function DCCard({ artboard, onOpen }) {
     : null;
 
   return (
-    <div className="dc-card">
-      <div className="dc-thumb" style={{ width: CARD_W, height: thumbH }} onClick={onOpen} title="Click to enlarge">
+    <div className="dc-card" style={{ width: cardW }}>
+      <div className="dc-thumb" style={{ width: cardW, height: thumbH }} onClick={onOpen} title="Click to enlarge">
         <div style={{ width, height: natH, transform: `scale(${scale})`, transformOrigin: 'top left', ...style }}>
           {frameSrc
             ? <DCFrame src={frameSrc} width={width} initialHeight={height} interactive={false} onHeight={setNatH} />
@@ -356,8 +365,9 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder, setFocus }) {
   // Reset the measured height whenever we navigate to a different artboard.
   React.useEffect(() => { setNatH(height); }, [aid]);
 
-  const availW = vp.w - 160;
-  const availH = vp.h - 150;
+  const mobile = vp.w < 640;
+  const availW = vp.w - (mobile ? 28 : 160);
+  const availH = vp.h - (mobile ? 116 : 150);
   const scale = Math.max(0.1, Math.min(availW / width, 1.6));
   const dispW = width * scale;
   const dispH = natH * scale;
@@ -385,15 +395,15 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder, setFocus }) {
 
       {/* top bar: section dropdown (left) · open-in-tab + close (right) */}
       <div onClick={(e) => e.stopPropagation()}
-        style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 72, display: 'flex', alignItems: 'flex-start', padding: '16px 20px 0', gap: 12, zIndex: 3 }}>
+        style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 72, display: 'flex', alignItems: 'flex-start', padding: mobile ? '12px 12px 0' : '16px 20px 0', gap: mobile ? 8 : 12, zIndex: 3 }}>
         <div style={{ position: 'relative' }}>
           <button onClick={() => setDd((o) => !o)}
             style={{ border: 'none', background: 'transparent', color: '#fff', cursor: 'pointer', padding: '6px 8px', borderRadius: 6, textAlign: 'left', fontFamily: 'inherit' }}>
-            <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: -0.3 }}>{meta.title}</span>
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" style={{ opacity: .7 }}><path d="M2 4l3.5 3.5L9 4"/></svg>
+            <span style={{ display: 'flex', alignItems: 'center', gap: 8, maxWidth: mobile ? vp.w - 112 : 'none' }}>
+              <span style={{ fontSize: mobile ? 15 : 18, fontWeight: 600, letterSpacing: -0.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{meta.title}</span>
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" style={{ opacity: .7, flexShrink: 0 }}><path d="M2 4l3.5 3.5L9 4"/></svg>
             </span>
-            {meta.subtitle && <span style={{ display: 'block', fontSize: 13, opacity: .6, fontWeight: 400, marginTop: 2 }}>{meta.subtitle}</span>}
+            {meta.subtitle && !mobile && <span style={{ display: 'block', fontSize: 13, opacity: .6, fontWeight: 400, marginTop: 2 }}>{meta.subtitle}</span>}
           </button>
           {ddOpen && (
             <div style={{ position: 'absolute', top: '100%', left: 0, marginTop: 4, background: '#22352b', borderRadius: 8, boxShadow: '0 8px 32px rgba(0,0,0,.4)', padding: 4, minWidth: 220, zIndex: 10 }}>
@@ -427,7 +437,7 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder, setFocus }) {
       </div>
 
       {/* card centered, label + index below (scrolls vertically if very tall) */}
-      <div style={{ position: 'absolute', top: 64, bottom: 56, left: 100, right: 100, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: needScroll ? 'flex-start' : 'center', gap: 16 }}>
+      <div style={{ position: 'absolute', top: mobile ? 58 : 64, bottom: mobile ? 46 : 56, left: mobile ? 10 : 100, right: mobile ? 10 : 100, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: needScroll ? 'flex-start' : 'center', gap: 16 }}>
         <div onClick={(e) => e.stopPropagation()}
           style={{ maxHeight: '100%', overflowY: needScroll ? 'auto' : 'visible', borderRadius: 4, boxShadow: '0 20px 80px rgba(0,0,0,.45)' }}>
           <div style={{ width: dispW, height: dispH, background: '#fff', overflow: 'hidden' }}>
@@ -444,8 +454,8 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder, setFocus }) {
         </div>
       </div>
 
-      {peers.length > 1 && <Arrow dir="left" onClick={() => go(-1)} />}
-      {peers.length > 1 && <Arrow dir="right" onClick={() => go(1)} />}
+      {peers.length > 1 && !mobile && <Arrow dir="left" onClick={() => go(-1)} />}
+      {peers.length > 1 && !mobile && <Arrow dir="right" onClick={() => go(1)} />}
 
       {/* dots */}
       {peers.length > 1 && (
