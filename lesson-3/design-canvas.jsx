@@ -110,16 +110,6 @@ if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
     box-shadow:0 1px 3px rgba(46,125,50,.35);transition:filter .15s,transform .12s}
   .dc-dl:hover{filter:brightness(1.08);transform:translateY(-1px)}
   .dc-dl:active{transform:translateY(0)}
-
-  .dc-pillrow{display:flex;flex-wrap:wrap;gap:12px}
-  .dc-pill{display:inline-flex;align-items:center;gap:9px;padding:11px 17px;border-radius:999px;
-    background:#fff;border:1.5px solid rgba(20,50,30,.14);color:#26382c;font-size:14.5px;font-weight:500;
-    text-decoration:none;box-shadow:0 1px 2px rgba(20,45,25,.06);
-    transition:transform .15s,border-color .15s,background .15s,box-shadow .15s}
-  .dc-pill:hover{border-color:${DC.green};background:#F1F8EE;color:${DC.ink};transform:translateY(-2px);
-    box-shadow:0 6px 16px rgba(20,45,25,.12)}
-  .dc-pill svg{opacity:.4;transition:opacity .15s,color .15s;flex-shrink:0}
-  .dc-pill:hover svg{opacity:.95;color:${DC.green}}
   `;
   document.head.appendChild(s);
 }
@@ -137,14 +127,6 @@ function findFrameSrc(node) {
     if (node.props.children) return findFrameSrc(node.props.children);
   }
   return null;
-}
-
-// Interactive riddles (riddle.html?s=N, never a printable/download) are shown
-// as compact "open on a device" pills instead of heavy preview cards.
-function isRiddle(artboard) {
-  if (artboard.props.download) return false;
-  const src = findFrameSrc(artboard.props.children);
-  return !!src && /riddle\.html/i.test(src);
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -216,23 +198,19 @@ function DesignCanvas({ children, title }) {
     if (!sec || sec.type !== DCSection) return;
     const sid = sec.props.id ?? sec.props.title;
     if (!sid) return;
-    const slotIds = [];   // card artboards only — the focus overlay navigates these
-    const cards = [];
-    const pills = [];     // riddles, rendered as compact links
+    sectionOrder.push(sid);
+    const slotIds = [];
+    const artboards = [];
     React.Children.forEach(sec.props.children, (ab) => {
       if (!ab || ab.type !== DCArtboard) return;
       const aid = ab.props.id ?? ab.props.label;
       if (!aid) return;
-      if (isRiddle(ab)) { pills.push({ aid, ab }); return; }
       registry[`${sid}/${aid}`] = { sectionId: sid, artboard: ab };
       slotIds.push(aid);
-      cards.push({ aid, ab });
+      artboards.push({ aid, ab });
     });
-    if (slotIds.length) {
-      sectionOrder.push(sid);
-      sectionMeta[sid] = { title: sec.props.title, subtitle: sec.props.subtitle, slotIds };
-    }
-    sections.push({ sid, title: sec.props.title, subtitle: sec.props.subtitle, cards, pills });
+    sectionMeta[sid] = { title: sec.props.title, subtitle: sec.props.subtitle, slotIds };
+    sections.push({ sid, title: sec.props.title, subtitle: sec.props.subtitle, artboards });
   });
 
   const api = React.useMemo(() => ({ setFocus }), []);
@@ -262,18 +240,11 @@ function DesignCanvas({ children, title }) {
                 {s.subtitle && <div className="dc-sec-sub">{s.subtitle}</div>}
                 <div className="dc-sec-rule" />
               </div>
-              {s.cards.length > 0 && (
-                <div className="dc-grid">
-                  {s.cards.map(({ aid, ab }) => (
-                    <DCCard key={aid} artboard={ab} onOpen={() => setFocus(`${s.sid}/${aid}`)} />
-                  ))}
-                </div>
-              )}
-              {s.pills.length > 0 && (
-                <div className="dc-pillrow">
-                  {s.pills.map(({ aid, ab }) => <DCRiddlePill key={aid} artboard={ab} />)}
-                </div>
-              )}
+              <div className="dc-grid">
+                {s.artboards.map(({ aid, ab }) => (
+                  <DCCard key={aid} artboard={ab} onOpen={() => setFocus(`${s.sid}/${aid}`)} />
+                ))}
+              </div>
             </section>
           ))}
         </div>
@@ -343,25 +314,6 @@ function DCCard({ artboard, onOpen }) {
         )}
       </div>
     </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────
-// DCRiddlePill — a compact chip for an interactive riddle; opens it in a new
-// tab (riddles are meant to be run on classroom tablets/phones).
-// ─────────────────────────────────────────────────────────────
-function DCRiddlePill({ artboard }) {
-  const { label, children } = artboard.props;
-  const src = findFrameSrc(children);
-  return (
-    <a className="dc-pill" href={src} target="_blank" rel="noopener" title="Open the riddle in a new tab">
-      <span>{label}</span>
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor"
-        strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M7 1h4v4"/><path d="M11 1L6.5 5.5"/>
-        <path d="M9 7v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h3"/>
-      </svg>
-    </a>
   );
 }
 

@@ -247,6 +247,17 @@ function downloadAllPrintables(){
   });
 }
 </script>
+<style id="pill-restyle">
+  /* Option 2 — solid-colour riddle pills + cream download pill */
+  .riddle-link{border-radius:999px;padding:7px 15px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,.30);text-shadow:0 1px 2px rgba(0,0,0,.3);box-shadow:0 2px 7px rgba(0,0,0,.22);transition:transform .13s,filter .13s,box-shadow .13s}
+  .riddle-link:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 5px 14px rgba(0,0,0,.30)}
+  .riddle-link.rl1{background:rgb(230,81,0);border-color:rgba(255,255,255,.30)}
+  .riddle-link.rl2{background:rgb(27,94,32);border-color:rgba(255,255,255,.30)}
+  .riddle-link.rl3{background:rgb(198,40,40);border-color:rgba(255,255,255,.30)}
+  .riddle-link.rl4{background:rgb(40,53,147);border-color:rgba(255,255,255,.30)}
+  .riddle-link.rl5{background:rgb(85,139,47);border-color:rgba(255,255,255,.30)}
+  .dl-all-btn{background:#FFF8E7 !important;color:#2E7D32 !important;border:1.5px solid rgba(255,255,255,.7) !important;border-radius:999px !important;box-shadow:0 3px 10px rgba(0,0,0,.25) !important}
+</style>
 </head>
 <body>
 
