@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="../favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0288D1">
+<title>Beach Guardians — Fun Fact Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<style>
+  img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0f241f;
+    font-family: 'Fredoka', sans-serif;
+    padding: clamp(16px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(28px, 4.5vw, 54px);
+    overflow-x: hidden;
+  }
+
+  .page-heading {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(20px, 3.8vw, 34px);
+    color: #FBC02D;
+    text-align: center;
+    padding-top: clamp(8px, 1.5vw, 16px);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  }
+
+  .print-note {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(251,192,45,0.3);
+    border-radius: 8px;
+    padding: clamp(8px,1.5vw,12px) clamp(16px,3vw,24px);
+    color: rgba(255,248,231,0.65);
+    font-size: clamp(12px,1.8vw,14px);
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .card-pair {
+    display: flex;
+    gap: clamp(20px, 3.5vw, 44px);
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .card-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(12px, 1.8vw, 15px);
+    color: rgba(255,248,231,0.5);
+    text-align: center;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .card {
+    width: 238px;
+    height: 332px;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 2px rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+
+  /* ── FRONT ── */
+  .card-front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    padding: 14px 12px 0;
+    position: relative;
+    gap: 7px;
+  }
+
+  .station-chip {
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ingredient-emoji {
+    font-size: 72px;
+    line-height: 1;
+    filter: drop-shadow(0 4px 14px rgba(0,0,0,0.4));
+    position: relative;
+    z-index: 2;
+    margin: 8px 0 2px;
+  }
+  .ingredient-emoji svg { display: block; }
+
+  .recipe-tag {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.78);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+  }
+
+  .recipe-card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 14px;
+    padding: 14px 12px 16px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+    position: relative;
+    z-index: 2;
+    border: 2.5px solid rgba(255,255,255,0.6);
+    margin-bottom: 8px;
+  }
+
+  .recipe-emoji {
+    font-size: 46px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .recipe-emoji svg { display: inline-block; vertical-align: middle; }
+
+  .recipe-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 19px;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+
+  .recipe-with {
+    font-size: 12px;
+    color: rgba(0,0,0,0.6);
+    font-weight: 500;
+    letter-spacing: 0.4px;
+  }
+  .recipe-with strong { font-weight: 700; }
+
+  .theme-sandcastle .recipe-name  { color: #F57F17; }
+  .theme-swimsuit   .recipe-name  { color: #C62828; }
+  .theme-sunscreen  .recipe-name  { color: #1565C0; }
+  .theme-turtle     .recipe-name  { color: #00695C; }
+  .theme-jellyfish  .recipe-name  { color: #5E35B1; }
+
+  /* Corner ornaments */
+  .corner-orns { position: absolute; inset: 0; pointer-events: none; }
+  .orn { position: absolute; font-size: 15px; opacity: 0.5; }
+  .orn-tl { top: 8px; left: 9px; }
+  .orn-tr { top: 8px; right: 9px; }
+  .orn-bl { bottom: 28px; left: 9px; }
+  .orn-br { bottom: 28px; right: 9px; }
+
+  .card-footer-strip {
+    width: calc(100% + 24px);
+    margin: 0 -12px 0;
+    padding: 7px 0;
+    background: rgba(0,0,0,0.3);
+    text-align: center;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 9px;
+    color: rgba(255,255,255,0.78);
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
+    border-radius: 0 0 18px 18px;
+  }
+
+  /* ── BACK ── */
+  .card-back {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 11px 11px 9px;
+    gap: 6px;
+    position: relative;
+  }
+
+  .back-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-bottom: 6px;
+    border-bottom: 1.5px solid rgba(255,255,255,0.15);
+  }
+
+  .back-emoji { font-size: 26px; line-height: 1; }
+  .back-emoji svg { display: inline-block; vertical-align: middle; }
+
+  .back-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 13px;
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    line-height: 1.15;
+  }
+
+  .back-station { font-size: 9.5px; color: rgba(255,255,255,0.6); letter-spacing: 0.7px; text-transform: uppercase; }
+
+  .back-section-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+  }
+
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px 6px;
+    background: rgba(0,0,0,0.18);
+    border-radius: 8px;
+    padding: 6px 8px;
+    border-left: 3px solid rgba(255,255,255,0.3);
+  }
+  .ing-item {
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.3;
+  }
+  .ing-item strong {
+    color: #FFE082;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 10px;
+  }
+
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 7px;
+    padding: 4px 7px;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.3;
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 15px; height: 15px;
+    border-radius: 50%;
+    background: rgba(251,192,45,0.9);
+    color: #0f241f;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 9px;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+
+  /* Green message strip */
+  .health-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.3);
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 9px;
+    color: #FFE082;
+    font-family: 'Fredoka One', sans-serif;
+    letter-spacing: 0.3px;
+    text-align: center;
+    line-height: 1.25;
+    margin-top: auto;
+  }
+
+  /* Themes — beach palette (front: deep → main → light) */
+  .theme-sandcastle { background: linear-gradient(145deg, #7a4500, #F9A825, #FDD835); }
+  .theme-swimsuit   { background: linear-gradient(145deg, #7f1a1a, #EF5350, #FF7043); }
+  .theme-sunscreen  { background: linear-gradient(145deg, #0a3a7a, #1E88E5, #42A5F5); }
+  .theme-turtle     { background: linear-gradient(145deg, #004d40, #00897B, #26A69A); }
+  .theme-jellyfish  { background: linear-gradient(145deg, #311B92, #7E57C2, #9575CD); }
+
+  /* Backs (main → dark → deep, for readable white text) */
+  .theme-sandcastle-inv { background: linear-gradient(145deg, #F9A825, #F57F17, #7a4500); }
+  .theme-swimsuit-inv   { background: linear-gradient(145deg, #EF5350, #C62828, #7f1a1a); }
+  .theme-sunscreen-inv  { background: linear-gradient(145deg, #1E88E5, #1565C0, #0a3a7a); }
+  .theme-turtle-inv     { background: linear-gradient(145deg, #00897B, #00695C, #004d40); }
+  .theme-jellyfish-inv  { background: linear-gradient(145deg, #7E57C2, #5E35B1, #311B92); }
+
+  @media (max-width: 540px) { .card-pair { gap: 14px; } }
+
+  @media print {
+    body { background: white; padding: 8px; gap: 18px; }
+    .page-heading, .print-note { display: none; }
+    .card-pair { page-break-after: always; gap: 28px; }
+    .card { box-shadow: 0 0 0 1px rgba(0,0,0,0.15); }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-heading">🏖️ Beach Guardians — Fun Fact Cards</div>
+<div class="print-note">Print on cardstock · Cut out each card · Glue front to back · Laminate for best results · Hand out when Guardians discover each word!</div>
+
+<!-- ══ CARD 1 — SANDCASTLE ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-sandcastle">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🏖️</span>
+          <span class="orn orn-tr">🪣</span>
+          <span class="orn orn-bl">☀️</span>
+          <span class="orn orn-br">🚩</span>
+        </div>
+        <div class="station-chip">Station 1 · On the Sand</div>
+        <div class="ingredient-emoji">🏰</div>
+        <div class="recipe-tag">🏖️ A Beach Word 🏖️</div>
+        <div class="recipe-card">
+          <div class="recipe-emoji">🏰</div>
+          <div class="recipe-name">Sandcastle</div>
+          <div class="recipe-with"><strong>On the Sand</strong> · bucket &amp; spade</div>
+        </div>
+        <div class="card-footer-strip">🏖️ Beach Guardians · Sandcastle</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-sandcastle-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🏰</div>
+          <div>
+            <div class="back-title">Sandcastle — On the Sand</div>
+            <div class="back-station">A beach word</div>
+          </div>
+        </div>
+
+        <div class="back-section-title">🏖️ At the beach we…</div>
+        <div class="ingredients-grid">
+          <div class="ing-item">build 🪣</div>
+          <div class="ing-item">dig 🏖️</div>
+          <div class="ing-item">play ☀️</div>
+          <div class="ing-item">no litter 🚯</div>
+          <div class="ing-item">reduce waste</div>
+          <div class="ing-item"><strong>a clean beach</strong></div>
+        </div>
+
+        <div class="back-section-title">✨ Guardian job!</div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span><strong>I build</strong> a sandcastle. 🏰</span></div>
+          <div class="step-item"><span class="step-num">2</span><span><strong>We reduce</strong> our rubbish. 🗑️</span></div>
+          <div class="step-item"><span class="step-num">3</span><span>We take our cans and plastic home. 🥫</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>A clean beach for everyone! 🏖️</span></div>
+        </div>
+
+        <div class="health-bar">♻️ REDUCE — a clean, safe beach!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CARD 2 — SWIMSUIT ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-swimsuit">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🏖️</span>
+          <span class="orn orn-tr">🏊</span>
+          <span class="orn orn-bl">🌊</span>
+          <span class="orn orn-br">💦</span>
+        </div>
+        <div class="station-chip">Station 2 · Water's Edge</div>
+        <div class="ingredient-emoji">🩱</div>
+        <div class="recipe-tag">🏖️ A Beach Word 🏖️</div>
+        <div class="recipe-card">
+          <div class="recipe-emoji">🩱</div>
+          <div class="recipe-name">Swimsuit</div>
+          <div class="recipe-with"><strong>Water's Edge</strong> · time to swim</div>
+        </div>
+        <div class="card-footer-strip">🏖️ Beach Guardians · Swimsuit</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-swimsuit-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🩱</div>
+          <div>
+            <div class="back-title">Swimsuit — Water's Edge</div>
+            <div class="back-station">A beach word</div>
+          </div>
+        </div>
+
+        <div class="back-section-title">🏊 We use it to…</div>
+        <div class="ingredients-grid">
+          <div class="ing-item">swim 🏊</div>
+          <div class="ing-item">splash 🌊</div>
+          <div class="ing-item">play 💦</div>
+          <div class="ing-item">any colour 🩱</div>
+          <div class="ing-item">reuse it</div>
+          <div class="ing-item"><strong>no waste</strong></div>
+        </div>
+
+        <div class="back-section-title">✨ Guardian job!</div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span><strong>I wear</strong> a swimsuit. 🩱</span></div>
+          <div class="step-item"><span class="step-num">2</span><span><strong>We reuse</strong> it every summer. 🔁</span></div>
+          <div class="step-item"><span class="step-num">3</span><span>We don't buy things we don't need. 💙</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>Reuse = less waste! 🌊</span></div>
+        </div>
+
+        <div class="health-bar">♻️ REUSE — use it again and again!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CARD 3 — SUNSCREEN ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-sunscreen">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🏖️</span>
+          <span class="orn orn-tr">☀️</span>
+          <span class="orn orn-bl">♻️</span>
+          <span class="orn orn-br">🐠</span>
+        </div>
+        <div class="station-chip">Station 3 · Under the Sun</div>
+        <div class="ingredient-emoji">🧴</div>
+        <div class="recipe-tag">🏖️ A Beach Word 🏖️</div>
+        <div class="recipe-card">
+          <div class="recipe-emoji">🧴</div>
+          <div class="recipe-name">Sunscreen</div>
+          <div class="recipe-with"><strong>Under the Sun</strong> · stay safe</div>
+        </div>
+        <div class="card-footer-strip">🏖️ Beach Guardians · Sunscreen</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-sunscreen-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🧴</div>
+          <div>
+            <div class="back-title">Sunscreen — Under the Sun</div>
+            <div class="back-station">A beach word</div>
+          </div>
+        </div>
+
+        <div class="back-section-title">☀️ It keeps us…</div>
+        <div class="ingredients-grid">
+          <div class="ing-item">safe ☀️</div>
+          <div class="ing-item">no sunburn 🔥</div>
+          <div class="ing-item">in a bottle 🧴</div>
+          <div class="ing-item">reef-safe 🐠</div>
+          <div class="ing-item">recycle it ♻️</div>
+          <div class="ing-item"><strong>healthy</strong></div>
+        </div>
+
+        <div class="back-section-title">✨ Guardian job!</div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span><strong>I put on</strong> sunscreen. 🧴</span></div>
+          <div class="step-item"><span class="step-num">2</span><span><strong>She puts on</strong> sunscreen too. ☀️</span></div>
+          <div class="step-item"><span class="step-num">3</span><span><strong>We recycle</strong> the empty bottle. ♻️</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>Bottles in the bin, not the sea! 🌊</span></div>
+        </div>
+
+        <div class="health-bar">♻️ RECYCLE — bottles in the right bin!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CARD 4 — TURTLE ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-turtle">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🌊</span>
+          <span class="orn orn-tr">🐢</span>
+          <span class="orn orn-bl">🐚</span>
+          <span class="orn orn-br">💧</span>
+        </div>
+        <div class="station-chip">Station 4 · In the Waves</div>
+        <div class="ingredient-emoji">🐢</div>
+        <div class="recipe-tag">🌊 A Sea Animal 🌊</div>
+        <div class="recipe-card">
+          <div class="recipe-emoji">🐢</div>
+          <div class="recipe-name">Turtle</div>
+          <div class="recipe-with"><strong>In the Waves</strong> · a sea animal</div>
+        </div>
+        <div class="card-footer-strip">🏖️ Beach Guardians · Turtle</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-turtle-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji">🐢</div>
+          <div>
+            <div class="back-title">Turtle — In the Waves</div>
+            <div class="back-station">A sea animal</div>
+          </div>
+        </div>
+
+        <div class="back-section-title">🐢 Turtles have…</div>
+        <div class="ingredients-grid">
+          <div class="ing-item">a shell 🐢</div>
+          <div class="ing-item">flippers 🌊</div>
+          <div class="ing-item">a long life</div>
+          <div class="ing-item">clean water 💧</div>
+          <div class="ing-item">no plastic 🚯</div>
+          <div class="ing-item"><strong>a safe sea</strong></div>
+        </div>
+
+        <div class="back-section-title">✨ Guardian job!</div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span><strong>The turtle swims</strong>. 🐢</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>Turtles <strong>eat</strong> plastic by mistake. 🛍️</span></div>
+          <div class="step-item"><span class="step-num">3</span><span><strong>We reduce</strong> plastic bags. 🌊</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>Less plastic = safe turtles! 💚</span></div>
+        </div>
+
+        <div class="health-bar">♻️ REDUCE plastic — save the turtles!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CARD 5 — JELLYFISH ══ -->
+<div class="card-pair">
+  <div>
+    <div class="card-label">Front</div>
+    <div class="card theme-jellyfish">
+      <div class="card-front">
+        <div class="corner-orns">
+          <span class="orn orn-tl">🌊</span>
+          <span class="orn orn-tr">✨</span>
+          <span class="orn orn-bl">💧</span>
+          <span class="orn orn-br">💙</span>
+        </div>
+        <div class="station-chip">Station 5 · The Deep Blue</div>
+        <div class="ingredient-emoji"><svg viewBox="0 0 32 32" width="72" height="72" xmlns="http://www.w3.org/2000/svg"><path d="M4 17a12 11 0 0 1 24 0v1.6a1.8 1.8 0 0 1-1.8 1.8H5.8A1.8 1.8 0 0 1 4 18.6z" fill="#B39DDB"/><path d="M4 17a12 11 0 0 1 24 0z" fill="#9575CD"/><ellipse cx="11" cy="11" rx="2.6" ry="3.4" fill="#F3E5F5" opacity="0.75"/><circle cx="12" cy="15.5" r="1.6" fill="#311B92"/><circle cx="20" cy="15.5" r="1.6" fill="#311B92"/><path d="M13 18.6q3 2 6 0" stroke="#311B92" stroke-width="1.2" fill="none" stroke-linecap="round"/><g stroke="#B39DDB" stroke-width="1.8" fill="none" stroke-linecap="round"><path d="M8 20.6q-1.2 4 0.6 8"/><path d="M12.5 20.9q1 4-0.8 8"/><path d="M16 21q0 5 0 8.6"/><path d="M19.5 20.9q-1 4 0.8 8"/><path d="M24 20.6q1.2 4-0.6 8"/></g></svg></div>
+        <div class="recipe-tag">🌊 A Sea Animal 🌊</div>
+        <div class="recipe-card">
+          <div class="recipe-emoji"><svg viewBox="0 0 32 32" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><path d="M4 17a12 11 0 0 1 24 0v1.6a1.8 1.8 0 0 1-1.8 1.8H5.8A1.8 1.8 0 0 1 4 18.6z" fill="#9575CD"/><path d="M4 17a12 11 0 0 1 24 0z" fill="#7E57C2"/><circle cx="12" cy="15.5" r="1.5" fill="#311B92"/><circle cx="20" cy="15.5" r="1.5" fill="#311B92"/><path d="M13 18.4q3 2 6 0" stroke="#311B92" stroke-width="1.1" fill="none" stroke-linecap="round"/><g stroke="#9575CD" stroke-width="1.7" fill="none" stroke-linecap="round"><path d="M8 20.6q-1.2 4 0.6 8"/><path d="M12.5 20.9q1 4-0.8 8"/><path d="M16 21q0 5 0 8.6"/><path d="M19.5 20.9q-1 4 0.8 8"/><path d="M24 20.6q1.2 4-0.6 8"/></g></svg></div>
+          <div class="recipe-name">Jellyfish</div>
+          <div class="recipe-with"><strong>The Deep Blue</strong> · a sea animal</div>
+        </div>
+        <div class="card-footer-strip">🏖️ Beach Guardians · Jellyfish</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card-label">Back</div>
+    <div class="card theme-jellyfish-inv">
+      <div class="card-back">
+        <div class="back-header">
+          <div class="back-emoji"><svg viewBox="0 0 32 32" width="26" height="26" xmlns="http://www.w3.org/2000/svg"><path d="M4 17a12 11 0 0 1 24 0v1.6a1.8 1.8 0 0 1-1.8 1.8H5.8A1.8 1.8 0 0 1 4 18.6z" fill="#B39DDB"/><path d="M4 17a12 11 0 0 1 24 0z" fill="#9575CD"/><circle cx="12" cy="15.5" r="1.6" fill="#311B92"/><circle cx="20" cy="15.5" r="1.6" fill="#311B92"/><g stroke="#B39DDB" stroke-width="1.8" fill="none" stroke-linecap="round"><path d="M8 20.6q-1.2 4 0.6 8"/><path d="M12.5 20.9q1 4-0.8 8"/><path d="M16 21q0 5 0 8.6"/><path d="M19.5 20.9q-1 4 0.8 8"/><path d="M24 20.6q1.2 4-0.6 8"/></g></svg></div>
+          <div>
+            <div class="back-title">Jellyfish — The Deep Blue</div>
+            <div class="back-station">A sea animal</div>
+          </div>
+        </div>
+
+        <div class="back-section-title">💜 Jellyfish are…</div>
+        <div class="ingredients-grid">
+          <div class="ing-item">soft 🌊</div>
+          <div class="ing-item">no bones</div>
+          <div class="ing-item">long tentacles</div>
+          <div class="ing-item">some glow ✨</div>
+          <div class="ing-item">need clean sea 💧</div>
+          <div class="ing-item"><strong>amazing</strong></div>
+        </div>
+
+        <div class="back-section-title">✨ Guardian job!</div>
+        <div class="steps-list">
+          <div class="step-item"><span class="step-num">1</span><span><strong>The jellyfish floats</strong>. 💜</span></div>
+          <div class="step-item"><span class="step-num">2</span><span><strong>We keep</strong> the sea clean. 🌊</span></div>
+          <div class="step-item"><span class="step-num">3</span><span><strong>Reduce, Reuse, Recycle!</strong> ♻️</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>A clean home for all sea life! 💙</span></div>
+        </div>
+
+        <div class="health-bar">♻️ The 3 Rs — a clean ocean for all!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>twemoji.parse(document.body,{folder:'svg',ext:'.svg'});</script>
+
+
+
+
+
+
+
+
+
+
+<script>/* auto-print/pdf on ?print=1 or ?pdf=1 */(function(){var p=new URLSearchParams(location.search);var pdf=p.get("pdf");var prn=p.get("print");if(pdf!=="1"&&prn!=="1")return;var dlall=p.get("dlall")==="1";function whenReady(cb){if(document.readyState==="complete")setTimeout(cb,900);else window.addEventListener("load",function(){setTimeout(cb,1100);});}function preloadEmojis(){return new Promise(function(resolve){var imgs=document.querySelectorAll("img.emoji");if(!imgs.length){return resolve();}var pending=imgs.length;var safety=setTimeout(resolve,20000);var done=function(){pending--;if(pending<=0){clearTimeout(safety);resolve();}};imgs.forEach(function(img){if(/^data:/.test(img.src)){done();return;}var m=img.src.match(/\/([a-f0-9\-]+)\.(?:svg|png)/i);if(!m){done();return;}var cp=m[1];var urls=["https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/twitter/twemoji@v14.0.2/assets/72x72/"+cp+".png","https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/72x72/"+cp+".png"];var i=0;(function tryNext(){if(i>=urls.length){done();return;}fetch(urls[i++]).then(function(r){if(!r.ok)return Promise.reject();return r.blob();}).then(function(blob){var reader=new FileReader();reader.onloadend=function(){if(typeof reader.result==="string"&&reader.result.indexOf("data:image/png")===0){img.src=reader.result;done();}else{tryNext();}};reader.onerror=tryNext;reader.readAsDataURL(blob);}).catch(tryNext);})();});});}function loadScript(src){return new Promise(function(resolve,reject){var s=document.createElement("script");s.src=src;s.crossOrigin="anonymous";s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}function loadLibs(){var p1=(typeof html2canvas==="function")?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");var p2=((window.jspdf&&window.jspdf.jsPDF)||window.jsPDF)?Promise.resolve():loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");return Promise.all([p1,p2]);}if(pdf==="1"){whenReady(function(){var size=(p.get("size")||"A4").toUpperCase();var orientation=(size==="A5")?"landscape":"portrait";var format=size.toLowerCase().replace(/[^a-z0-9]/g,"");if(format==="2xa4"||format==="2a4")format="a4";if(["a3","a4","a5"].indexOf(format)<0)format="a4";var sizeMM={"a3":[297,420],"a4":[210,297],"a5":[148,210]};var paper=sizeMM[format]||[210,297];var pdfW=(orientation==="landscape")?paper[1]:paper[0];var pdfH=(orientation==="landscape")?paper[0]:paper[1];var fn=(document.title||"lesson_print").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"").toLowerCase()+".pdf";function shotElem(elem){return html2canvas(elem,{scale:3,useCORS:true,allowTaint:true,logging:false,backgroundColor:"#ffffff",imageTimeout:9000,onclone:function(doc){var b=doc.body;b.style.padding="0";b.style.margin="0";b.style.minHeight="0";b.style.background="#ffffff";Array.prototype.forEach.call(doc.querySelectorAll(".print-note,.page-heading,.card-label"),function(el){el.style.display="none";});var s=doc.createElement("style");s.textContent=".page,.guide{width:794px!important;min-height:1123px!important;max-width:none!important;box-shadow:none!important;transform:none!important;display:flex!important;flex-direction:column!important;box-sizing:border-box!important;page-break-after:always!important;}.page-footer,.footer-bar{margin-top:auto!important;}";doc.head.appendChild(s);}});}function placeImage(doc,canvas,marginMM,fill){var availW=pdfW-marginMM*2;var availH=pdfH-marginMM*2;if(fill){doc.addImage(canvas.toDataURL("image/png"),"PNG",marginMM,marginMM,availW,availH,undefined,"FAST");}else{var aspect=canvas.width/canvas.height;var imgW=availW,imgH=availW/aspect;if(imgH>availH){imgH=availH;imgW=availH*aspect;}var x=(pdfW-imgW)/2,y=(pdfH-imgH)/2;doc.addImage(canvas.toDataURL("image/png"),"PNG",x,y,imgW,imgH,undefined,"FAST");}}function newDoc(){var Ctor=(window.jspdf&&window.jspdf.jsPDF)||window.jsPDF;return new Ctor({orientation:orientation,unit:"mm",format:format,compress:true});}function deliver(doc){if(dlall&&window.parent&&window.parent!==window){try{var blob=doc.output("blob");window.parent.postMessage({type:"pdf-blob",name:fn,blob:blob},"*");}catch(e){console.error("[PDF] postMessage failed",e);doc.save(fn);}}else{doc.save(fn);}}function renderHero(elem,marginMM,fill){var doc=newDoc();return shotElem(elem).then(function(canvas){placeImage(doc,canvas,marginMM,fill);deliver(doc);});}function renderMulti(elements,marginMM,fill){var doc=newDoc();var first=true;return elements.reduce(function(prev,elem){return prev.then(function(){return shotElem(elem).then(function(canvas){if(!first)doc.addPage(format,orientation);first=false;placeImage(doc,canvas,marginMM,fill);});});},Promise.resolve()).then(function(){deliver(doc);});}function gen(){var board=document.querySelector(".board");var hero=document.querySelector(".poster, .diploma");var pages=document.querySelectorAll(".page, .guide");var cards=document.querySelectorAll(".card-pair, .card-wrap, .medal-wrap, .row, .qr-card");if(cards.length>=2)return renderMulti(Array.prototype.slice.call(cards),10,false);if(pages.length>=2)return renderMulti(Array.prototype.slice.call(pages),0,true);if(hero)return renderHero(hero,0,true);if(board)return renderHero(board,8,false);return renderHero(document.body,0,true);}preloadEmojis().then(loadLibs).then(gen).catch(function(err){console.error("[PDF] failed:",err);if(dlall&&window.parent&&window.parent!==window){try{window.parent.postMessage({type:"pdf-error",error:String(err)},"*");}catch(e){}}else{alert("Could not generate the PDF. Reload and try again. Error: "+(err.message||err));}});});}else{whenReady(function(){window.print();});}})();</script>
+</body>
+</html>

@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="../favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0288D1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Beach Guardians — Riddle</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<style>
+  img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sun: #FBC02D;
+    --green: #2E7D32;
+    --coral: #EF5350;
+    --teal: #00897B;
+    --blue: #1E88E5;
+    --cream: #FFF8E7;
+    --bg: #0f241f;
+    --white: #FFF8E7;
+  }
+
+  body {
+    font-family: 'Fredoka', sans-serif;
+    min-height: 100dvh;
+    background: var(--bg);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .bg-anim {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .bg-particle {
+    position: absolute;
+    font-size: clamp(14px, 2.8vw, 26px);
+    animation: float-particle linear infinite;
+    opacity: 0.12;
+  }
+
+  @keyframes float-particle {
+    0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.12; }
+    90%  { opacity: 0.12; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    padding: clamp(16px, 3vw, 32px) clamp(16px, 4vw, 32px);
+    gap: clamp(14px, 2.5vw, 22px);
+  }
+
+  /* Header */
+  .riddle-header {
+    text-align: center;
+    padding: clamp(16px, 3vw, 26px) clamp(16px, 4vw, 28px);
+    border-radius: 20px;
+    border: 3px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .station-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(13px, 2.2vw, 16px);
+    color: rgba(255,255,255,0.9);
+    margin-bottom: clamp(8px, 1.5vw, 12px);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .station-mystery-big {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(52px, 11vw, 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(80px, 16vw, 110px);
+    height: clamp(80px, 16vw, 110px);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 3px solid rgba(255,255,255,0.25);
+    margin: 0 auto clamp(4px, 1vw, 8px);
+    box-shadow: 0 0 30px rgba(255,255,255,0.1), inset 0 0 20px rgba(255,255,255,0.05);
+    animation: pulse 2s ease-in-out infinite;
+    color: white;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  }
+
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+  .location-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(24px, 5vw, 44px);
+    line-height: 1.1;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  }
+
+  .location-subtitle {
+    font-size: clamp(13px, 2.3vw, 17px);
+    opacity: 0.78;
+    margin-top: 4px;
+  }
+
+  /* Clues section */
+  .clues-section {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: clamp(16px, 3vw, 26px);
+    backdrop-filter: blur(4px);
+  }
+
+  .clues-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--sun);
+    margin-bottom: clamp(12px, 2.5vw, 18px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .clue-cards { display: flex; flex-direction: column; gap: clamp(8px, 1.5vw, 11px); }
+
+  .clue-card {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: clamp(10px, 2vw, 15px) clamp(14px, 2.5vw, 20px);
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 2vw, 16px);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  .clue-card.visible { opacity: 1; transform: translateX(0); }
+
+  .clue-card.active {
+    border-color: var(--sun);
+    background: rgba(251,192,45,0.12);
+    box-shadow: 0 0 18px rgba(251,192,45,0.2);
+  }
+
+  .clue-num {
+    width: clamp(30px, 4.8vw, 38px);
+    height: clamp(30px, 4.8vw, 38px);
+    border-radius: 50%;
+    background: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.4vw, 17px);
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(30,136,229,0.4);
+  }
+
+  .clue-text {
+    font-size: clamp(14px, 2.4vw, 17px);
+    line-height: 1.5;
+    color: var(--white);
+  }
+
+  .clue-text em { color: var(--sun); font-style: normal; font-weight: 600; }
+
+  .next-clue-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--blue), #1565C0);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: clamp(12px, 2.5vw, 15px) clamp(24px, 5vw, 36px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 19px);
+    cursor: pointer;
+    margin-top: clamp(12px, 2.5vw, 16px);
+    width: 100%;
+    min-height: 52px;
+    box-shadow: 0 4px 16px rgba(30,136,229,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    touch-action: manipulation;
+  }
+
+  .next-clue-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(30,136,229,0.5); }
+  .next-clue-btn:active { transform: translateY(0); }
+  .next-clue-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Answer section — multiple choice */
+  .answer-section {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: clamp(16px, 3vw, 26px);
+    backdrop-filter: blur(4px);
+  }
+
+  .answer-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--sun);
+    margin-bottom: clamp(12px, 2.5vw, 16px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .choices-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(8px, 1.5vw, 12px);
+  }
+
+  .choice-btn {
+    background: rgba(255,255,255,0.08);
+    border: 2.5px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: clamp(14px, 2.5vw, 18px) clamp(10px, 2vw, 16px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.4vw, 17px);
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-height: 80px;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .choice-btn .choice-emoji { font-size: clamp(26px, 5vw, 38px); line-height: 1; }
+
+  .choice-btn:hover {
+    background: rgba(251,192,45,0.12);
+    border-color: var(--sun);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(251,192,45,0.2);
+  }
+
+  .choice-btn:active { transform: scale(0.97); }
+
+  .choice-btn.correct {
+    background: rgba(46,125,50,0.4);
+    border-color: #66BB6A;
+    box-shadow: 0 0 20px rgba(102,187,106,0.4);
+    animation: correct-flash 0.4s ease;
+  }
+
+  .choice-btn.wrong {
+    background: rgba(239,83,80,0.3);
+    border-color: #ff7043;
+    animation: shake 0.4s ease;
+    opacity: 0.6;
+  }
+
+  @keyframes correct-flash {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+
+  .feedback {
+    margin-top: clamp(10px, 2vw, 14px);
+    padding: clamp(10px, 2vw, 13px) clamp(14px, 2.5vw, 18px);
+    border-radius: 12px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(14px, 2.6vw, 17px);
+    text-align: center;
+    display: none;
+  }
+
+  .feedback.error {
+    display: block;
+    background: rgba(239,83,80,0.2);
+    border: 2px solid #ff7043;
+    color: #ffccbc;
+  }
+
+  .tries-info {
+    text-align: center;
+    font-size: clamp(11px, 1.8vw, 14px);
+    color: rgba(255,248,231,0.5);
+    margin-top: clamp(6px, 1.2vw, 10px);
+  }
+
+  .clue-progress { display: flex; gap: 6px; justify-content: center; margin-top: clamp(10px, 2vw, 14px); }
+  .clue-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); transition: background 0.3s; }
+  .clue-dot.filled { background: var(--sun); }
+
+  /* Success panel */
+  .success-panel {
+    display: none;
+    background: rgba(255,255,255,0.07);
+    border: 3px solid var(--sun);
+    border-radius: 20px;
+    padding: clamp(20px, 4vw, 34px) clamp(16px, 4vw, 30px);
+    text-align: center;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    backdrop-filter: blur(8px);
+  }
+
+  .success-panel.visible { display: block; }
+
+  @keyframes pop-in {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .success-emoji-big {
+    font-size: clamp(46px, 9vw, 76px);
+    line-height: 1;
+    display: block;
+    margin-bottom: clamp(8px, 1.5vw, 12px);
+    animation: bounce 0.6s ease 0.3s both;
+  }
+
+  @keyframes bounce {
+    0% { transform: translateY(20px); opacity: 0; }
+    60% { transform: translateY(-10px); }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  .success-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(26px, 5.5vw, 50px);
+    color: var(--sun);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    margin-bottom: 4px;
+  }
+
+  .success-subtitle {
+    font-size: clamp(13px, 2.4vw, 17px);
+    color: rgba(255,248,231,0.85);
+    margin-bottom: clamp(14px, 3vw, 22px);
+  }
+
+  .character-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: clamp(14px, 2.5vw, 20px);
+    margin-bottom: clamp(14px, 2.5vw, 20px);
+    border: 2px solid rgba(255,255,255,0.12);
+    text-align: left;
+  }
+
+  .char-card-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(17px, 3.3vw, 24px);
+    color: var(--sun);
+    margin-bottom: clamp(6px, 1.2vw, 9px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .char-description {
+    font-size: clamp(12px, 2vw, 15px);
+    line-height: 1.6;
+    color: rgba(255,248,231,0.92);
+    margin-bottom: clamp(10px, 2vw, 13px);
+    font-style: italic;
+  }
+
+  /* Vocabulary badge */
+  .health-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(11px, 1.8vw, 14px);
+    margin-bottom: clamp(10px, 2vw, 14px);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .health-badge.healthy   { background: rgba(2,136,209,0.22); color: #B3E5FC; border: 1.5px solid #4FC3F7; }
+  .health-badge.unhealthy { background: rgba(239,83,80,0.22); color: #FFCCBC; border: 1.5px solid #ff7043; }
+
+  /* Present Simple grammar tip */
+  .measure-tip {
+    background: rgba(0,137,123,0.18);
+    border: 2px solid rgba(0,137,123,0.5);
+    border-radius: 12px;
+    padding: clamp(8px, 1.6vw, 12px) clamp(11px, 2vw, 15px);
+    font-size: clamp(12px, 2vw, 14px);
+    color: #B2DFDB;
+    margin-bottom: clamp(10px, 2vw, 13px);
+    line-height: 1.5;
+  }
+  .measure-tip strong { color: var(--sun); font-weight: 600; }
+
+  /* 3 Rs / recycling tip */
+  .plate-tip {
+    background: rgba(46,125,50,0.18);
+    border: 2px solid rgba(46,125,50,0.45);
+    border-radius: 12px;
+    padding: clamp(8px, 1.6vw, 12px) clamp(11px, 2vw, 15px);
+    font-size: clamp(12px, 2vw, 14px);
+    color: #C8E6C9;
+    margin-bottom: clamp(10px, 2vw, 13px);
+    line-height: 1.5;
+  }
+  .plate-tip strong { color: #FFF59D; font-weight: 600; }
+
+  .fun-facts { display: flex; flex-direction: column; gap: clamp(6px, 1.2vw, 9px); }
+
+  .fun-fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: clamp(7px, 1.4vw, 11px) clamp(10px, 2vw, 13px);
+    font-size: clamp(12px, 1.9vw, 14px);
+    color: rgba(255,248,231,0.88);
+    line-height: 1.4;
+  }
+
+  .fact-icon { font-size: clamp(15px, 2.4vw, 19px); flex-shrink: 0; }
+
+  .world-msg {
+    margin-top: clamp(8px, 1.5vw, 12px);
+    padding: clamp(8px, 1.6vw, 12px) clamp(11px, 2vw, 15px);
+    background: rgba(251,192,45,0.12);
+    border-left: 3px solid var(--sun);
+    border-radius: 8px;
+    font-size: clamp(11px, 1.8vw, 13px);
+    color: rgba(255,248,231,0.92);
+    line-height: 1.5;
+    text-align: left;
+  }
+  .world-msg strong { color: var(--sun); }
+
+  .claim-btn {
+    background: linear-gradient(135deg, var(--blue), var(--sun));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: clamp(14px, 3vw, 19px) clamp(28px, 6vw, 46px);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(17px, 3.3vw, 24px);
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(30,136,229,0.5);
+    transition: transform 0.15s, box-shadow 0.15s;
+    min-height: 58px;
+    width: 100%;
+    touch-action: manipulation;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 4px 20px rgba(30,136,229,0.4); }
+    100% { box-shadow: 0 4px 40px rgba(251,192,45,0.7), 0 0 60px rgba(2,136,209,0.3); }
+  }
+
+  .claim-btn:hover { transform: translateY(-2px) scale(1.02); }
+
+  .treat-sticker {
+    display: none;
+    margin: clamp(14px, 3vw, 22px) auto 0;
+    text-align: center;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .treat-sticker.visible { display: block; }
+
+  .sticker-circle {
+    width: clamp(96px, 19vw, 134px);
+    height: clamp(96px, 19vw, 134px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #FFE082, var(--teal));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto clamp(8px, 1.5vw, 12px);
+    box-shadow: 0 0 40px rgba(0,137,123,0.5), 0 0 0 4px var(--sun), 0 0 0 8px rgba(251,192,45,0.3);
+    animation: spin-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes spin-in {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .sticker-emoji { font-size: clamp(34px, 6.5vw, 52px); line-height: 1; }
+  .sticker-text {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(7px, 1.3vw, 10px);
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .sticker-label {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(15px, 2.8vw, 21px);
+    color: var(--sun);
+  }
+
+  @media (min-width: 600px) {
+    .choices-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bg-particle, .station-mystery-big { animation: none; }
+    .clue-card { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-anim" id="bgAnim"></div>
+
+<div class="page">
+  <div class="riddle-header" id="riddleHeader">
+    <div class="station-badge" id="stationBadge">🏖️ Station 1</div>
+    <div class="station-mystery-big" id="stationMystery">?</div>
+    <div class="location-title" id="locationTitle">On the Sand</div>
+    <div class="location-subtitle" id="locationSubtitle">Read the clues — what is it? 🏖️</div>
+  </div>
+
+  <div class="clues-section">
+    <div class="clues-title">🔍 Read the clues — what is it?</div>
+    <div class="clue-cards" id="clueCards"></div>
+    <div class="clue-progress" id="clueProgress"></div>
+    <button class="next-clue-btn" id="nextClueBtn" onclick="showNextClue()">Next Clue 👉</button>
+  </div>
+
+  <div class="answer-section" id="answerSection">
+    <div class="answer-title">🤔 Which word is it?</div>
+    <div class="choices-grid" id="choicesGrid"></div>
+    <div class="feedback" id="feedbackMsg"></div>
+    <div class="tries-info" id="triesInfo"></div>
+  </div>
+
+  <div class="success-panel" id="successPanel">
+    <span class="success-emoji-big" id="successEmoji">🏖️</span>
+    <div class="success-title">WORD FOUND!</div>
+    <div class="success-subtitle" id="successSubtitle">Amazing! You're a real Beach Guardian! 🎉</div>
+    <div class="character-card">
+      <div class="char-card-name" id="charName"></div>
+      <div class="char-description" id="charDesc"></div>
+      <span class="health-badge" id="healthBadge"></span>
+      <div class="measure-tip" id="measureTip"></div>
+      <div class="plate-tip" id="plateTip"></div>
+      <div class="fun-facts" id="funFacts"></div>
+      <div class="world-msg" id="worldMsg" style="display:none;"></div>
+    </div>
+    <button class="claim-btn" onclick="claimGift()">🌊 Add it to the Clean Beach!</button>
+    <div class="treat-sticker" id="treatSticker">
+      <div class="sticker-circle">
+        <span class="sticker-emoji" id="stickerEmoji">🏖️</span>
+        <span class="sticker-text">Word!</span>
+      </div>
+      <div class="sticker-label" id="stickerLabel">+1 Word found! Total: 1/5 🏖️</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const JELLYFISH = '<svg viewBox="0 0 32 32" style="width:1em;height:1em;vertical-align:-0.15em;display:inline-block" xmlns="http://www.w3.org/2000/svg"><path d="M4 17a12 11 0 0 1 24 0v1.6a1.8 1.8 0 0 1-1.8 1.8H5.8A1.8 1.8 0 0 1 4 18.6z" fill="#9575CD"/><path d="M4 17a12 11 0 0 1 24 0z" fill="#7E57C2"/><ellipse cx="11" cy="11" rx="2.6" ry="3.4" fill="#EDE7F6" opacity="0.7"/><circle cx="12" cy="15.5" r="1.5" fill="#311B92"/><circle cx="20" cy="15.5" r="1.5" fill="#311B92"/><path d="M13 18.4q3 2 6 0" stroke="#311B92" stroke-width="1.1" fill="none" stroke-linecap="round"/><g stroke="#9575CD" stroke-width="1.7" fill="none" stroke-linecap="round"><path d="M8 20.6q-1.2 4 0.6 8"/><path d="M12.5 20.9q1 4-0.8 8"/><path d="M16 21q0 5 0 8.6"/><path d="M19.5 20.9q-1 4 0.8 8"/><path d="M24 20.6q1.2 4-0.6 8"/></g></svg>';
+
+const STATIONS = {
+  1: {
+    location: 'On the Sand',
+    subtitle: 'Read the clues — what is it? 🏖️',
+    color: ['#F9A825', '#FDD835'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🏰', label: 'Sandcastle' },
+      { emoji: '🐢', label: 'Turtle' },
+      { emoji: '🩱', label: 'Swimsuit' },
+      { emoji: '🧴', label: 'Sunscreen' },
+    ],
+    clues: [
+      { text: "You make me with a <em>bucket</em> and a spade. 🪣", emoji: '🪣' },
+      { text: "I am made of wet sand, near the sea. 🏖️", emoji: '🏖️' },
+      { text: "I have towers and a little flag on top. 🚩", emoji: '🚩' },
+      { text: "The waves can wash me away! What am I?", emoji: '🌊' },
+    ],
+    description: '"You make me with a bucket and a spade. I am made of wet sand and I have towers and a flag. The waves wash me away. What am I?"',
+    positive: true,
+    wordBadge: '🏰 Beach word: SANDCASTLE',
+    measure: '🗣️ Present simple: "<strong>I build</strong> a sandcastle." "<strong>She builds</strong> a sandcastle." Add <strong>-s</strong> for he / she / it!',
+    plate: '♻️ Guardian tip: We <strong>REDUCE</strong> our rubbish. We take our cans and plastic home — a clean beach for everyone! 🏖️',
+    facts: [
+      { icon: '🪣', text: 'A bucket and a spade are all you need to build a big sandcastle!' },
+      { icon: '🗑️', text: 'Never leave litter on the sand — put it in the bin or take it home!' },
+      { icon: '🏖️', text: 'A clean beach is safe and fun for children and animals.' },
+    ],
+    character: 'Sandcastle 🏰',
+    worldMsg: null,
+  },
+  2: {
+    location: "At the Water's Edge",
+    subtitle: 'Read the clues — what is it? 🏖️',
+    color: ['#EF5350', '#FF7043'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🩱', label: 'Swimsuit' },
+      { emoji: '🧴', label: 'Sunscreen' },
+      { emoji: '🐢', label: 'Turtle' },
+      { emoji: '🏰', label: 'Sandcastle' },
+    ],
+    clues: [
+      { text: "You put me on before you swim. 🏊", emoji: '🏊' },
+      { text: "I can be blue, red or pink. 🩱", emoji: '🩱' },
+      { text: "I get wet in the sea, then I dry in the sun. ☀️", emoji: '☀️' },
+      { text: "You wear me at the pool and the beach. What am I?", emoji: '🌊' },
+    ],
+    description: '"You put me on before you swim. I can be blue, red or pink. I get wet in the sea and dry in the sun. What am I?"',
+    positive: true,
+    wordBadge: '🩱 Beach word: SWIMSUIT',
+    measure: '🗣️ Present simple: "<strong>I wear</strong> a swimsuit." "<strong>He wears</strong> a swimsuit." Add <strong>-s</strong> for he / she / it!',
+    plate: '♻️ Guardian tip: We <strong>REUSE</strong> our swimsuit every summer. We don\'t buy things we don\'t need! 💙',
+    facts: [
+      { icon: '🩱', text: 'A good swimsuit lasts for many summers — reuse it, don\'t throw it away!' },
+      { icon: '👕', text: 'Old clothes can be given to other children instead of the bin.' },
+      { icon: '💙', text: 'Reuse means using something again and again — good for the Planet!' },
+    ],
+    character: 'Swimsuit 🩱',
+    worldMsg: null,
+  },
+  3: {
+    location: 'Under the Sun',
+    subtitle: 'Read the clues — what is it? 🏖️',
+    color: ['#1E88E5', '#42A5F5'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🧴', label: 'Sunscreen' },
+      { emoji: '🩱', label: 'Swimsuit' },
+      { emoji: '🐢', label: 'Turtle' },
+      { emoji: JELLYFISH, label: 'Jellyfish' },
+    ],
+    clues: [
+      { text: "I come in a bottle. You rub me on your skin. 🧴", emoji: '🧴' },
+      { text: "I keep you safe from the hot sun. ☀️", emoji: '☀️' },
+      { text: "I stop your skin from getting red and sore. 🔥", emoji: '🔥' },
+      { text: "You need me at the beach every day. What am I?", emoji: '🏖️' },
+    ],
+    description: '"I come in a bottle and you rub me on your skin. I keep you safe from the hot sun. What am I?"',
+    positive: true,
+    wordBadge: '🧴 Beach word: SUNSCREEN',
+    measure: '🗣️ Present simple: "<strong>I put on</strong> sunscreen." "<strong>She puts on</strong> sunscreen." Add <strong>-s</strong> for he / she / it!',
+    plate: '♻️ Guardian tip: When the bottle is empty, we <strong>RECYCLE</strong> it in the right bin! ♻️',
+    facts: [
+      { icon: '☀️', text: 'Sunscreen protects your skin from the strong beach sun.' },
+      { icon: '♻️', text: 'Empty plastic bottles go in the recycling bin, not the sea!' },
+      { icon: '🐠', text: 'Choose "reef-safe" sunscreen — it is kinder to fish and coral.' },
+    ],
+    character: 'Sunscreen 🧴',
+    worldMsg: null,
+  },
+  4: {
+    location: 'In the Waves',
+    subtitle: 'Read the clues — what is it? 🏖️',
+    color: ['#00897B', '#26A69A'],
+    correctIndex: 0,
+    choices: [
+      { emoji: '🐢', label: 'Turtle' },
+      { emoji: JELLYFISH, label: 'Jellyfish' },
+      { emoji: '🏰', label: 'Sandcastle' },
+      { emoji: '🩱', label: 'Swimsuit' },
+    ],
+    clues: [
+      { text: "I am green and I swim in the sea. 🌊", emoji: '🌊' },
+      { text: "I have a hard shell on my back. 🐢", emoji: '🐢' },
+      { text: "I am slow on land but fast in the water.", emoji: '🏖️' },
+      { text: "Plastic bags make me sick — I think they are food! What am I?", emoji: '🛍️' },
+    ],
+    description: '"I am green and I swim in the sea. I have a hard shell on my back. Plastic bags make me sick — I think they are food! What am I?"',
+    positive: true,
+    wordBadge: '🐢 Beach word: TURTLE',
+    measure: '🗣️ Present simple: "<strong>The turtle swims</strong>." "<strong>Turtles eat</strong> plants and jellyfish." (he / she / it → verb + s)',
+    plate: '♻️ Guardian tip: We <strong>REDUCE</strong> plastic! Turtles eat plastic bags by mistake. Less plastic = safe turtles! 🐢',
+    facts: [
+      { icon: '🐢', text: 'Sea turtles can live for a very long time in a clean ocean!' },
+      { icon: '🛍️', text: 'A floating plastic bag looks like a jellyfish — turtles try to eat it.' },
+      { icon: '♻️', text: 'Use a cloth bag, not plastic — reduce plastic to save sea animals!' },
+    ],
+    character: 'Turtle 🐢',
+    worldMsg: '🌊 <strong>Around the world:</strong> Beaches everywhere have "clean-up days" where children pick up plastic to protect sea turtles! ♻️',
+  },
+  5: {
+    location: 'Deep in the Blue',
+    subtitle: 'Read the clues — what is it? 🏖️',
+    color: ['#7E57C2', '#9575CD'],
+    correctIndex: 0,
+    choices: [
+      { emoji: JELLYFISH, label: 'Jellyfish' },
+      { emoji: '🐢', label: 'Turtle' },
+      { emoji: '🧴', label: 'Sunscreen' },
+      { emoji: '🏰', label: 'Sandcastle' },
+    ],
+    clues: [
+      { text: "I am soft and I have no bones. 🌊", emoji: '🌊' },
+      { text: "I float in the sea with long tentacles.", emoji: '💧' },
+      { text: "Some of me can glow in the dark! ✨", emoji: '✨' },
+      { text: "I can sting, but I need a clean sea to live. What am I?", emoji: '💙' },
+    ],
+    description: '"I am soft and I have no bones. I float in the sea with long tentacles. Some of me glow in the dark. I need a clean sea. What am I?"',
+    positive: true,
+    wordBadge: '💜 Beach word: JELLYFISH',
+    measure: '🗣️ Present simple: "<strong>The jellyfish floats</strong>." "<strong>We keep</strong> the sea clean." (he / she / it → verb + s)',
+    plate: '♻️ Guardian tip: <strong>REDUCE, REUSE, RECYCLE!</strong> A clean sea is a happy home for jellyfish, turtles and fish! 🌊',
+    facts: [
+      { icon: '💜', text: 'Jellyfish have lived in the oceans for millions of years!' },
+      { icon: '🌊', text: 'Clean water keeps jellyfish, fish and turtles healthy and safe.' },
+      { icon: '♻️', text: 'The 3 Rs — Reduce, Reuse, Recycle — keep our oceans clean!' },
+    ],
+    character: 'Jellyfish 💜',
+    worldMsg: '🌊 <strong>Around the world:</strong> When we all reduce, reuse and recycle, the whole ocean becomes a cleaner, safer home for every sea animal! 💙',
+  },
+};
+
+let station = 1;
+let currentClue = 0;
+let tries = 0;
+let solved = false;
+
+function init() {
+  const params = new URLSearchParams(window.location.search);
+  station = parseInt(params.get('s')) || 1;
+  if (station < 1 || station > 5) station = 1;
+
+  const data = STATIONS[station];
+
+  document.getElementById('riddleHeader').style.background =
+    `linear-gradient(160deg, ${data.color[0]}cc, ${data.color[1]}99)`;
+  document.getElementById('riddleHeader').style.borderColor = `${data.color[1]}88`;
+  document.body.style.background =
+    `linear-gradient(160deg, ${data.color[0]}33 0%, #0f241f 40%)`;
+
+  document.getElementById('stationBadge').textContent = `🏖️ Station ${station}`;
+  document.getElementById('stationMystery').textContent = '?';
+  document.getElementById('locationTitle').textContent = data.location;
+  document.getElementById('locationSubtitle').textContent = data.subtitle;
+  document.title = `Station ${station} · Beach Guardians`;
+
+  // Build clue cards
+  const clueContainer = document.getElementById('clueCards');
+  const progressContainer = document.getElementById('clueProgress');
+  data.clues.forEach((clue, i) => {
+    const card = document.createElement('div');
+    card.className = 'clue-card';
+    card.id = `clue-${i}`;
+    card.innerHTML = `<div class="clue-num">${i + 1}</div><div class="clue-text">${clue.emoji} ${clue.text}</div>`;
+    clueContainer.appendChild(card);
+
+    const dot = document.createElement('div');
+    dot.className = 'clue-dot';
+    dot.id = `dot-${i}`;
+    progressContainer.appendChild(dot);
+  });
+
+  // Build answer choices — shuffle so correct answer isn't always first
+  const grid = document.getElementById('choicesGrid');
+  const shuffled = [...data.choices];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const correctLabel = data.choices[data.correctIndex].label;
+  shuffled.forEach((choice, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.id = `choice-${i}`;
+    btn.innerHTML = `<span class="choice-emoji">${choice.emoji}</span><span>${choice.label}</span>`;
+    const isCorrect = choice.label === correctLabel;
+    btn.addEventListener('click', () => checkChoice(i, isCorrect));
+    grid.appendChild(btn);
+  });
+
+  // Background particles — beach / ocean themed
+  const particles = ['🏖️', '🌊', '♻️', '🐢', '🐟', '🐚', '☀️', '🩱', '🧴', '🪣', '⭐', '💙'];
+  const bgAnim = document.getElementById('bgAnim');
+  for (let i = 0; i < 14; i++) {
+    const el = document.createElement('div');
+    el.className = 'bg-particle';
+    el.textContent = particles[Math.floor(Math.random() * particles.length)];
+    el.style.left = `${Math.random() * 100}%`;
+    el.style.animationDuration = `${9 + Math.random() * 12}s`;
+    el.style.animationDelay = `${Math.random() * 10}s`;
+    bgAnim.appendChild(el);
+  }
+
+  showClue(0);
+}
+
+function showClue(index) {
+  const el = document.getElementById(`clue-${index}`);
+  const dot = document.getElementById(`dot-${index}`);
+  if (el) {
+    setTimeout(() => {
+      el.classList.add('visible');
+      if (index === currentClue) el.classList.add('active');
+    }, 50);
+  }
+  if (dot) dot.classList.add('filled');
+}
+
+function showNextClue() {
+  const data = STATIONS[station];
+  const cur = document.getElementById(`clue-${currentClue}`);
+  if (cur) cur.classList.remove('active');
+
+  currentClue++;
+  if (currentClue < data.clues.length) {
+    showClue(currentClue);
+    const next = document.getElementById(`clue-${currentClue}`);
+    if (next) next.classList.add('active');
+  }
+
+  if (currentClue >= data.clues.length - 1) {
+    document.getElementById('nextClueBtn').disabled = true;
+    document.getElementById('nextClueBtn').textContent = 'All clues revealed! 🔍';
+  }
+}
+
+function checkChoice(index, isCorrect) {
+  if (solved) return;
+  const btn = document.getElementById(`choice-${index}`);
+  const data = STATIONS[station];
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    for (let i = 0; i < 4; i++) {
+      const b = document.getElementById(`choice-${i}`);
+      if (b) b.disabled = true;
+    }
+    onSuccess(data);
+  } else {
+    btn.classList.add('wrong');
+    setTimeout(() => btn.classList.remove('wrong'), 700);
+    tries++;
+    onWrong(data);
+  }
+}
+
+function onWrong(data) {
+  const fb = document.getElementById('feedbackMsg');
+  const tries_el = document.getElementById('triesInfo');
+  fb.className = 'feedback error';
+  fb.textContent = '⚠️ Not quite! Read the clues again, Guardian! 🔍';
+  tries_el.textContent = `Attempt ${tries} — You can do it! Think about the clues!`;
+  if (tries >= 2) {
+    data.clues.forEach((_, i) => showClue(i));
+    currentClue = data.clues.length - 1;
+    document.getElementById('nextClueBtn').disabled = true;
+    document.getElementById('nextClueBtn').textContent = 'All clues revealed! 🔍';
+  }
+}
+
+function onSuccess(data) {
+  solved = true;
+  document.getElementById('answerSection').style.display = 'none';
+  data.clues.forEach((_, i) => showClue(i));
+
+  const panel = document.getElementById('successPanel');
+  panel.classList.add('visible');
+  panel.style.background = `linear-gradient(160deg, ${data.color[0]}33, rgba(255,255,255,0.07))`;
+  panel.style.borderColor = data.color[1];
+
+  document.getElementById('successEmoji').innerHTML = data.choices[0].emoji;
+  document.getElementById('successSubtitle').textContent = `You found a beach word — teach the future to recycle! 🎉`;
+  document.getElementById('charName').innerHTML = `${data.choices[0].emoji} ${data.choices[0].label} — ${data.location}`;
+  document.getElementById('charDesc').textContent = data.description;
+
+  const badge = document.getElementById('healthBadge');
+  badge.className = data.positive ? 'health-badge healthy' : 'health-badge unhealthy';
+  badge.innerHTML = data.wordBadge;
+
+  document.getElementById('measureTip').innerHTML = data.measure;
+  document.getElementById('plateTip').innerHTML = data.plate;
+
+  const factsEl = document.getElementById('funFacts');
+  factsEl.innerHTML = '';
+  data.facts.forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'fun-fact';
+    div.innerHTML = `<span class="fact-icon">${f.icon}</span><span>${f.text}</span>`;
+    factsEl.appendChild(div);
+  });
+
+  if (data.worldMsg) {
+    const wm = document.getElementById('worldMsg');
+    wm.innerHTML = data.worldMsg;
+    wm.style.display = 'block';
+  }
+
+  launchConfetti(data.color[0], data.color[1]);
+
+  const saved = JSON.parse(localStorage.getItem('beach-guardians') || '[]');
+  if (!saved.includes(station)) {
+    saved.push(station);
+    localStorage.setItem('beach-guardians', JSON.stringify(saved));
+  }
+}
+
+function claimGift() {
+  document.getElementById('treatSticker').classList.add('visible');
+  const stickers = ['🏰', '🩱', '🧴', '🐢', JELLYFISH];
+  document.getElementById('stickerEmoji').innerHTML = stickers[(station - 1) % stickers.length];
+
+  document.getElementById('stickerLabel').textContent =
+    `+1 Word found! Station ${station}/5 🏖️`;
+
+  launchConfetti(STATIONS[station].color[0], STATIONS[station].color[1]);
+  document.querySelector('.claim-btn').style.display = 'none';
+}
+
+function launchConfetti(color1, color2) {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  const colors = [color1, color2, '#1E88E5', '#FBC02D', '#00897B', '#7E57C2', '#FFF8E7'];
+  const pieces = [];
+  for (let i = 0; i < 90; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: -20 - Math.random() * 120,
+      w: 5 + Math.random() * 9,
+      h: 5 + Math.random() * 9,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rot: Math.random() * 360,
+      vx: (Math.random() - 0.5) * 3,
+      vy: 3 + Math.random() * 4,
+      vr: (Math.random() - 0.5) * 9,
+      round: Math.random() > 0.5,
+    });
+  }
+  const start = Date.now();
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    for (const p of pieces) {
+      if (p.y < canvas.height + 20) {
+        alive = true;
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        if (p.round) { ctx.beginPath(); ctx.arc(0,0,p.w/2,0,Math.PI*2); ctx.fill(); }
+        else { ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); }
+        ctx.restore();
+      }
+    }
+    if (alive && Date.now() - start < 4000) { requestAnimationFrame(draw); }
+    else { canvas.remove(); }
+  }
+  requestAnimationFrame(draw);
+}
+
+init();
+twemoji.parse(document.body,{folder:'svg',ext:'.svg'});
+</script>
+</body>
+</html>
